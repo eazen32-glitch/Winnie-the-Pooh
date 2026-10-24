@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+    <title>Upcoming Interviews | Career Workspace</title>
+    <style>
+/* ===== INTERVIEW PAGE: STYLES START ===== */
+body { margin: 0; background: #191b1f; color: #f4f4f5; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
+.interview-page-nav { border-bottom: 1px solid #353540; background: #18181b; padding: 22px max(24px, calc((100% - 920px) / 2)); }
+.interview-back { display: inline-flex; align-items: center; gap: 10px; color: #c7d2fe; text-decoration: none; font-size: 14px; }
+.interview-back:hover { color: #fff; }
+#interviewPage {
+    color-scheme: dark;
+    box-sizing: border-box;
+    width: min(920px, calc(100% - 32px));
+    margin: 44px auto;
+    padding: 0;
+    overflow: auto;
+    color: #f4f4f5;
+    background: #191b23;
+    border: 1px solid #454168;
+    border-radius: 22px;
+    font-family: inherit;
+    box-shadow: 0 24px 90px #0008;
+}
+#interviewPage * { box-sizing: border-box; }
+.interview-header { display: flex; align-items: flex-start; gap: 20px; padding: 28px; border-bottom: 1px solid #353540; }
+.interview-eyebrow { margin: 0 0 8px; color: #a5a2ff; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; }
+#interviewTitle { margin: 0; font-size: clamp(26px, 4vw, 36px); line-height: 1.3; font-weight: 700; }
+.interview-subtitle { margin: 10px 0 0; color: #a5a9b8; font-size: 13px; line-height: 1.7; }
+.interview-content { padding: 24px 28px 28px; }
+.interview-summary { margin: 0 0 16px; font-size: 13px; color: #c7d2fe; }
+.interview-list { display: grid; gap: 14px; }
+.interview-session { padding: 20px; border: 1px solid #3b3c4b; border-radius: 14px; background: #20212c; }
+.interview-session:first-child { border-color: #736be0; }
+.interview-company-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.interview-mark { display: grid; place-items: center; width: 44px; height: 44px; flex-shrink: 0; border-radius: 12px; background: #353054; color: #c7c2ff; font-weight: 800; font-size: 18px; }
+.interview-company { margin: 0; font-size: 17px; font-weight: 700; overflow-wrap: anywhere; }
+.interview-role { margin: 4px 0 0; color: #aeb3c7; font-size: 12px; overflow-wrap: anywhere; }
+.interview-status { margin-left: auto; padding: 5px 9px; border: 1px solid #3b6a60; border-radius: 20px; color: #a7e5ce; background: #213a33; font-size: 11px; }
+.interview-details { display: flex; gap: 8px 22px; flex-wrap: wrap; margin: 18px 0 14px; color: #ddddeb; font-size: 13px; line-height: 1.8; }
+.interview-detail-label { color: #979bb1; margin-right: 7px; }
+.interview-footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; border-top: 1px solid #383948; padding-top: 14px; }
+.interview-host, .interview-link-note { color: #a5a9b8; font-size: 12px; line-height: 1.6; margin: 0; }
+/* JOIN BUTTON ADDITION: shared appearance for active links and disabled buttons. */
+.interview-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 7px; }
+.interview-join { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 18px; min-height: 44px; border: 1px solid #a39bf5; border-radius: 9px; background: #7971ef; color: #fff; font-family: inherit; font-size: 12px; font-weight: 700; text-decoration: none; cursor: pointer; }
+.interview-join[href]:hover { background: #655bdc; }
+.interview-join:disabled { background: #514b91; border-color: #7068b1; color: #e4e1ff; cursor: not-allowed; }
+.interview-empty { text-align: center; padding: 34px 16px; color: #aeb3c7; line-height: 1.7; }
+.interview-empty h3 { color: #e4e4ed; font-size: 18px; margin: 0 0 8px; }
+.interview-empty p { margin: 0; font-size: 13px; }
+:focus-visible { outline: 3px solid #b5b1ff; outline-offset: 4px; }
+@media (max-width: 520px) {
+    .interview-header { padding: 20px; gap: 10px; }
+    .interview-content { padding: 18px; }
+    .interview-session { padding: 16px; }
+    .interview-status { margin-left: 56px; }
+    .interview-details { flex-direction: column; gap: 4px; }
+    .interview-actions { align-items: flex-start; }
+}
+/* ===== INTERVIEW PAGE: STYLES END ===== */
+
+    </style>
+</head>
+<body>
+    <nav class="interview-page-nav" aria-label="Page navigation">
+        <a class="interview-back" href="mainpage.html">&#8592; Back to home</a>
+    </nav>
+    <!-- ===== INTERVIEW PAGE: HTML START ===== -->
+    <main id="interviewPage">
+        <header class="interview-header">
+            <div>
+                <h1 id="interviewTitle">Upcoming interviews</h1>
+                <p class="interview-subtitle">See who you are meeting and when.<br>All times are in Malaysia time (UTC+8).</p>
+            </div>
+        </header>
+        <section class="interview-content" aria-label="Your interview sessions">
+            <p class="interview-summary" id="interviewSummary" role="status"></p>
+            <div class="interview-list" id="interviewList"></div>
+            <noscript><p>Enable JavaScript to view your upcoming interview sessions.</p></noscript>
+        </section>
+    </main>
+    <!-- ===== INTERVIEW PAGE: HTML END ===== -->
+    <script>
+/* ===== INTERVIEW PAGE: JAVASCRIPT START ===== */
+(() => {
+    'use strict';
+    const list = document.getElementById('interviewList');
+    const summary = document.getElementById('interviewSummary');
+    const zone = 'Asia/Kuala_Lumpur';
+    const dateFormat = new Intl.DateTimeFormat('en-GB', {
+        timeZone: zone, weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'
+    });
+    const timeFormat = new Intl.DateTimeFormat('en-MY', {
+        timeZone: zone, hour: 'numeric', minute: '2-digit', hour12: true
+    });
+
+    // DEMO DATA: replace through InterviewSchedule.setSessions(yourBookings).
+    // Relative future dates keep the sample useful whenever your friends open it.
+    function demoTime(days, hour) {
+        const day = new Date(Date.now() + days * 86400000 + 8 * 3600000).toISOString().slice(0, 10);
+        return `${day}T${String(hour).padStart(2, '0')}:00:00+08:00`;
+    }
+    let sessions = [
+        { company: 'North Studio', role: 'Product Designer', startsAt: demoTime(2, 10), durationMinutes: 30, interviewer: 'Emma · Talent team', status: 'confirmed', meetingUrl: '' },
+        { company: 'Bloom Labs', role: 'Frontend Developer', startsAt: demoTime(3, 14), durationMinutes: 45, interviewer: 'Engineering team', status: 'confirmed', meetingUrl: '' },
+        { company: 'Fieldwork', role: 'UX Researcher', startsAt: demoTime(5, 10), durationMinutes: 45, interviewer: 'Research team', status: 'confirmed', meetingUrl: '' }
+    ];
+    let isDemo = true;
+
+    function element(tag, className, text) {
+        const node = document.createElement(tag);
+        if (className) node.className = className;
+        if (text !== undefined) node.textContent = text;
+        return node;
+    }
+    function safeMeetingUrl(value) {
+        if (typeof value !== 'string' || !value.trim()) return null;
+        try {
+            const url = new URL(value, window.location.href);
+            return ['https:', 'http:'].includes(url.protocol) ? url.href : null;
+        } catch { return null; }
+    }
+    function detail(label, text) {
+        const node = element('span');
+        node.append(element('span', 'interview-detail-label', label), document.createTextNode(text));
+        return node;
+    }
+    function render() {
+        const now = Date.now();
+        const upcoming = sessions.filter(session => {
+            if (!session || session.status !== 'confirmed' || typeof session.company !== 'string' || !session.company.trim()) return false;
+            if (typeof session.startsAt !== 'string' || !/(Z|[+-]\d{2}:\d{2})$/i.test(session.startsAt)) return false;
+            const start = Date.parse(session.startsAt);
+            return Number.isFinite(start) && Number.isFinite(session.durationMinutes) && session.durationMinutes > 0
+                && start + session.durationMinutes * 60000 > now;
+        }).sort((a, b) => Date.parse(a.startsAt) - Date.parse(b.startsAt));
+        summary.textContent = `${upcoming.length} ${upcoming.length === 1 ? 'session' : 'sessions'} scheduled · Nearest first`;
+        list.replaceChildren();
+        if (!upcoming.length) {
+            const empty = element('div', 'interview-empty');
+            empty.append(element('h3', '', 'No upcoming interviews yet'), element('p', '', 'Your confirmed interview sessions will appear here once a company has scheduled a time with you.'));
+            list.append(empty);
+            return;
+        }
+        upcoming.forEach(session => {
+            const start = new Date(session.startsAt);
+            const end = new Date(start.getTime() + session.durationMinutes * 60000);
+            const card = element('article', 'interview-session');
+            const row = element('div', 'interview-company-row');
+            const mark = element('span', 'interview-mark', session.company.trim().charAt(0).toUpperCase());
+            mark.setAttribute('aria-hidden', 'true');
+            const company = element('div');
+            company.append(element('h3', 'interview-company', session.company), element('p', 'interview-role', session.role || 'Interview session'));
+            row.append(mark, company, element('span', 'interview-status', start.getTime() <= now ? 'In progress' : 'Confirmed'));
+            const details = element('div', 'interview-details');
+            details.append(detail('Date', dateFormat.format(start)), detail('Time', `${timeFormat.format(start)} – ${timeFormat.format(end)}`), detail('Duration', `${session.durationMinutes} min`));
+            const footer = element('div', 'interview-footer');
+            footer.append(element('p', 'interview-host', session.interviewer ? `With ${session.interviewer}` : 'Interviewer to be confirmed'));
+            const url = safeMeetingUrl(session.meetingUrl);
+            // JOIN BUTTON ADDITION: every interview card has a visible join control.
+            const actions = element('div', 'interview-actions');
+            if (url) {
+                const join = element('a', 'interview-join', 'Join Virtual Interview →');
+                join.href = url;
+                join.setAttribute('aria-label', `Join virtual interview with ${session.company}`);
+                actions.append(join);
+            } else {
+                const join = element('button', 'interview-join', 'Join Virtual Interview →');
+                join.type = 'button';
+                /*join.disabled = true;*/
+                const note = element('p', 'interview-link-note', isDemo ? 'Ensure your microphone and camera are working before joining.' : 'Be Punctual');
+                note.id = `interview-link-note-${list.children.length}`;
+                join.setAttribute('aria-describedby', note.id);
+                actions.append(join, note);
+            }
+            footer.append(actions);
+            card.append(row, details, footer);
+            list.append(card);
+        });
+    }
+
+    // TEAM INTEGRATION: pass only this signed-in user's bookings from your backend.
+    // An empty array correctly shows the empty state; it never restores demo data.
+    window.InterviewSchedule = Object.freeze({
+        setSessions(bookings) {
+            if (!Array.isArray(bookings)) throw new TypeError('Interview bookings must be an array.');
+            sessions = bookings.map(booking => booking && ({ ...booking }));
+            isDemo = false;
+            render();
+        }
+    });
+    render();
+    window.setInterval(render, 30000);
+})();
+/* ===== INTERVIEW PAGE: JAVASCRIPT END ===== */
+
+    </script>
+</body>
+</html>

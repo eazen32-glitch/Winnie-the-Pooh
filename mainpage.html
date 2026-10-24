@@ -558,8 +558,10 @@
         }
         /* ===== SECTION HEADING ===== */
         .functions {
-            font-size: 25px;
-            font-weight: 700;
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: clamp(24px, 3vw, 32px);
+            font-weight: 800;
+            line-height: 1.25;
             color: #ffffff;
             display: flex;
             align-items: center;
@@ -567,11 +569,386 @@
             margin-left: 28px;
         }
         .functions-subtitle {
-            margin-top: 4px;
-            color: #a1a1aa;
-            font-size: 12px;
+            font-family: "Plus Jakarta Sans", sans-serif;
+            color: #94a3b8;
+            max-width: 720px;
+            font-size: 13px;
+            font-weight: 400;
             line-height: 1.6;
-            margin-left: 28px;
+            margin: 4px 0 0 28px;
+        }
+
+        /* ===== SKILLS & ROLES RADAR — HOMEPAGE THEME ===== */
+        .skills-radar {
+            --bg: #0b1120;
+            --surface: #111827;
+            --ink: #e5e7eb;
+            --muted: #94a3b8;
+            --line: #273248;
+            --radius: 14px;
+
+            color: var(--ink);
+            background: transparent;
+            padding: 28px;
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        .skills-radar *,
+        .skills-radar *::before,
+        .skills-radar *::after {
+            box-sizing: border-box;
+        }
+        .skills-radar p {
+            margin: 0;
+        }
+        .skills-radar button,
+        .skills-radar input,
+        .skills-radar select {
+            font: inherit;
+            color: var(--ink);
+        }
+
+        .skills-radar button {
+            cursor: pointer;
+        }
+
+        .skills-radar :is(button, a, input, select):focus-visible {
+            outline: 2px solid #818cf8;
+            outline-offset: 3px;
+        }
+
+        .skills-radar .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .skills-radar .radar-heading {
+            margin: 0 0 24px;
+        }
+
+        .skills-radar .radar-title {
+            color: #fff;
+            font-size: clamp(24px, 3vw, 32px);
+            font-weight: 800;
+            line-height: 1.25;
+            margin: 0 0 10px;
+        }
+
+        .skills-radar .radar-subtitle {
+            color: #94a3b8;
+            max-width: 720px;
+            font-size: 13px;
+        }
+
+        .skills-radar [data-sr-monitor] {
+            color: #94a3b8;
+            font-size: 10px;
+            padding: 0 0 16px;
+            border: 0;
+            background: transparent;
+        }
+
+        .skills-radar .toolbar {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .skills-radar .search-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+            flex: 1;
+            min-width: 200px;
+            max-width: 440px;
+        }
+
+        .skills-radar .search-box > span {
+            position: absolute;
+            left: 13px;
+            color: #94a3b8;
+        }
+
+        .skills-radar .search-box svg {
+            width: 15px;
+            height: 15px;
+        }
+
+        .skills-radar .search-box input {
+            width: 100%;
+            height: 42px;
+            padding: 9px 12px 9px 38px;
+            border: 1px solid #273248;
+            border-radius: 9px;
+            background: #111827;
+            color: #e5e7eb;
+            font-size: 12px;
+        }
+
+        .skills-radar .search-box input::placeholder {
+            color: #64748b;
+        }
+
+        .skills-radar .search-box input:focus {
+            border-color: #6366f1;
+            outline: none;
+        }
+
+        .skills-radar .segmented {
+            display: inline-flex;
+            gap: 4px;
+            padding: 4px;
+            border: 1px solid #273248;
+            border-radius: 9px;
+            background: #0f172a;
+        }
+
+        .skills-radar .segmented button {
+            padding: 8px 15px;
+            border: 0;
+            border-radius: 6px;
+            background: transparent;
+            color: #94a3b8;
+            font-size: 11px;
+            transition: background .2s, color .2s;
+        }
+
+        .skills-radar .segmented button:hover {
+            color: #fff;
+        }
+
+        .skills-radar .segmented button.selected {
+            background: #4338ca;
+            color: #fff;
+            font-weight: 700;
+            box-shadow: 0 3px 10px rgba(79, 70, 229, .2);
+        }
+
+        .skills-radar .select-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+            color: #94a3b8;
+            font-size: 11px;
+        }
+
+        .skills-radar .select-label select {
+            min-height: 40px;
+            padding: 8px 30px 8px 11px;
+            border: 1px solid #273248;
+            border-radius: 8px;
+            background: #111827;
+            color: #e5e7eb;
+            font-size: 11px;
+        }
+
+        .skills-radar .card {
+            padding: 0;
+            border: 1px solid #273248;
+            border-radius: 14px;
+            background: #111827;
+        }
+
+        .skills-radar .radar-table-card {
+            overflow: hidden;
+        }
+
+        .skills-radar .table-scroll {
+            overflow-x: auto;
+        }
+
+        .skills-radar .radar-table {
+            width: 100%;
+            min-width: 760px;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .skills-radar .radar-table th {
+            padding: 16px 18px;
+            border-bottom: 1px solid #273248;
+            background: #0f172a;
+            color: #94a3b8;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .skills-radar .radar-table td {
+            padding: 18px;
+            border-bottom: 1px solid #202b3d;
+            color: #cbd5e1;
+            font-size: 13px;
+            vertical-align: middle;
+        }
+
+        .skills-radar .radar-table tbody tr {
+            transition: background .2s;
+        }
+
+        .skills-radar .radar-table tbody tr:hover {
+            background: #172036;
+        }
+
+        .skills-radar .radar-table tbody tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .skills-radar .radar-table td:first-child {
+            min-width: 160px;
+            color: #e5e7eb;
+            font-weight: 700;
+        }
+
+        .skills-radar .radar-table td:nth-child(2),
+        .skills-radar .radar-table td:nth-child(3) {
+            color: #a5b4fc;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .skills-radar .sdg-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            max-width: 140px;
+        }
+
+        .skills-radar .sdg-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 7px;
+            border: 1px solid #303c51;
+            border-radius: 5px;
+            background: #172036;
+            color: #c7d2fe;
+            font-size: 11px;
+            white-space: nowrap;
+            transition: background .2s, border-color .2s;
+        }
+
+        .skills-radar .sdg-badge:hover {
+            background: #242b50;
+            border-color: #6366f1;
+        }
+
+        .skills-radar .sdg-dot {
+            width: 6px;
+            height: 6px;
+            flex-shrink: 0;
+            border-radius: 2px;
+            background: var(--sdg-color, #818cf8);
+        }
+
+        .skills-radar .trend-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 8px;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            background: #1e293b;
+            color: #cbd5e1;
+            font-size: 11px;
+            white-space: nowrap;
+        }
+
+        .skills-radar .trend-badge.rising {
+            background: rgba(16, 185, 129, .1);
+            border-color: rgba(52, 211, 153, .25);
+            color: #6ee7b7;
+        }
+
+        .skills-radar .trend-badge.declining {
+            background: rgba(251, 146, 60, .1);
+            border-color: rgba(251, 146, 60, .25);
+            color: #fdba74;
+        }
+
+        .skills-radar .trend-badge.stable {
+            background: rgba(129, 140, 248, .1);
+            border-color: rgba(129, 140, 248, .25);
+            color: #a5b4fc;
+        }
+
+        .skills-radar .trend-badge.insufficient {
+            background: #1e293b;
+            border-color: #334155;
+            color: #94a3b8;
+        }
+
+        .skills-radar .trend-badge svg {
+            width: 11px;
+            height: 11px;
+        }
+
+        .skills-radar .evidence-link {
+            color: #a5b4fc;
+            font-size: 12px;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            white-space: nowrap;
+        }
+
+        .skills-radar .evidence-link:hover {
+            color: #c7d2fe;
+        }
+
+        .skills-radar .evidence-date {
+            display: block;
+            margin-top: 5px;
+            color: #64748b;
+            font-size: 11px;
+        }
+
+        .skills-radar .muted {
+            color: #94a3b8;
+        }
+
+        .skills-radar .small {
+            font-size: 10px;
+        }
+
+        .skills-radar .empty-state {
+            padding: 28px;
+            color: #94a3b8;
+            text-align: center;
+        }
+
+        @media (min-width: 900px) {
+            .skills-radar .radar-table th:nth-child(5) {
+                width: 23%;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .skills-radar {
+                padding: 20px 14px;
+            }
+
+            .skills-radar .toolbar {
+                gap: 10px;
+            }
+
+            .skills-radar .search-box {
+                flex-basis: 100%;
+                max-width: none;
+            }
+
+            .skills-radar .select-label {
+                margin-left: auto;
+            }
         }
     </style>
 </head>
@@ -604,7 +981,7 @@
             </button>
 
             <!-- User Profile Modal Trigger -->
-            <button onclick="openProfileModal()" class="w-9 h-9 rounded-xl gradient-btn flex items-center justify-center text-white font-bold shadow-md hover:opacity-90 transition" title="User Profile">
+            <button onclick="openProfileModal()" class="w-9 h-9 rounded-xl gradient-btn border-slate-500 flex items-center justify-center text-white font-bold shadow-md hover:opacity-90 transition" title="User Profile">
                 <i class="fa-solid fa-user text-xs"></i>
             </button>
         </div>
@@ -774,7 +1151,7 @@
         <section class="space-y-4">
             <div class="flex items-center justify-between">
                 <div>
-                    <h3 class="functions">What You Can Do</h3>
+                    <h2 class="functions">What You Can Do</h2>
                     <p class="functions-subtitle">Explore opportunities, improve your skills, and prepare for your next career move.</p>
                 </div>
             </div>
@@ -835,7 +1212,7 @@
 
                 <!-- 5. Interview Meeting Room -->
                 <div class="function-item">
-                    <div onclick="switchTab('meeting')" class="function-card">
+                    <div onclick="window.location.href='interviews.html'" class="function-card">
                         <div class="function-icon">
                             <i class="fa-solid fa-video"></i>
                         </div>
@@ -847,6 +1224,84 @@
                 </div>
             </div>
         </section>
+        
+        <!-- ===== SKILLS & ROLES RADAR ===== -->
+        <section class="skills-radar" data-skills-radar
+                aria-label="Skills and roles radar">
+
+            <div class="radar-heading">
+                <h2 class="radar-title">Skills &amp; Roles Radar</h2>
+                <p class="radar-subtitle">
+                    Explore emerging skill signals, compare early-career job postings,
+                    and discover how career opportunities connect to the UN Sustainable
+                    Development Goals.
+                </p>
+            </div>
+
+            <p data-sr-monitor class="table-note" role="status">
+                Loading dated source evidence…
+            </p>
+
+            <div class="toolbar">
+                <div class="search-box">
+                    <span aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.6">
+                            <circle cx="10.5" cy="10.5" r="6.5"/>
+                            <path d="m16 16 5 5"/>
+                        </svg>
+                    </span>
+                    <input type="search" data-sr-search
+                        aria-label="Search skills and roles"
+                        placeholder="Search skills or roles…">
+                </div>
+
+                <div class="segmented" role="group" aria-label="Radar category">
+                    <button class="selected" type="button"
+                            data-sr-tab="skills" aria-pressed="true">
+                        Skills
+                    </button>
+                    <button type="button" data-sr-tab="roles"
+                            aria-pressed="false">
+                        Roles
+                    </button>
+                </div>
+
+                <label class="select-label">
+                    Signal
+                    <select data-sr-filter>
+                        <option value="all">All signals</option>
+                        <option value="rising">Rising</option>
+                        <option value="declining">Declining</option>
+                        <option value="stable">Stable</option>
+                        <option value="insufficient">Limited evidence</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="card radar-table-card">
+                <div class="table-scroll">
+                    <table class="radar-table">
+                        <caption class="sr-only">
+                            Job sample skill and role signals
+                        </caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Skill / role</th>
+                                <th scope="col">Recent postings</th>
+                                <th scope="col">Earlier postings</th>
+                                <th scope="col">Sample direction</th>
+                                <th scope="col">SDG connection</th>
+                                <th scope="col">Evidence</th>
+                            </tr>
+                        </thead>
+                        <tbody data-sr-body></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <!-- ===== END SKILLS & ROLES RADAR ===== -->
+
     </div>
 
 <script>    
@@ -939,6 +1394,151 @@
     else {
         initializeHeroCarousel();
     }
+
+    /* Dated public snapshot from the supplied project; no live refresh in file preview. */
+    window.SKILLS_RADAR_PREVIEW = {"signal_status": {"status": "cached", "message": "Dated public-source snapshot. Refresh to check for new evidence.", "refreshing": false, "fetched_at": "2026-10-24T03:54:15Z", "source_name": "Simplify / Coder Quad public new-graduate listings", "source_url": "https://raw.githubusercontent.com/SimplifyJobs/New-Grad-Positions/dev/.github/scripts/listings.json", "jobs_count": 3927, "active_jobs_count": 1723, "windows": {"recent_start": "2026-09-25", "recent_end": "2026-10-25", "previous_start": "2026-08-26", "previous_end": "2026-09-25"}, "refresh_allowed_at": "2026-10-24T07:11:21Z", "ai_source_name": "Hugging Face Transformers releases", "ai_source_url": "https://github.com/huggingface/transformers/releases.atom", "ai_fetched_at": "2026-10-24T03:54:15Z", "ai_updates": [{"title": "Patch release v5.20.2", "published_at": "2026-10-19T17:45:37Z", "url": "https://github.com/huggingface/transformers/releases/tag/v5.20.2"}, {"title": "Release v5.20.1", "published_at": "2026-10-16T13:02:29Z", "url": "https://github.com/huggingface/transformers/releases/tag/v5.20.1"}, {"title": "Release v5.20.0", "published_at": "2026-10-15T18:05:36Z", "url": "https://github.com/huggingface/transformers/releases/tag/v5.20.0"}, {"title": "Release v5.19.0", "published_at": "2026-10-06T16:39:23Z", "url": "https://github.com/huggingface/transformers/releases/tag/v5.19.0"}, {"title": "Release 5.18.0", "published_at": "2026-09-30T16:46:27Z", "url": "https://github.com/huggingface/transformers/releases/tag/v5.18.0"}, {"title": "Release 5.17.0", "published_at": "2026-09-10T12:03:18Z", "url": "https://github.com/huggingface/transformers/releases/tag/v5.17.0"}, {"title": "Release v5.16.1", "published_at": "2026-08-26T14:50:01Z", "url": "https://github.com/huggingface/transformers/releases/tag/v5.16.1"}, {"title": "Release: v5.16.0", "published_at": "2026-08-26T15:03:33Z", "url": "https://github.com/huggingface/transformers/releases/tag/v5.16.0"}, {"title": "Patch release: v5.15.1", "published_at": "2026-08-19T10:50:47Z", "url": "https://github.com/huggingface/transformers/releases/tag/v5.15.1"}, {"title": "Release: v5.15.0", "published_at": "2026-08-10T10:28:13Z", "url": "https://github.com/huggingface/transformers/releases/tag/v5.15.0"}], "scope": "International new-graduate technical job sample, mainly US/Canada/remote; includes inactive historical postings. Not Malaysian labor-market statistics.", "method": "Title/category keyword mentions; two equal 30-day posting windows. Dates use UTC; window end is exclusive. Releases are technology evidence, not job demand."}, "skills": [{"id": "software-development", "name": "Software development", "sdgs": [8, 9], "recent_count": 477, "previous_count": 543, "momentum": -12.2, "label": "stable", "evidence": [{"title": "Software Engineer · Microsoft", "url": "https://apply.careers.microsoft.com/careers/job/1970393557045536", "date": "2026-10-23", "kind": "job"}, {"title": "Associate Software Engineer · L3Harris Technologies", "url": "https://jobs.l3harris.com/job/Melbourne-Associate,-Software-Engineer-FL-32904/1443247400/?ats=successfactors", "date": "2026-10-23", "kind": "job"}, {"title": "Associate Software Engineer · ServiceNow", "url": "https://jobs.smartrecruiters.com/ServiceNow/744000157571919", "date": "2026-10-23", "kind": "job"}], "ai_update_count": 0, "score": 100.0}, {"id": "data-analysis", "name": "Data analysis", "sdgs": [8, 9, 12], "recent_count": 70, "previous_count": 141, "momentum": -50.4, "label": "declining", "evidence": [{"title": "Data Analyst · Ascension", "url": "https://jobs.ascension.org/us/en/job/19659", "date": "2026-10-22", "kind": "job"}, {"title": "Data Analyst 1 · Memorial Sloan Kettering Cancer Center", "url": "https://msk.wd108.myworkdayjobs.com/MSKCC_Careers_Primary/job/New-York-NY/Data-Analyst-I_103335-1", "date": "2026-10-22", "kind": "job"}, {"title": "Data Analyst 1 · Thorlabs", "url": "https://apply.workable.com/thorlabs/j/B3CD05F790/apply", "date": "2026-10-21", "kind": "job"}], "ai_update_count": 0, "score": 69.1}, {"id": "machine-learning", "name": "Machine learning", "sdgs": [9, 12, 13], "recent_count": 38, "previous_count": 35, "momentum": 8.6, "label": "stable", "evidence": [{"title": "Associate Applied Machine Learning Scientist · Lightcast", "url": "https://jobs.lever.co/economicmodeling/ac72eba1-48f4-46e5-b0c6-93b6780b2618/apply", "date": "2026-10-23", "kind": "job"}, {"title": "AI Machine Learning Engineer · RSM", "url": "https://rsm.wd1.myworkdayjobs.com/RSMCareers/job/Chicago/AI-Machine-Learning-Engineer_JR122103", "date": "2026-10-23", "kind": "job"}, {"title": "Deep Learning Hardware Engineer · Intel", "url": "https://intel.wd1.myworkdayjobs.com/en-us/external/job/US-California-Santa-Clara/Deep-Learning-Hardware-Engineer_JR0288400", "date": "2026-10-23", "kind": "job"}, {"title": "Release v5.20.0", "url": "https://github.com/huggingface/transformers/releases/tag/v5.20.0", "date": "2026-10-15", "kind": "ai_release"}, {"title": "Release 5.18.0", "url": "https://github.com/huggingface/transformers/releases/tag/v5.18.0", "date": "2026-09-30", "kind": "ai_release"}], "ai_update_count": 4, "score": 59.4}, {"id": "cloud", "name": "Cloud fundamentals", "sdgs": [8, 9], "recent_count": 12, "previous_count": 7, "momentum": 71.4, "label": "rising", "evidence": [{"title": "Cloud Hardware Development Engineer – Early Career · Amazon", "url": "https://amazon.jobs/en/jobs/10530353/cloud-hardware-development-engineer-aws-early-career-2026", "date": "2026-10-23", "kind": "job"}, {"title": "Analyst AI ML and Cloud Security · GSK", "url": "https://gsk.wd5.myworkdayjobs.com/GSKCareers/job/UK--London--New-Oxford-Street/Analyst--AI-ML-and-Cloud-Security_450144-1", "date": "2026-10-23", "kind": "job"}, {"title": "Junior Full Stack Engineer - Associate Member of Technical Staff - Software Architecture Engineering and Cloud Computing Architecture · The Aerospace Corporation", "url": "https://aero.wd5.myworkdayjobs.com/external/job/Chantilly-VA/Junior-Full-Stack-Engineer_R016972", "date": "2026-10-22", "kind": "job"}, {"title": "Release v5.20.1", "url": "https://github.com/huggingface/transformers/releases/tag/v5.20.1", "date": "2026-10-16", "kind": "ai_release"}], "ai_update_count": 1, "score": 41.6}, {"id": "ai-literacy", "name": "AI literacy", "sdgs": [4, 8, 9], "recent_count": 6, "previous_count": 22, "momentum": -72.7, "label": "declining", "evidence": [{"title": "High-Performance LLM Training Engineer New Grad · NVIDIA", "url": "https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite/job/US-CA-Santa-Clara/High-Performance-LLM-Training-Engineer---New-College-Grad-2027_JR2028237", "date": "2026-10-21", "kind": "job"}, {"title": "Gen AI Engineers · Accellor", "url": "https://apply.workable.com/accellor/j/54AC0426BD/apply", "date": "2026-10-16", "kind": "job"}, {"title": "Generative AI Research Engineer - Siri Speech · Apple", "url": "https://jobs.apple.com/en-us/details/200688766", "date": "2026-10-15", "kind": "job"}, {"title": "Release 5.17.0", "url": "https://github.com/huggingface/transformers/releases/tag/v5.17.0", "date": "2026-09-10", "kind": "ai_release"}], "ai_update_count": 1, "score": 31.5}, {"id": "automation", "name": "Workflow automation", "sdgs": [8, 9, 12], "recent_count": 5, "previous_count": 21, "momentum": -76.2, "label": "declining", "evidence": [{"title": "Senior Software Engineer - API & Automation · Formlabs", "url": "https://careers.formlabs.com/job/8316018/apply/?gh_jid=8316018", "date": "2026-10-22", "kind": "job"}, {"title": "Systems Engineer 1 - Robotics & Automation · Varian", "url": "https://onehealthineers.wd3.myworkdayjobs.com/SHSJB/job/TAR-B/Systems-Engineer-1---Robotics---Automation_R-31137-1", "date": "2026-10-21", "kind": "job"}, {"title": "Operations Automation Technician · Caterpillar", "url": "https://cat.wd5.myworkdayjobs.com/CaterpillarCareers/job/Champaign-Illinois/Operations-Automation-Technician_R0000400033", "date": "2026-10-21", "kind": "job"}, {"title": "Release v5.20.0", "url": "https://github.com/huggingface/transformers/releases/tag/v5.20.0", "date": "2026-10-15", "kind": "ai_release"}, {"title": "Release v5.19.0", "url": "https://github.com/huggingface/transformers/releases/tag/v5.19.0", "date": "2026-10-06", "kind": "ai_release"}], "ai_update_count": 4, "score": 29.0}, {"id": "sustainability", "name": "Sustainability literacy", "sdgs": [7, 12, 13], "recent_count": 4, "previous_count": 2, "momentum": 100.0, "label": "rising", "evidence": [{"title": "Entry-Level Environmental Statistician · AECOM", "url": "https://jobs.smartrecruiters.com/AECOM2/744000157479969", "date": "2026-10-23", "kind": "job"}, {"title": "Entry-Level Environmental Statistician · AECOM", "url": "https://jobs.smartrecruiters.com/AECOM2/744000157479574", "date": "2026-10-23", "kind": "job"}, {"title": "Environmental Monitoring Apprentice · Adler & Allan", "url": "https://jobs.smartrecruiters.com/AdlerAllan1/744000156781770", "date": "2026-10-21", "kind": "job"}], "ai_update_count": 0, "score": 26.1}, {"id": "cybersecurity", "name": "Cybersecurity", "sdgs": [9, 16], "recent_count": 3, "previous_count": 2, "momentum": 50.0, "label": "rising", "evidence": [{"title": "Technology Cyber Security · Citi", "url": "https://citi.wd5.myworkdayjobs.com/2/job/Irving-Texas-United-States/Technology--Cyber-Security--Full-Time-Analyst--Irving-2027-_26999831", "date": "2026-10-23", "kind": "job"}, {"title": "System Software Engineer, Automotive Cybersecurity - Tegra Security Software · NVIDIA", "url": "https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite/job/UK-Bristol/System-Software-Engineer--Tegra-Security-Software_JR2028405", "date": "2026-10-21", "kind": "job"}, {"title": "Cybersecurity Software Engineer New Grad - Cyber Concepts · Johns Hopkins Applied Physics Laboratory", "url": "https://careers.jhuapl.edu/jobs/60116?icims=1", "date": "2026-10-19", "kind": "job"}], "ai_update_count": 0, "score": 22.5}, {"id": "python", "name": "Python", "sdgs": [4, 8, 9], "recent_count": 3, "previous_count": 0, "momentum": null, "label": "insufficient", "evidence": [{"title": "Software Engineer 1 - Python · U.S. Bank", "url": "https://usbank.wd1.myworkdayjobs.com/US_Bank_Careers/job/Minneapolis-MN/Software-Engineer-1---Python_2026-0033403-1", "date": "2026-10-23", "kind": "job"}, {"title": "Associate Software Developer - Node.js & Python · Liberty Mutual Canada", "url": "https://apply.workable.com/liberty-mutual-canada/j/A60F74CB9D/apply", "date": "2026-10-13", "kind": "job"}, {"title": "Associate Data Engineer - Python / AI Insurance SaaS · EvolutionIQ", "url": "https://job-boards.greenhouse.io/evolutioniq/jobs/6210230004", "date": "2026-09-28", "kind": "job"}, {"title": "Release v5.20.0", "url": "https://github.com/huggingface/transformers/releases/tag/v5.20.0", "date": "2026-10-15", "kind": "ai_release"}, {"title": "Release v5.19.0", "url": "https://github.com/huggingface/transformers/releases/tag/v5.19.0", "date": "2026-10-06", "kind": "ai_release"}], "ai_update_count": 3, "score": 22.5}, {"id": "data-visualisation", "name": "Data visualisation", "sdgs": [4, 8, 16], "recent_count": 2, "previous_count": 0, "momentum": null, "label": "insufficient", "evidence": [{"title": "Junior Dashboard Administrator · CACI", "url": "https://caci.wd1.myworkdayjobs.com/external/job/Ashburn-VA-US/Dashboard-Administrator--Junior-_333487", "date": "2026-10-15", "kind": "job"}, {"title": "Junior Power BI Developer · LMI", "url": "https://careers-lmi.icims.com/jobs/14673/job?mobile=true&needsRedirect=false", "date": "2026-10-01", "kind": "job"}], "ai_update_count": 0, "score": 17.8}, {"id": "ai-ethics", "name": "Responsible AI", "sdgs": [5, 10, 16], "recent_count": 1, "previous_count": 0, "momentum": null, "label": "insufficient", "evidence": [{"title": "Responsible AI Specialist - Technology Workstreams · Pearson", "url": "https://hccz.fa.em3.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_2/job/26323", "date": "2026-10-20", "kind": "job"}], "ai_update_count": 0, "score": 11.2}, {"id": "statistics", "name": "Statistics", "sdgs": [4, 9, 16], "recent_count": 1, "previous_count": 2, "momentum": null, "label": "insufficient", "evidence": [{"title": "Statistical Programmer/Data Analyst · Mass General Brigham", "url": "https://massgeneralbrigham.wd1.myworkdayjobs.com/mgbexternal/job/Somerville-MA/Statistical-Programmer--Data-Analyst_RQ4083625", "date": "2026-10-20", "kind": "job"}, {"title": "Research Scientist - Information Theory and Statistical Inference · Evolver", "url": "https://job-boards.greenhouse.io/evolver/jobs/4402424009", "date": "2026-09-10", "kind": "job"}, {"title": "PhD Graduate - Statistics and Data Science · Johns Hopkins Applied Physics Laboratory", "url": "https://careers.jhuapl.edu/jobs/59889?icims=1", "date": "2026-09-01", "kind": "job"}], "ai_update_count": 0, "score": 11.2}, {"id": "communication", "name": "Communication", "sdgs": [4, 8, 17], "recent_count": 0, "previous_count": 1, "momentum": null, "label": "insufficient", "evidence": [{"title": "Firmware Engineer - Phased Array Communication Ground Systems · AeroVironment", "url": "https://avav.wd1.myworkdayjobs.com/en-US/avav/job/Albuquerque-NM/Firmware-Engineer-for-Phased-Array-Communication-Ground-Systems_8663", "date": "2026-09-04", "kind": "job"}], "ai_update_count": 0, "score": 0.0}, {"id": "learning-design", "name": "Learning design", "sdgs": [4, 8, 10], "recent_count": 0, "previous_count": 0, "momentum": null, "label": "insufficient", "evidence": [], "ai_update_count": 0, "score": 0.0}, {"id": "project-management", "name": "Project management", "sdgs": [8, 9, 17], "recent_count": 0, "previous_count": 0, "momentum": null, "label": "insufficient", "evidence": [], "ai_update_count": 0, "score": 0.0}, {"id": "prompting", "name": "Prompt design", "sdgs": [4, 8, 9], "recent_count": 0, "previous_count": 0, "momentum": null, "label": "insufficient", "evidence": [], "ai_update_count": 0, "score": 0.0}, {"id": "sql", "name": "SQL", "sdgs": [8, 9, 16], "recent_count": 0, "previous_count": 2, "momentum": null, "label": "insufficient", "evidence": [{"title": "Production Programmer - SQL Developer · Datalab USA", "url": "https://jobs.lever.co/datalabusa/9254110c-d83f-4921-aca6-b26d203bbc53/apply", "date": "2026-09-22", "kind": "job"}, {"title": "Data Modeler / Data Architect - Snowflake & Data Warehousing · CTG", "url": "https://careers.ctg.com/jobs/17509?icims=1", "date": "2026-09-03", "kind": "job"}, {"title": "Release 5.18.0", "url": "https://github.com/huggingface/transformers/releases/tag/v5.18.0", "date": "2026-09-30", "kind": "ai_release"}], "ai_update_count": 1, "score": 0.0}, {"id": "excel", "name": "Spreadsheets", "sdgs": [4, 8], "recent_count": 0, "previous_count": 0, "momentum": null, "label": "insufficient", "evidence": [], "ai_update_count": 0, "score": 0.0}], "roles": [{"id": "software-developer", "title": "Software Developer", "sdgs": [8, 9], "recent_count": 466, "previous_count": 538, "count": 1004, "momentum": -13.4, "label": "stable", "evidence": [{"title": "Frontend Engineer - Design Systems · Mercury", "url": "https://job-boards.greenhouse.io/mercury/jobs/6233910004", "date": "2026-10-23", "kind": "job"}, {"title": "Software Engineer · Microsoft", "url": "https://apply.careers.microsoft.com/careers/job/1970393557045536", "date": "2026-10-23", "kind": "job"}, {"title": "Associate Software Engineer · L3Harris Technologies", "url": "https://jobs.l3harris.com/job/Melbourne-Associate,-Software-Engineer-FL-32904/1443247400/?ats=successfactors", "date": "2026-10-23", "kind": "job"}], "score": 100.0}, {"id": "data-scientist", "title": "Data Scientist", "sdgs": [9, 12, 13], "recent_count": 101, "previous_count": 139, "count": 240, "momentum": -27.3, "label": "declining", "evidence": [{"title": "AI Engineer - Data Science · Applied Underwriters", "url": "https://jobs.lever.co/auw/6f317af6-4362-4dea-accc-e86ec1d102a5/apply", "date": "2026-10-23", "kind": "job"}, {"title": "AI Engineer - Application Development · Applied Underwriters", "url": "https://jobs.lever.co/auw/9234d6e2-f306-48d9-9cd6-9192d34d889c/apply", "date": "2026-10-23", "kind": "job"}, {"title": "Associate Credit Review Data Scientist · State Employees' Credit Union", "url": "https://ncsecu.wd1.myworkdayjobs.com/secu/job/Operations-Wake-Forest-Road/Associate-Credit-Review-Data-Scientist_JR-16697", "date": "2026-10-23", "kind": "job"}], "score": 75.2}, {"id": "business-intelligence-analyst", "title": "Business Intelligence Analyst", "sdgs": [8, 9, 12], "recent_count": 55, "previous_count": 104, "count": 159, "momentum": -47.1, "label": "declining", "evidence": [{"title": "Business Intelligence Associate · Farther", "url": "https://job-boards.greenhouse.io/fartherfinance/jobs/4746642005", "date": "2026-10-23", "kind": "job"}, {"title": "Business Intelligence Consulting Associate · RSM", "url": "https://rsm.wd1.myworkdayjobs.com/RSMCareers/job/Edmonton/Business-Intelligence-Consulting-Associate---Fall-2027_JR122065", "date": "2026-10-23", "kind": "job"}, {"title": "Data Analyst · Ascension", "url": "https://jobs.ascension.org/us/en/job/19659", "date": "2026-10-22", "kind": "job"}], "score": 65.5}, {"id": "computer-systems-analyst", "title": "Computer Systems Analyst", "sdgs": [8, 9, 12], "recent_count": 5, "previous_count": 10, "count": 15, "momentum": -50.0, "label": "declining", "evidence": [{"title": "Technology Analyst - Application Development · Citi", "url": "https://citi.wd5.myworkdayjobs.com/2/job/Tampa-Florida-United-States/Technology--Application-Development--Full-Time-Analyst--Tampa---USA--2027_261004424", "date": "2026-10-23", "kind": "job"}, {"title": "Application Development Technology Analyst · Citi", "url": "https://citi.wd5.myworkdayjobs.com/2/job/Mississauga-Ontario-Canada/Technology--Application-Development--Full-Time-Analyst--Mississauga--Canada--2027_261003395", "date": "2026-10-23", "kind": "job"}, {"title": "Technology Analyst - Application Development · Citi", "url": "https://citi.wd5.myworkdayjobs.com/2/job/Irving-Texas-United-States/Technology--Application-Development--Full-Time-Analyst--Irving---USA--2027_261004387", "date": "2026-10-23", "kind": "job"}], "score": 29.2}, {"id": "information-security-analyst", "title": "Information Security Analyst", "sdgs": [9, 16], "recent_count": 2, "previous_count": 1, "count": 3, "momentum": null, "label": "insufficient", "evidence": [{"title": "Technology Cyber Security · Citi", "url": "https://citi.wd5.myworkdayjobs.com/2/job/Irving-Texas-United-States/Technology--Cyber-Security--Full-Time-Analyst--Irving-2027-_26999831", "date": "2026-10-23", "kind": "job"}, {"title": "Embedded Software Security Engineer 1 - S3E · RTX", "url": "https://globalhr.wd5.myworkdayjobs.com/rec_rtx_ext_gateway/job/US-AZ-TUCSON-801--1151-E-Hermans-Rd--BLDG-801-External-Site/Embedded-Software-Security-Engineer-I---S3E_01878692", "date": "2026-09-29", "kind": "job"}, {"title": "Cyber Security Engineer - Air Systems · Textron", "url": "https://textron.taleo.net/careersection/textron/jobdetail.ftl?job=342900", "date": "2026-09-01", "kind": "job"}], "score": 17.9}, {"id": "project-management-specialist", "title": "Project Management Specialist", "sdgs": [8, 9, 17], "recent_count": 1, "previous_count": 1, "count": 2, "momentum": null, "label": "insufficient", "evidence": [{"title": "Non-Technical Project/Program Manager New Grad · Applied Materials", "url": "https://amat.wd1.myworkdayjobs.com/External/job/AustinTX/Non-Technical-Project-Program-Management-New-College-Grad--Bachelor-s-Master-s--Austin--TX-_R2628156", "date": "2026-09-25", "kind": "job"}, {"title": "Junior Data Analyst / Project Coordinator · Hewlett Packard", "url": "https://hp.wd5.myworkdayjobs.com/EXTEU-AC-CareerSite/job/Cambridge-Cambridgeshire-United-Kingdom/Data-Analyst_3160884-1", "date": "2026-09-16", "kind": "job"}], "score": 11.3}, {"id": "sustainability-specialist", "title": "Sustainability Specialist", "sdgs": [7, 12, 13], "recent_count": 0, "previous_count": 1, "count": 1, "momentum": null, "label": "insufficient", "evidence": [{"title": "Analyst Trainee - Air, Energy and Materials Sustainability - Director's Office · NJ Department of Environmental Protection", "url": "https://njdepartmentofenvironmentalprotection.applytojob.com/apply/Q9Z4BcdgNw/AEMS202645-Analyst-Trainee", "date": "2026-08-27", "kind": "job"}], "score": 0.0}, {"id": "learning-development-specialist", "title": "Training and Development Specialist", "sdgs": [4, 8, 10], "recent_count": 0, "previous_count": 0, "count": 0, "momentum": null, "label": "insufficient", "evidence": [], "score": 0.0}], "scenario": "moderate", "disclaimer": "Exploratory career support, not a hiring decision or a validated job forecast. Signals describe a limited global early-career job sample, not Malaysian labour-market statistics. Moderate and fast scenarios are planning assumptions. Skill requirements, SDG links and learning hours are curated estimates; real course resources and occupation sources are cited. No language model is used: matching combines weighted skills, TF-IDF lexical interest relevance and observed source-sample support.", "sdgs": [{"id": 1, "title": "No Poverty", "description": "Build accessible pathways to income and economic participation.", "url": "https://sdgs.un.org/goals/goal1"}, {"id": 2, "title": "Zero Hunger", "description": "Apply skills to resilient agriculture and food systems.", "url": "https://sdgs.un.org/goals/goal2"}, {"id": 3, "title": "Good Health and Well-being", "description": "Support safe, accessible health and well-being services.", "url": "https://sdgs.un.org/goals/goal3"}, {"id": 4, "title": "Quality Education", "description": "Make continuing education and practical skills more accessible.", "url": "https://sdgs.un.org/goals/goal4"}, {"id": 5, "title": "Gender Equality", "description": "Promote equal access to skills and career opportunities.", "url": "https://sdgs.un.org/goals/goal5"}, {"id": 6, "title": "Clean Water and Sanitation", "description": "Improve measurement and management of water resources.", "url": "https://sdgs.un.org/goals/goal6"}, {"id": 7, "title": "Affordable and Clean Energy", "description": "Support effective, accessible clean-energy systems.", "url": "https://sdgs.un.org/goals/goal7"}, {"id": 8, "title": "Decent Work and Economic Growth", "description": "Support productive work and worker-led reskilling.", "url": "https://sdgs.un.org/goals/goal8"}, {"id": 9, "title": "Industry, Innovation and Infrastructure", "description": "Build reliable technology and responsible innovation.", "url": "https://sdgs.un.org/goals/goal9"}, {"id": 10, "title": "Reduced Inequalities", "description": "Reduce barriers to opportunity and inclusive services.", "url": "https://sdgs.un.org/goals/goal10"}, {"id": 11, "title": "Sustainable Cities and Communities", "description": "Support resilient and inclusive communities.", "url": "https://sdgs.un.org/goals/goal11"}, {"id": 12, "title": "Responsible Consumption and Production", "description": "Measure and reduce waste in operations and supply chains.", "url": "https://sdgs.un.org/goals/goal12"}, {"id": 13, "title": "Climate Action", "description": "Use evidence and practical capabilities to respond to climate change.", "url": "https://sdgs.un.org/goals/goal13"}, {"id": 14, "title": "Life Below Water", "description": "Support protection of marine ecosystems through evidence and action.", "url": "https://sdgs.un.org/goals/goal14"}, {"id": 15, "title": "Life on Land", "description": "Support conservation and responsible land management.", "url": "https://sdgs.un.org/goals/goal15"}, {"id": 16, "title": "Peace, Justice and Strong Institutions", "description": "Promote trustworthy systems, accountability and information security.", "url": "https://sdgs.un.org/goals/goal16"}, {"id": 17, "title": "Partnerships for the Goals", "description": "Share knowledge and collaborate across organisations.", "url": "https://sdgs.un.org/goals/goal17"}]};
+
+    </script>
+    <!-- COMPONENT INTERACTIONS: search, tabs, filters and table rendering. -->
+    <script>
+    /* Extracted radar interactions; unrelated whole-app state/navigation removed. */
+    "use strict";
+    (() => {
+    const colors = {1:"#e5243b",2:"#dda63a",3:"#4c9f38",4:"#c5192d",5:"#ff3a21",6:"#26bde2",7:"#fcc30b",8:"#a21942",9:"#fd6925",10:"#dd1367",11:"#fd9d24",12:"#bf8b2e",13:"#3f7e44",14:"#0a97d9",15:"#56c02b",16:"#00689d",17:"#19486a"};
+    const paths = {
+        rising: '<path d="m3 17 6-6 4 4 8-10M15 5h6v6"/>',
+        declining: '<path d="m3 7 6 6 4-4 8 10M15 19h6v-6"/>',
+        stable: '<path d="M4 12h16M16 8l4 4-4 4"/>'
+    };
+    const e = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);
+    const integer = value => Number.isFinite(Number(value)) ? Math.round(Number(value)).toLocaleString() : "0";
+    function safeURL(value) {
+        try { const url = new URL(value); return ["https:","http:"].includes(url.protocol) ? url.href : null; }
+        catch { return null; }
+    }
+    function date(value, full = false) {
+        if (!value) return "Not available";
+        const parsed = new Date(value);
+        if (!Number.isFinite(parsed.getTime())) return "Not available";
+        return parsed.toLocaleString("en-MY", {
+        day: "numeric", month: "short", year: "numeric", timeZone: "Asia/Kuala_Lumpur",
+        ...(full ? {hour:"2-digit",minute:"2-digit"} : {})
+        });
+    }
+    function trend(item) {
+        const label = ["rising", "declining", "stable"].includes(item?.label) ? item.label : "insufficient";
+        const text = {rising:"Rising",declining:"Declining",stable:"Stable",insufficient:"Limited evidence"}[label];
+        const icon = paths[label] ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[label]}</svg>` : "◦";
+        return `<span class="trend-badge ${label}">${icon}${text}</span>`;
+    }
+    async function json(url, signal) {
+        const response = await fetch(url, {signal, headers:{Accept:"application/json"}});
+        if (!response.ok) throw new Error(`Unable to load radar (${response.status}).`);
+        return response.json();
+    }
+    const mounted = new WeakMap();
+    function mount(root, options = {}) {
+        if (mounted.has(root)) return mounted.get(root);
+        const $ = selector => root.querySelector(selector);
+        const search = $("[data-sr-search]");
+        const filter = $("[data-sr-filter]");
+        const body = $("[data-sr-body]");
+        const monitor = $("[data-sr-monitor]");
+        const tabs = [...root.querySelectorAll("[data-sr-tab]")];
+        const radarUrl = options.radarUrl ?? root.dataset.radarUrl;
+        const monitorUrl = options.monitorUrl ?? root.dataset.monitorUrl;
+        const controller = new AbortController();
+        let data = options.data ?? window.SKILLS_RADAR_PREVIEW ?? {skills:[],roles:[]};
+        let tab = "skills", revision = null, timer = null, busy = false, destroyed = false;
+        const pollMs = Math.max(5000, Number(options.pollMs) || 20000);
+
+        function badges(ids) {
+        return (ids || []).map(id => {
+            const goal = (data.sdgs || []).find(goal => Number(goal.id) === Number(id));
+            const url = safeURL(goal?.url) || `https://sdgs.un.org/goals/goal${Number(id)}`;
+            return `<a class="sdg-badge" href="${e(url)}" target="_blank" rel="noopener noreferrer" title="${e(goal?.title || `Goal ${id}`)}"><span class="sdg-dot" style="--sdg-color:${colors[Number(id)] || '#689656'}"></span>SDG ${e(id)}</a>`;
+        }).join("");
+        }
+        function render() {
+        const query = search.value.toLowerCase().trim();
+        const items = (data[tab] || []).filter(item =>
+            (item.name || item.title || "").toLowerCase().includes(query) &&
+            (filter.value === "all" || (item.label || "insufficient") === filter.value)
+        );
+        body.innerHTML = items.length ? items.map(item => {
+            const evidence = item.evidence?.[0];
+            const url = safeURL(evidence?.url);
+            return `<tr><td>${e(item.name || item.title)}</td><td>${integer(item.recent_count)}</td><td>${integer(item.previous_count)}</td><td>${trend(item)}</td><td><div class="sdg-badges">${badges(item.sdgs)}</div></td><td>${url ? `<a class="evidence-link" href="${e(url)}" target="_blank" rel="noopener noreferrer">${evidence.kind === 'ai_release' ? 'View AI release' : 'View posting'} ↗</a><time class="evidence-date" datetime="${e(evidence.date)}">${e(date(evidence.date))}</time>` : '<span class="muted small">No current evidence</span>'}</td></tr>`;
+        }).join("") : '<tr><td colspan="6"><div class="empty-state">No signals match your search. Try another skill, role, or signal filter.</div></td></tr>';
+        }
+        function showSnapshotStatus() {
+        const stamp = data.signal_status?.fetched_at;
+        monitor.textContent = `Dated snapshot${stamp ? `: ${date(stamp, true)} MYT` : ''}. `;
+        }
+        function setData(value) {
+        if (!value || !Array.isArray(value.skills) || !Array.isArray(value.roles)) throw new Error("Expected radar data with skills and roles arrays.");
+        data = value;
+        render();
+        if (!monitorUrl) showSnapshotStatus();
+        }
+        async function reload() {
+        if (!radarUrl || destroyed) return;
+        root.setAttribute("aria-busy", "true");
+        try { setData(await json(radarUrl, controller.signal)); }
+        finally { if (!destroyed) root.setAttribute("aria-busy", "false"); }
+        }
+        async function poll() {
+        if (busy || destroyed || document.hidden) return;
+        busy = true;
+        try {
+            const status = await json(monitorUrl, controller.signal);
+            // Reload whenever the evidence revision differs, including on the first
+            // poll. This closes the race between initial data and status requests.
+            if (status.revision !== revision) { await reload(); revision = status.revision; }
+            monitor.textContent = status.enabled
+            ? `Automatic source refresh every ${Math.round(status.interval_seconds / 60)} minutes. ${status.refreshing ? 'Checking sources now.' : status.next_refresh_at ? `Next check: ${date(status.next_refresh_at, true)} MYT.` : 'Waiting for the next source check.'}${status.last_error ? ' Latest check could not refresh; using dated cached evidence.' : ''}`
+            : 'Automatic source refresh is paused. Showing dated source evidence.';
+        } catch (error) {
+            if (error.name !== "AbortError") monitor.textContent = "Automatic update status is unavailable. Showing the last loaded dated evidence.";
+        } finally {
+            busy = false;
+            if (!destroyed) { clearTimeout(timer); timer = setTimeout(poll, pollMs); }
+        }
+        }
+        search.addEventListener("input", render, {signal:controller.signal});
+        filter.addEventListener("change", render, {signal:controller.signal});
+        tabs.forEach(button => button.addEventListener("click", () => {
+        tab = button.dataset.srTab;
+        tabs.forEach(item => {
+            const selected = item === button;
+            item.classList.toggle("selected", selected);
+            item.setAttribute("aria-pressed", String(selected));
+        });
+        render();
+        }, {signal:controller.signal}));
+        document.addEventListener("visibilitychange", () => {
+        clearTimeout(timer);
+        if (!document.hidden && monitorUrl) poll();
+        }, {signal:controller.signal});
+        const api = {
+        setData, reload,
+        destroy() { destroyed = true; clearTimeout(timer); controller.abort(); mounted.delete(root); }
+        };
+        mounted.set(root, api);
+        render();
+        if (!radarUrl) showSnapshotStatus();
+        api.ready = (async () => {
+        try { await reload(); }
+        catch (error) { if (error.name !== "AbortError") monitor.textContent = "Radar data is unavailable. Check the configured API address."; }
+        if (monitorUrl) await poll();
+        })();
+        return api;
+    }
+    window.SkillsRadar = {mount};
+    const start = () => document.querySelectorAll("[data-skills-radar]").forEach(root => mount(root));
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start, {once:true});
+    else start();
+    })();
 </script>
 </body>
 </html>
