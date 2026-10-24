@@ -1,0 +1,5 @@
+Aina Rahman
+Bachelor's degree in Computer Science. 2 years experience as a data analyst intern and junior developer.
+Skills: Python, pandas, SQL, data visualization (Power BI, matplotlib), statistics, scikit-learn machine learning,
+Flask API development, Excel, Docker basics, communication and presentation to stakeholders.
+Projects: Built a solar energy usage dashboard; led a team of 4 in a hackathon on sustainability reporting.
