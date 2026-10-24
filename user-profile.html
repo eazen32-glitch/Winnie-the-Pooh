@@ -1,0 +1,892 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="WinHire user profile and application settings workspace.">
+  <title>WinHire · My Profile</title>
+  <link rel="icon" type="image/png" href="Wlogo.png">
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+  <style>
+    /* ===== THEME & ALIGNMENT WITH INTERVIEWS.HTML & MAINPAGE.HTML ===== */
+    :root {
+      color-scheme: dark;
+      --bg-page: #191b1f;
+      --bg-card: #18181b;
+      --bg-surface: #20212c;
+      --bg-modal: #0f172a;
+      --border-color: #3b3c4b;
+      --border-focus: #736be0;
+      --text-main: #f4f4f5;
+      --text-muted: #a5a9b8;
+      --accent: #a5b4fc;
+      --brand-primary: #7971ef;
+      --brand-hover: #6366f1;
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg-page);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, p { margin: 0; }
+    button, input, textarea, select { font: inherit; }
+    button { cursor: pointer; color: inherit; border: 0; }
+    a { color: inherit; text-decoration: none; }
+    [hidden] { display: none !important; }
+
+    :focus-visible {
+      outline: 2px solid #818cf8;
+      outline-offset: 3px;
+    }
+
+    /* Page Navigation Bar matching interviews.html */
+    .career-page-nav {
+      border-bottom: 1px solid #353540;
+      background: #18181b;
+      padding: 18px max(24px, calc((100% - 920px) / 2));
+    }
+
+    .applicant-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #c7d2fe;
+      font-size: 13px;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+
+    .applicant-back:hover {
+      color: #ffffff;
+    }
+
+    /* Main Container matching interviews.html dimensions */
+    main#profile-app {
+      width: min(920px, calc(100% - 32px));
+      margin: 32px auto 64px;
+    }
+
+    .page-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      gap: 20px;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    h1.page-title {
+      font-size: clamp(24px, 3.5vw, 30px);
+      line-height: 1.25;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    /* Buttons */
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      height: 38px;
+      padding: 0 16px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .button-light {
+      border: 1px solid #3f3f46;
+      background: #27272a;
+      color: #e4e4e7;
+    }
+
+    .button-light:hover {
+      background: #3f3f46;
+      color: #ffffff;
+      border-color: #52525b;
+    }
+
+    .button-dark {
+      color: #ffffff;
+      background: var(--brand-primary);
+      border: 1px solid var(--brand-primary);
+    }
+
+    .button-dark:hover {
+      background: var(--brand-hover);
+    }
+
+    /* Profile Card */
+    .profile-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .cover {
+      height: 140px;
+      background: #20212c;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .cover-art {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      right: 0;
+      object-fit: cover;
+      opacity: 0.6;
+    }
+
+    .profile-content {
+      padding: 0 28px 28px;
+    }
+
+    .avatar-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: -42px;
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    .avatar {
+      height: 88px;
+      width: 88px;
+      border: 4px solid var(--bg-card);
+      border-radius: 50%;
+      background: #312e81;
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .avatar span {
+      font-size: 26px;
+      font-weight: 800;
+      color: #c7d2fe;
+    }
+
+    .availability {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(34, 211, 238, 0.1);
+      border: 1px solid rgba(34, 211, 238, 0.25);
+      border-radius: 20px;
+      padding: 5px 12px;
+      color: #22d3ee;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .availability i {
+      width: 6px;
+      height: 6px;
+      background: #22d3ee;
+      border-radius: 50%;
+    }
+
+    .availability.unavailable {
+      background: rgba(148, 163, 184, 0.1);
+      border-color: rgba(148, 163, 184, 0.25);
+      color: #94a3b8;
+    }
+
+    .availability.unavailable i {
+      background: #94a3b8;
+    }
+
+    .intro-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 15px;
+    }
+
+    h2#profile-name {
+      font-size: 26px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.3;
+    }
+
+    .wave {
+      font-size: 22px;
+      color: var(--accent);
+      margin-left: 6px;
+    }
+
+    .role {
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .location {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      margin-top: 6px;
+    }
+
+    .profile-bio {
+      font-size: 13px;
+      color: #cbd5e1;
+      line-height: 1.8;
+      margin: 18px 0 22px;
+      white-space: pre-line;
+    }
+
+    .profile-bottom {
+      border-top: 1px solid var(--border-color);
+      padding-top: 16px;
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Modals & Dialogs */
+    dialog {
+      width: min(640px, calc(100vw - 32px));
+      max-height: 88vh;
+      overflow-y: auto;
+      padding: 24px;
+      background: var(--bg-modal);
+      color: var(--text-main);
+      border: 1px solid #1e293b;
+      border-radius: 18px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    }
+
+    dialog::backdrop {
+      background: rgba(2, 6, 23, 0.75);
+      backdrop-filter: blur(8px);
+    }
+
+    .dialog-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .dialog-heading h2 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .close-button {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: #1e293b;
+      color: var(--text-muted);
+      display: grid;
+      place-items: center;
+      font-size: 16px;
+    }
+
+    .close-button:hover {
+      background: #334155;
+      color: #ffffff;
+    }
+
+    .dialog-description {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-grid label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #e4e4e7;
+    }
+
+    .form-grid input, .form-grid select, .form-grid textarea {
+      display: block;
+      width: 100%;
+      border: 1px solid #3f3f46;
+      border-radius: 10px;
+      background: #18181b;
+      color: var(--text-main);
+      font-size: 13px;
+      padding: 10px 12px;
+      margin-top: 6px;
+    }
+
+    .form-grid input:focus, .form-grid select:focus, .form-grid textarea:focus {
+      outline: none;
+      border-color: #818cf8;
+    }
+
+    .full-width { grid-column: 1 / -1; }
+
+    .required { color: #818cf8; }
+
+    .field-hint {
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .checkbox-label {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      font-size: 13px;
+      color: #e4e4e7;
+      margin-top: 18px;
+      cursor: pointer;
+    }
+
+    .checkbox-label input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--brand-primary);
+    }
+
+    .dialog-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid #1e293b;
+    }
+
+    /* History Table Styles */
+    .profile-history-section {
+      grid-column: 1 / -1;
+      margin-top: 10px;
+    }
+
+    .profile-history-section h3 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .history-hint {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .profile-history-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border: 1px solid #3f3f46;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .profile-history-table th {
+      padding: 8px 12px;
+      background: #20212c;
+      color: #c7d2fe;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .profile-history-table td {
+      padding: 10px;
+      border-top: 1px solid #27272a;
+      background: #18181b;
+    }
+
+    .profile-history-table .history-year-cell { width: 110px; }
+
+    .history-remove {
+      background: transparent;
+      color: #f87171;
+      font-size: 11px;
+      padding: 4px 0 0;
+      cursor: pointer;
+    }
+
+    .history-table-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    /* PDF Demo Box */
+    .pdf-demo-section {
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid #1e293b;
+    }
+
+    .pdf-demo-heading {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .pdf-demo-heading h3 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .pdf-demo-badge {
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(129, 140, 248, 0.3);
+      color: #c7d2fe;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .pdf-demo-picker {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 20px;
+      border: 1px dashed #3f3f46;
+      border-radius: 12px;
+      background: #18181b;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .pdf-demo-picker:hover {
+      border-color: #818cf8;
+      background: #20212c;
+    }
+
+    .pdf-demo-picker input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .toast {
+      padding: 12px 16px;
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border-radius: 10px;
+      font-size: 12px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    @media (max-width: 640px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .intro-row { flex-direction: column; gap: 10px; }
+      .avatar-row { margin-top: -36px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="career-page-nav" aria-label="Page navigation">
+    <a class="applicant-back" href="mainpage.html?role=jobseeker">&#8592; Back to home</a>
+  </nav>
+
+  <!-- Main Container -->
+  <main id="profile-app">
+    <div class="toast" id="save-status" role="status" hidden></div>
+
+    <div class="page-heading">
+      <div>
+        <p class="eyebrow">User Space</p>
+        <h1 class="page-title">Personal Profile</h1>
+      </div>
+      <button class="button button-light" type="button" data-edit>
+        <i class="fa-solid fa-pen-to-square"></i> Edit Profile
+      </button>
+    </div>
+
+    <!-- Profile Overview Card -->
+    <section class="profile-card" id="overview" aria-labelledby="profile-name">
+      <div class="cover">
+        <svg class="cover-art" viewBox="0 0 650 180" fill="none" aria-hidden="true">
+          <path d="M50 180C80 83 163 30 265 42s132 137 229 118 138-108 176-114" stroke="#353654" stroke-width="52"/>
+          <path d="M272 194C284 111 310 59 370 13" stroke="#818cf8" stroke-width="2"/>
+          <circle cx="525" cy="48" r="28" fill="#22d3ee" opacity="0.4"/>
+        </svg>
+      </div>
+
+      <div class="profile-content">
+        <div class="avatar-row">
+          <div class="avatar" aria-label="Profile initials">
+            <span id="profile-initials">--</span>
+          </div>
+          <span class="availability">
+            <i></i> <span id="availability-text">Open to opportunities</span>
+          </span>
+        </div>
+
+        <div class="intro-row">
+          <div>
+            <h2 id="profile-name">
+              <span data-profile="name">San Yee</span>
+              <span class="wave" aria-hidden="true">✳</span>
+            </h2>
+            <p class="role"><span data-profile="role">Electrical Engineering Candidate</span></p>
+            <p class="location">
+              <i class="fa-solid fa-location-dot"></i>
+              <span data-profile="location">Kuala Lumpur, Malaysia</span>
+            </p>
+          </div>
+          <a class="button button-dark" id="contact-link" href="mailto:san.yee@example.com">
+            Let’s Connect <i class="fa-solid fa-paper-plane" style="font-size:10px;"></i>
+          </a>
+        </div>
+
+        <p class="profile-bio"><span data-profile="bio"></span></p>
+
+        <div class="profile-bottom">
+          <span>Build your future with WinHire Career Platform.</span>
+          <span><i class="fa-solid fa-shield-halved"></i> Profile Verified</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Edit Profile Modal Dialog -->
+  <dialog id="edit-dialog" aria-labelledby="edit-title">
+    <div class="dialog-heading">
+      <h2 id="edit-title">Update Your Profile</h2>
+      <button class="close-button" type="button" data-close aria-label="Close editor">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <p class="dialog-description">Update your personal information. Changes persist in your browser.</p>
+
+    <form id="profile-form">
+      <div class="form-grid">
+        <label>Full Name <span class="required">*</span>
+          <input name="name" type="text" maxlength="70" required>
+        </label>
+
+        <label>Job Title / Discipline <span class="required">*</span>
+          <input name="role" type="text" maxlength="100" required>
+        </label>
+
+        <label>Location <span class="required">*</span>
+          <input name="location" type="text" maxlength="100" required>
+        </label>
+
+        <label>Email Address
+          <input name="email" type="email" maxlength="254">
+        </label>
+
+        <label class="full-width">Career Status
+          <select name="status" required>
+            <option value="studying">Studying / Student</option>
+            <option value="fresh_graduate">Fresh Graduate</option>
+            <option value="under_3_years">Working — less than 3 years</option>
+            <option value="3_to_10_years">Working — 3 to 10 years</option>
+            <option value="over_10_years">Working — more than 10 years</option>
+          </select>
+        </label>
+
+        <label class="full-width">Professional Bio / Story <span class="required">*</span>
+          <textarea name="bio" rows="3" maxlength="600" required></textarea>
+        </label>
+
+        <label class="full-width">Key Skills <span class="field-hint">(separated by commas, max 12)</span>
+          <input name="skills" type="text" maxlength="250">
+        </label>
+
+        <label class="full-width">Phone Number
+          <input name="phone" type="tel" maxlength="32" placeholder="e.g. +60 12-345 6789">
+        </label>
+
+        <label class="full-width">LinkedIn Profile URL
+          <input name="linkedin" type="url" maxlength="300" placeholder="https://www.linkedin.com/in/your-name">
+        </label>
+
+        <!-- Experience Table -->
+        <section class="profile-history-section full-width" data-profile-table data-section="experience">
+          <h3>Experience History</h3>
+          <p class="history-hint">Add previous roles, internships, or relevant work history.</p>
+          <table class="profile-history-table">
+            <thead>
+              <tr><th class="history-year-cell">Year</th><th>Details</th></tr>
+            </thead>
+            <tbody data-table-rows></tbody>
+          </table>
+          <template data-table-row-template>
+            <tr>
+              <td class="history-year-cell">
+                <select name="experience_year" aria-label="Experience year"><option value="">Year</option></select>
+              </td>
+              <td>
+                <textarea name="experience_description" rows="2" maxlength="1000" placeholder="Role, company and responsibilities"></textarea>
+                <button type="button" class="history-remove" data-remove-table-row>Remove row</button>
+              </td>
+            </tr>
+          </template>
+          <div class="history-table-actions">
+            <button type="button" class="button button-light" data-add-table-row>+ Add Row</button>
+            <span class="history-row-status" role="status"></span>
+          </div>
+        </section>
+
+        <!-- Education Table -->
+        <section class="profile-history-section full-width" data-profile-table data-section="education">
+          <h3>Education & Qualifications</h3>
+          <p class="history-hint">Add university degrees, certifications, or diplomas.</p>
+          <table class="profile-history-table">
+            <thead>
+              <tr><th class="history-year-cell">Year</th><th>Details</th></tr>
+            </thead>
+            <tbody data-table-rows></tbody>
+          </table>
+          <template data-table-row-template>
+            <tr>
+              <td class="history-year-cell">
+                <select name="education_year" aria-label="Education year"><option value="">Year</option></select>
+              </td>
+              <td>
+                <textarea name="education_description" rows="2" maxlength="1000" placeholder="Degree, qualification and university"></textarea>
+                <button type="button" class="history-remove" data-remove-table-row>Remove row</button>
+              </td>
+            </tr>
+          </template>
+          <div class="history-table-actions">
+            <button type="button" class="button button-light" data-add-table-row>+ Add Row</button>
+            <span class="history-row-status" role="status"></span>
+          </div>
+        </section>
+      </div>
+
+      <!-- PDF Attachments Demo -->
+      <section class="pdf-demo-section" data-pdf-demo>
+        <div class="pdf-demo-heading">
+          <h3>Supporting Attachments</h3>
+          <span class="pdf-demo-badge">PDF Attachments</span>
+        </div>
+        <p class="field-hint" style="margin-bottom:10px;">Upload CV documents or portfolio certificates.</p>
+        <label class="pdf-demo-picker">
+          <i class="fa-solid fa-file-pdf" style="font-size:24px; color:#818cf8;"></i>
+          <strong style="color:#fff; font-size:12px; margin-top:4px;">Choose PDF Documents</strong>
+          <span style="font-size:10px; color:#a5a9b8;">PDF format · Up to 10 files · 5 MB each</span>
+          <input type="file" accept=".pdf,application/pdf" multiple>
+        </label>
+        <p class="pdf-demo-status" style="font-size:11px; color:#a5a9b8; margin-top:8px;">No PDFs selected.</p>
+      </section>
+
+      <label class="checkbox-label">
+        <input type="checkbox" name="available"> I’m open to new career opportunities
+      </label>
+
+      <div class="dialog-actions">
+        <button type="button" class="button button-light" data-close>Cancel</button>
+        <button type="submit" class="button button-dark">Save Profile Changes</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script>
+    'use strict';
+    const defaults = {
+      "name": "Lim San Yee",
+      "role": "Electrical & Electronic Engineering Candidate",
+      "location": "Kuala Lumpur, Malaysia",
+      "bio": "Electrical & Electronic Engineering student passionate about embedded systems, microcontroller programming, and digital design.",
+      "email": "sanyee@example.com",
+      "phone": "013-4055552",
+      "status": "fresh_graduate",
+      "experience": [
+        { "year": "2026", "description": "Test Engineer - ABC Technologies (Internship)" },
+        { "year": "2025", "description": "Barista - Cafe (Part-time)" }
+      ],
+      "education": [
+        { "year": "2025", "description": "BEng Electrical & Electronic Engineering" }
+      ],
+      "awards": [],
+      "linkedin": "",
+      "skills": "Arduino, Raspberry Pi, Python, C, Java, HTML/CSS",
+      "available": true
+    };
+
+    const storageKey = 'winhire-profile-v1';
+    const limits = { name: 70, role: 100, location: 100, bio: 600, email: 254, phone: 32, linkedin: 300, skills: 250 };
+    const sections = ['experience', 'education', 'awards'];
+    const currentYear = new Date().getFullYear();
+
+    const editor = document.getElementById('edit-dialog');
+    const form = document.getElementById('profile-form');
+    const statusMessage = document.getElementById('save-status');
+
+    function normalize(value) {
+      const clean = { ...defaults };
+      if (!value || typeof value !== 'object') return clean;
+      for (const [key, limit] of Object.entries(limits)) {
+        if (typeof value[key] === 'string') clean[key] = value[key].slice(0, limit);
+      }
+      if (typeof value.available === 'boolean') clean.available = value.available;
+      for (const section of sections) {
+        clean[section] = (Array.isArray(value[section]) ? value[section] : defaults[section] || [])
+          .map(row => ({ year: String(row.year || ''), description: String(row.description || '').slice(0, 1000) }));
+      }
+      return clean;
+    }
+
+    let profile = normalize(defaults);
+    try {
+      const saved = localStorage.getItem(storageKey);
+      if (saved) profile = normalize(JSON.parse(saved));
+    } catch { }
+
+    function renderProfile() {
+      document.querySelectorAll('[data-profile]').forEach(element => {
+        element.textContent = profile[element.dataset.profile];
+      });
+      document.title = 'WinHire · ' + profile.name;
+      document.getElementById('profile-initials').textContent = profile.name.trim().split(/\s+/).slice(0, 2).map(part => part[0] || '').join('').toUpperCase();
+      
+      const avail = document.querySelector('.availability');
+      avail.classList.toggle('unavailable', !profile.available);
+      document.getElementById('availability-text').textContent = profile.available ? 'Open to opportunities' : 'Focused on current projects';
+
+      const contact = document.getElementById('contact-link');
+      if (profile.email) contact.href = 'mailto:' + encodeURIComponent(profile.email);
+    }
+
+    document.querySelectorAll('[data-profile-table]').forEach(section => {
+      const select = section.querySelector('template').content.querySelector('select');
+      for (let year = currentYear + 5; year >= 1970; year--) {
+        select.add(new Option(String(year), String(year)));
+      }
+    });
+
+    function fillEditor() {
+      for (const key of Object.keys(limits)) {
+        if (form.elements.namedItem(key)) form.elements.namedItem(key).value = profile[key] || '';
+      }
+      if (form.elements.namedItem('status')) form.elements.namedItem('status').value = profile.status || 'fresh_graduate';
+      if (form.elements.namedItem('available')) form.elements.namedItem('available').checked = profile.available;
+
+      document.querySelectorAll('[data-profile-table]').forEach(section => {
+        const rows = section.querySelector('[data-table-rows]');
+        const template = section.querySelector('template');
+        rows.replaceChildren();
+        const savedRows = profile[section.dataset.section] || [];
+        for (const row of savedRows.length ? savedRows : [{ year: '', description: '' }]) {
+          const fragment = template.content.cloneNode(true);
+          fragment.querySelector('select').value = row.year;
+          fragment.querySelector('textarea').value = row.description;
+          rows.append(fragment);
+        }
+      });
+    }
+
+    document.querySelectorAll('[data-edit]').forEach(btn => btn.addEventListener('click', () => { fillEditor(); editor.showModal(); }));
+    document.querySelectorAll('[data-close]').forEach(btn => btn.addEventListener('click', () => editor.close()));
+
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      const next = {};
+      for (const key of Object.keys(limits)) {
+        if (form.elements.namedItem(key)) next[key] = form.elements.namedItem(key).value.trim();
+      }
+      next.status = form.elements.namedItem('status').value;
+      next.available = form.elements.namedItem('available').checked;
+
+      document.querySelectorAll('[data-profile-table]').forEach(section => {
+        const key = section.dataset.section;
+        next[key] = [];
+        section.querySelectorAll('tbody tr').forEach(row => {
+          const year = row.querySelector('select').value;
+          const details = row.querySelector('textarea').value.trim();
+          if (year || details) next[key].push({ year, description: details });
+        });
+      });
+
+      profile = next;
+      try { localStorage.setItem(storageKey, JSON.stringify(profile)); } catch {}
+      
+      renderProfile();
+      editor.close();
+      statusMessage.textContent = 'Profile successfully updated and saved!';
+      statusMessage.hidden = false;
+      setTimeout(() => { statusMessage.hidden = true; }, 4000);
+    });
+
+    // Handle Adding/Removing Dynamic History Rows
+    document.querySelectorAll('[data-profile-table]').forEach(section => {
+      const rows = section.querySelector('[data-table-rows]');
+      const template = section.querySelector('template');
+      const addButton = section.querySelector('[data-add-table-row]');
+
+      addButton.addEventListener('click', () => {
+        rows.append(template.content.cloneNode(true));
+      });
+
+      section.addEventListener('click', e => {
+        if (e.target.closest('[data-remove-table-row]')) {
+          e.target.closest('tr').remove();
+        }
+      });
+    });
+
+    renderProfile();
+  </script>
+</body>
+</html>

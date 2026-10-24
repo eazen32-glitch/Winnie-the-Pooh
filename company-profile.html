@@ -1,0 +1,876 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="Get to know this company, its people, and its culture on WinHire.">
+  <title>WinHire · Company Profile</title>
+  <link rel="icon" type="image/png" href="Wlogo.png">
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+  <style>
+    /* ===== THEME & ALIGNMENT WITH INTERVIEWS.HTML & MAINPAGE.HTML ===== */
+    :root {
+      color-scheme: dark;
+      --bg-page: #191b1f;
+      --bg-card: #18181b;
+      --bg-surface: #20212c;
+      --bg-modal: #0f172a;
+      --border-color: #3b3c4b;
+      --border-focus: #736be0;
+      --text-main: #f4f4f5;
+      --text-muted: #a5a9b8;
+      --accent: #a5b4fc;
+      --brand-primary: #7971ef;
+      --brand-hover: #6366f1;
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg-page);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, p, dl, dd { margin: 0; }
+    button, input, textarea, select { font: inherit; }
+    button { cursor: pointer; color: inherit; border: 0; }
+    a { color: inherit; text-decoration: none; }
+    [hidden] { display: none !important; }
+
+    :focus-visible {
+      outline: 2px solid #818cf8;
+      outline-offset: 3px;
+    }
+
+    /* Page Navigation Bar matching interviews.html */
+    .career-page-nav {
+      border-bottom: 1px solid #353540;
+      background: #18181b;
+      padding: 18px max(24px, calc((100% - 920px) / 2));
+    }
+
+    .applicant-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #c7d2fe;
+      font-size: 13px;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+
+    .applicant-back:hover {
+      color: #ffffff;
+    }
+
+    /* Main Container matching interviews.html dimensions */
+    main#company-main {
+      width: min(920px, calc(100% - 32px));
+      margin: 32px auto 64px;
+    }
+
+    .page-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      gap: 20px;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    h1.page-title {
+      font-size: clamp(24px, 3.5vw, 30px);
+      line-height: 1.25;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    /* Buttons */
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      height: 38px;
+      padding: 0 16px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .button-light {
+      border: 1px solid #3f3f46;
+      background: #27272a;
+      color: #e4e4e7;
+    }
+
+    .button-light:hover {
+      background: #3f3f46;
+      color: #ffffff;
+      border-color: #52525b;
+    }
+
+    .button-dark {
+      color: #ffffff;
+      background: var(--brand-primary);
+      border: 1px solid var(--brand-primary);
+    }
+
+    .button-dark:hover {
+      background: var(--brand-hover);
+    }
+
+    /* Company Profile Card */
+    .company-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .company-cover {
+      height: 140px;
+      background: #20212c;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .cover-art {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      right: 0;
+      object-fit: cover;
+      opacity: 0.6;
+    }
+
+    .cover-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .company-content {
+      padding: 0 28px 28px;
+    }
+
+    .identity-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: -42px;
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    .company-logo {
+      display: grid;
+      place-items: center;
+      width: 88px;
+      height: 88px;
+      border: 4px solid var(--bg-card);
+      border-radius: 20px;
+      background: #312e81;
+      color: #c7d2fe;
+      font-size: 26px;
+      font-weight: 800;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      flex-shrink: 0;
+    }
+
+    .company-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #ffffff;
+    }
+
+    .hiring-badge {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(34, 211, 238, 0.1);
+      border: 1px solid rgba(34, 211, 238, 0.25);
+      border-radius: 20px;
+      padding: 5px 12px;
+      color: #22d3ee;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .hiring-badge i {
+      width: 6px;
+      height: 6px;
+      background: #22d3ee;
+      border-radius: 50%;
+    }
+
+    .hiring-badge.open_to_talent {
+      background: rgba(251, 191, 36, 0.1);
+      border-color: rgba(251, 191, 36, 0.25);
+      color: #fbbf24;
+    }
+
+    .hiring-badge.open_to_talent i {
+      background: #fbbf24;
+    }
+
+    .hiring-badge.not_hiring {
+      background: rgba(148, 163, 184, 0.1);
+      border-color: rgba(148, 163, 184, 0.25);
+      color: #94a3b8;
+    }
+
+    .hiring-badge.not_hiring i {
+      background: #94a3b8;
+    }
+
+    .company-intro {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 15px;
+    }
+
+    #company-name {
+      font-size: 26px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.3;
+    }
+
+    .company-industry {
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .company-location {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      margin-top: 6px;
+    }
+
+    .company-facts {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 22px;
+      padding: 18px 0;
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .company-facts dt {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .company-facts dd {
+      font-size: 13px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .company-details {
+      display: grid;
+      grid-template-columns: 1fr 240px;
+      gap: 32px;
+      margin-top: 24px;
+    }
+
+    .body-copy {
+      font-size: 13px;
+      color: #cbd5e1;
+      line-height: 1.8;
+      margin-top: 10px;
+      white-space: pre-line;
+    }
+
+    .culture-section, .benefits-section {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .benefit-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .benefit-list span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: #20212c;
+      border: 1px solid #3b3c4b;
+      border-radius: 8px;
+      color: #c7d2fe;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .company-contact {
+      padding: 20px;
+      background: #20212c;
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      height: fit-content;
+    }
+
+    .contact-detail {
+      margin-top: 14px;
+    }
+
+    .contact-detail span {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .contact-detail a {
+      color: var(--accent);
+      font-size: 12px;
+      word-break: break-all;
+    }
+
+    .elsewhere-links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border-color);
+      font-size: 12px;
+      color: var(--accent);
+    }
+
+    .profile-signoff {
+      border-top: 1px solid var(--border-color);
+      padding-top: 16px;
+      margin-top: 24px;
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Modals & Dialogs */
+    dialog {
+      width: min(640px, calc(100vw - 32px));
+      max-height: 88vh;
+      overflow-y: auto;
+      padding: 24px;
+      background: var(--bg-modal);
+      color: var(--text-main);
+      border: 1px solid #1e293b;
+      border-radius: 18px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    }
+
+    dialog::backdrop {
+      background: rgba(2, 6, 23, 0.75);
+      backdrop-filter: blur(8px);
+    }
+
+    .editor-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .editor-heading h2 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .close-button {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: #1e293b;
+      color: var(--text-muted);
+      display: grid;
+      place-items: center;
+      font-size: 16px;
+    }
+
+    .close-button:hover {
+      background: #334155;
+      color: #ffffff;
+    }
+
+    .editor-description {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .form-section {
+      border: 0;
+      padding: 16px 0 0;
+      margin: 0 0 18px;
+      border-top: 1px solid #1e293b;
+    }
+
+    .form-section legend {
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffffff;
+      padding: 0;
+      margin-bottom: 12px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-grid label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #e4e4e7;
+    }
+
+    .form-grid input, .form-grid select, .form-grid textarea {
+      display: block;
+      width: 100%;
+      border: 1px solid #3f3f46;
+      border-radius: 10px;
+      background: #18181b;
+      color: var(--text-main);
+      font-size: 13px;
+      padding: 10px 12px;
+      margin-top: 6px;
+    }
+
+    .form-grid input:focus, .form-grid select:focus, .form-grid textarea:focus {
+      outline: none;
+      border-color: #818cf8;
+    }
+
+    .full-width { grid-column: 1 / -1; }
+
+    .required { color: #818cf8; }
+
+    .field-hint {
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .editor-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid #1e293b;
+    }
+
+    .toast {
+      padding: 12px 16px;
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border-radius: 10px;
+      font-size: 12px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .company-details { grid-template-columns: 1fr; }
+      .company-facts { grid-template-columns: 1fr 1fr; }
+      .company-intro { flex-direction: column; gap: 12px; }
+      .identity-top { margin-top: -36px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="career-page-nav" aria-label="Page navigation">
+    <a class="applicant-back" href="mainpage.html?role=hr">&#8592; Back to home</a>
+  </nav>
+
+  <!-- Main Container -->
+  <main id="company-main">
+    <div class="toast" id="save-status" role="status" hidden></div>
+
+    <div class="page-heading">
+      <div>
+        <p class="eyebrow" id="page-eyebrow">Employer Space</p>
+        <h1 class="page-title"><span id="page-title" style="color:inherit">Company Profile</span></h1>
+      </div>
+      <div class="page-actions" data-setup-only>
+        <a class="button button-light" href="#candidate" id="viewToggleBtn">Candidate View</a>
+        <button class="button button-light" type="button" data-edit-company>
+          <i class="fa-solid fa-pen-to-square"></i> Edit Profile
+        </button>
+      </div>
+    </div>
+
+    <!-- Company Profile Card -->
+    <article class="company-card" aria-labelledby="company-name">
+      <div class="company-cover">
+        <svg class="cover-art" data-default-cover viewBox="0 0 740 190" fill="none" aria-hidden="true">
+          <path d="M30 196C139 42 234 17 333 93S502 248 729 15" stroke="#353654" stroke-width="70"/>
+          <circle cx="587" cy="50" r="30" fill="#22d3ee" opacity="0.4"/>
+        </svg>
+        <img class="cover-image" data-live-cover alt="Company cover preview" hidden>
+      </div>
+
+      <div class="company-content">
+        <div class="identity-top">
+          <div class="company-logo" aria-label="Company logo">
+            <span data-default-logo>SH</span>
+            <img data-live-logo alt="Company logo preview" hidden>
+          </div>
+          <span class="hiring-badge">
+            <i></i><span id="hiring-label">Actively hiring</span>
+          </span>
+        </div>
+
+        <div class="company-intro">
+          <div>
+            <h2 id="company-name"><span data-company="name">SDC Hackathon</span></h2>
+            <p class="company-industry"><span data-company="industry">Software & Technology</span></p>
+            <p class="company-location">
+              <i class="fa-solid fa-location-dot"></i>
+              <span data-company="headquarters">Kuala Lumpur, Malaysia</span>
+            </p>
+          </div>
+          <a class="button button-dark" id="careers-link">Contact Our Team</a>
+        </div>
+
+        <dl class="company-facts">
+          <div><dt>INDUSTRY</dt><dd><span data-company="industry">Software & Technology</span></dd></div>
+          <div><dt>TEAM SIZE</dt><dd><span data-company="size">51–200</span> people</dd></div>
+          <div><dt>HEADQUARTERS</dt><dd><span data-company="headquarters">Kuala Lumpur, Malaysia</span></dd></div>
+          <div id="founded-fact"><dt>ESTABLISHED</dt><dd><span data-company="founded_year">2026</span></dd></div>
+        </dl>
+
+        <div class="company-details">
+          <div class="company-story">
+            <section aria-labelledby="company-about-title">
+              <h3 id="company-about-title" style="color:#fff; font-size:16px; font-weight:700;">About the Company</h3>
+              <p class="body-copy"><span data-company="description">We build thoughtful digital tools that make everyday work simpler. We bring curious people together to turn useful ideas into products that feel a little more human.</span></p>
+            </section>
+
+            <section class="culture-section" id="culture-section">
+              <p class="eyebrow">COMPANY CULTURE</p>
+              <h3 id="culture-title" style="color:#fff; font-size:16px; font-weight:700;">Life on Our Team</h3>
+              <p class="body-copy"><span data-company="culture">Good work starts with trust. We make room for questions, share what we learn, and give people the space to do their best work.</span></p>
+            </section>
+
+            <section class="benefits-section" id="benefits-section">
+              <h3 id="benefits-title" style="color:#fff; font-size:16px; font-weight:700;">Perks & Benefits</h3>
+              <div class="benefit-list" id="benefits-list"></div>
+            </section>
+          </div>
+
+          <aside class="company-contact" aria-labelledby="contact-title">
+            <h3 id="contact-title" style="color:#fff; font-size:15px; font-weight:700;">Contact Details</h3>
+            <div class="contact-detail">
+              <span>RECRUITMENT EMAIL</span>
+              <a id="recruitment-link">careers@example.com</a>
+            </div>
+            <div class="contact-detail" id="office-contact">
+              <span>OFFICE PHONE</span>
+              <a id="phone-link"></a>
+            </div>
+            <div class="elsewhere-links" id="external-links">
+              <a id="website-link" target="_blank" rel="noopener noreferrer">Company Website <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:10px;"></i></a>
+              <a id="linkedin-link" target="_blank" rel="noopener noreferrer">LinkedIn <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:10px;"></i></a>
+            </div>
+          </aside>
+        </div>
+
+        <div class="profile-signoff">
+          <span>Build your team with WinHire.</span>
+          <span>Verified Employer</span>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <!-- Edit Company Profile Modal -->
+  <dialog id="company-editor" aria-labelledby="company-editor-title">
+    <div class="editor-heading">
+      <h2 id="company-editor-title">Edit Company Profile</h2>
+      <button type="button" class="close-button" data-close-company aria-label="Close editor">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <p class="editor-description">Update your organization details, hiring status, and culture information.</p>
+
+    <form id="company-form">
+      <fieldset class="form-section">
+        <legend>1. Essential Information</legend>
+        <div class="form-grid">
+          <label class="full-width">Company Name <span class="required">*</span>
+            <input name="name" type="text" maxlength="100" required placeholder="Your company name">
+          </label>
+
+          <label>Industry <span class="required">*</span>
+            <select name="industry" required>
+              <option value="">Choose industry</option>
+              <option value="Software & Technology">Software & Technology</option>
+              <option value="Engineering & Manufacturing">Engineering & Manufacturing</option>
+              <option value="Finance & Insurance">Finance & Insurance</option>
+              <option value="Healthcare">Healthcare</option>
+              <option value="Education">Education</option>
+              <option value="Retail & E-commerce">Retail & E-commerce</option>
+              <option value="Other">Other</option>
+            </select>
+          </label>
+
+          <label>Company Size <span class="required">*</span>
+            <select name="size" required>
+              <option value="">Choose company size</option>
+              <option value="1–10">1–10 people</option>
+              <option value="11–50">11–50 people</option>
+              <option value="51–200">51–200 people</option>
+              <option value="201–500">201–500 people</option>
+              <option value="501+">501+ people</option>
+            </select>
+          </label>
+
+          <label>Headquarters <span class="required">*</span>
+            <input name="headquarters" type="text" maxlength="120" required placeholder="City, country">
+          </label>
+
+          <label>Founded In
+            <input type="number" name="founded_year" min="1800" placeholder="e.g. 2019">
+          </label>
+
+          <label>Website URL
+            <input name="website" type="url" maxlength="300" placeholder="https://yourcompany.com">
+          </label>
+
+          <label>LinkedIn URL
+            <input name="linkedin" type="url" maxlength="300" placeholder="https://www.linkedin.com/company/...">
+          </label>
+
+          <label class="full-width">About the Company <span class="required">*</span>
+            <textarea name="description" rows="4" maxlength="1400" required></textarea>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-section">
+        <legend>2. Hiring & Culture</legend>
+        <div class="form-grid">
+          <label class="full-width">Hiring Status <span class="required">*</span>
+            <select name="hiring_status" required>
+              <option value="actively_hiring">Actively hiring</option>
+              <option value="open_to_talent">Open to future talent</option>
+              <option value="not_hiring">Not hiring right now</option>
+            </select>
+          </label>
+
+          <label class="full-width">Careers Page URL
+            <input name="careers_url" type="url" maxlength="300" placeholder="https://yourcompany.com/careers">
+          </label>
+
+          <label class="full-width">Culture Description
+            <textarea name="culture" rows="3" maxlength="1400" placeholder="How do people work and collaborate on your team?"></textarea>
+          </label>
+
+          <label class="full-width">Benefits
+            <textarea name="benefits" rows="2" maxlength="700" placeholder="Flexible working, Health budget, Team events"></textarea>
+            <span class="field-hint">Separate benefits with commas (up to 12).</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-section">
+        <legend>3. Contact Info</legend>
+        <div class="form-grid">
+          <label>Recruitment Email <span class="required">*</span>
+            <input name="recruitment_email" type="email" maxlength="254" required placeholder="careers@yourcompany.com">
+          </label>
+
+          <label>Office Phone
+            <input name="office_phone" type="tel" maxlength="32" placeholder="+60 3-1234 5678">
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="editor-actions">
+        <button class="button button-light" type="button" data-close-company>Cancel</button>
+        <button class="button button-dark" type="submit">Save Company Profile</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script>
+    'use strict';
+    const defaults = {
+      "name": "SDC Hackathon",
+      "industry": "Software & Technology",
+      "size": "51–200",
+      "headquarters": "Kuala Lumpur, Malaysia",
+      "founded_year": "2026",
+      "website": "",
+      "linkedin": "",
+      "description": "We build thoughtful digital tools that make everyday work simpler. We bring curious people together to turn useful ideas into products that feel a little more human.",
+      "recruitment_email": "careers@example.com",
+      "office_phone": "",
+      "hiring_status": "actively_hiring",
+      "culture": "Good work starts with trust. We make room for questions, share what we learn, and give people the space to do their best work.",
+      "benefits": ["Flexible working", "Learning & development", "Health coverage", "Team connection"],
+      "careers_url": ""
+    };
+
+    const storageKey = 'winhire-company-profile-v1';
+    const editor = document.getElementById('company-editor');
+    const form = document.getElementById('company-form');
+
+    let company = { ...defaults };
+    try {
+      const saved = localStorage.getItem(storageKey);
+      if (saved) company = { ...defaults, ...JSON.parse(saved) };
+    } catch {}
+
+    function renderCompany() {
+      document.querySelectorAll('[data-company]').forEach(el => {
+        el.textContent = company[el.dataset.company];
+      });
+
+      document.title = 'WinHire · ' + company.name;
+
+      const initials = company.name.trim().split(/\s+/).slice(0, 2).map(w => w[0] || '').join('').toUpperCase();
+      document.querySelector('[data-default-logo]').textContent = initials;
+
+      const badge = document.querySelector('.hiring-badge');
+      badge.className = 'hiring-badge ' + company.hiring_status;
+      document.getElementById('hiring-label').textContent =
+        company.hiring_status === 'actively_hiring' ? 'Actively hiring' :
+        company.hiring_status === 'open_to_talent' ? 'Open to talent' : 'Not hiring';
+
+      document.getElementById('founded-fact').hidden = !company.founded_year;
+      document.getElementById('culture-section').hidden = !company.culture;
+      document.getElementById('benefits-section').hidden = !company.benefits || !company.benefits.length;
+
+      const benefitsContainer = document.getElementById('benefits-list');
+      benefitsContainer.replaceChildren();
+      (company.benefits || []).forEach(b => {
+        const tag = document.createElement('span');
+        tag.innerHTML = `<i class="fa-solid fa-check" style="font-size:10px; color:#34d399;"></i> ${b}`;
+        benefitsContainer.append(tag);
+      });
+
+      const mailto = 'mailto:' + encodeURIComponent(company.recruitment_email);
+      document.getElementById('recruitment-link').textContent = company.recruitment_email;
+      document.getElementById('recruitment-link').href = mailto;
+
+      const careers = document.getElementById('careers-link');
+      careers.href = company.careers_url || mailto;
+
+      document.getElementById('office-contact').hidden = !company.office_phone;
+      if (company.office_phone) {
+        document.getElementById('phone-link').textContent = company.office_phone;
+        document.getElementById('phone-link').href = 'tel:' + company.office_phone;
+      }
+
+      document.getElementById('external-links').hidden = !company.website && !company.linkedin;
+      if (company.website) document.getElementById('website-link').href = company.website;
+      if (company.linkedin) document.getElementById('linkedin-link').href = company.linkedin;
+    }
+
+    function fillEditor() {
+      for (const key of Object.keys(defaults)) {
+        if (form.elements.namedItem(key)) {
+          const val = company[key];
+          form.elements.namedItem(key).value = Array.isArray(val) ? val.join(', ') : val || '';
+        }
+      }
+    }
+
+    document.querySelectorAll('[data-edit-company]').forEach(btn => btn.addEventListener('click', () => {
+      fillEditor();
+      editor.showModal();
+    }));
+
+    document.querySelectorAll('[data-close-company]').forEach(btn => btn.addEventListener('click', () => editor.close()));
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const updated = { ...company };
+
+      for (const key of Object.keys(defaults)) {
+        if (form.elements.namedItem(key)) {
+          let val = form.elements.namedItem(key).value.trim();
+          if (key === 'benefits') {
+            updated.benefits = val.split(',').map(s => s.trim()).filter(Boolean);
+          } else {
+            updated[key] = val;
+          }
+        }
+      }
+
+      company = updated;
+      try { localStorage.setItem(storageKey, JSON.stringify(company)); } catch {}
+
+      renderCompany();
+      editor.close();
+
+      const toast = document.getElementById('save-status');
+      toast.textContent = 'Company profile successfully updated!';
+      toast.hidden = false;
+      setTimeout(() => { toast.hidden = true; }, 4000);
+    });
+
+    renderCompany();
+  </script>
+</body>
+</html>
