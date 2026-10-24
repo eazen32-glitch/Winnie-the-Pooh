@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Analytics & Trends | Winnie The Pooh</title>
+  <link rel="icon" type="image/png" href="Wlogo.png" width="80">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,9 +32,18 @@
       color: #f4f4f5;
       font-family: "Plus Jakarta Sans", sans-serif;
     }
-    .topbar {
-      background: var(--nav);
-      border-bottom: 1px solid var(--border);
+    .analytics-page-nav { 
+      border-bottom: 1px solid #353540; 
+      background: #18181b; 
+      padding: 20px max(20px, calc((100% - 1200px) / 2)); 
+    }
+    .analytics-back { 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 10px; 
+      color: #c7d2fe; 
+      text-decoration: none; 
+      font-size: 14px; 
     }
     .glass-panel {
       background: var(--panel);
@@ -112,11 +122,9 @@
 </head>
 
 <body>
-  <header class="topbar">
-    <div class="max-w-7xl mx-auto px-5 md:px-8 py-4 flex items-center justify-between gap-4">
-      <a class="back-link" href="mainpage.html"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
-    </div>
-  </header>
+  <nav class="analytics-page-nav" aria-label="Page navigation">
+      <a class="analytics-back" href="mainpage.html?role=hr">&#8592; Back to home</a>
+  </nav>
 
   <main class="max-w-7xl mx-auto px-5 md:px-8 py-8 md:py-10 space-y-6">
     <section class="glass-panel p-6 md:p-8">

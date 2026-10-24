@@ -1,0 +1,841 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WinHire HR View: Applications Received & Candidate Management Cart">
+    <title>WinHire · Applicant Cart (HR View)</title>
+    <link rel="icon" type="image/png" href="Wlogo.png" width="80">
+
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#EEF2FF',
+                            100: '#E0E7FF',
+                            500: '#6366F1',
+                            600: '#4F46E5',
+                            700: '#4338CA',
+                            900: '#1E1B4B',
+                        },
+                        cyan: {
+                            400: '#22D3EE',
+                            500: '#06B6D4',
+                        },
+                        dark: {
+                            bg: '#18181b',
+                            card: '#0f172a',
+                            border: '#1e293b',
+                            glass: 'rgba(15, 23, 42, 0.85)'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* ===== MAINPAGE & INTERVIEW THEME ALIGNMENT ===== */
+        :root {
+            --bg-dark: #18181b;
+            --card-dark: #0f172a;
+            --border-dark: #1e293b;
+            --brand-primary: #6366f1;
+            --brand-hover: #4f46e5;
+            --brand-light: #818cf8;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+        body {
+            margin: 0;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        .applicant-page-nav { 
+          border-bottom: 1px solid #353540; 
+          background: #18181b; 
+          padding: 20px max(20px, calc((100% - 1200px) / 2)); 
+        }
+        .applicant-back { 
+          display: inline-flex; 
+          align-items: center; 
+          gap: 10px; 
+          color: #c7d2fe; 
+          text-decoration: none; 
+          font-size: 14px; 
+        }
+        .applicant-back:hover { 
+          color: #fff; 
+        }
+
+        /* Modals & Backdrop Blur */
+        dialog {
+            padding: 0;
+            background: #0f172a;
+            color: var(--text-main);
+            border: 1px solid var(--border-dark);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+        }
+        dialog::backdrop {
+            background: rgba(2, 6, 23, 0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        @keyframes riseUp {
+            from { transform: translateY(16px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .modal-animated[open] {
+            animation: riseUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Custom Scrollbar */
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 3px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+
+        /* Status Badge Colors */
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+        .status-pill::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+        .status-pending { 
+          background: rgba(99, 102, 241, 0.15); 
+          color: #818cf8; 
+          border: 1px solid rgba(129, 140, 248, 0.3); 
+        }
+        .status-interview { 
+          background: rgba(245, 158, 11, 0.15); 
+          color: #fbbf24; 
+          border: 1px solid rgba(245, 158, 11, 0.3); 
+        }
+        .status-hired { 
+          background: rgba(16, 185, 129, 0.15); 
+          color: #34d399; 
+          border: 1px solid rgba(16, 185, 129, 0.3); 
+        }
+        .status-rejected { 
+          background: rgba(239, 68, 68, 0.15); 
+          color: #f87171; 
+          border: 1px solid rgba(239, 68, 68, 0.3); 
+        }
+    </style>
+</head>
+<body class="bg-[#18181b] text-slate-100 flex flex-col min-h-screen">
+  <nav class="applicant-page-nav" aria-label="Page navigation">
+      <a class="applicant-back" href="mainpage.html?role=hr">&#8592; Back to home</a>
+  </nav>
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        
+        <!-- Main Candidate Management Area -->
+        <section class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 sm:p-8 space-y-6">
+            
+            <!-- Search & Filter Toolbar -->
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-slate-800">
+                <!-- Search Box -->
+                <div class="relative flex-1 max-w-md">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <input type="text" id="pageSearchInput" onkeyup="handlePageSearch()" placeholder="Search candidates, positions, or skills..."
+                        class="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-slate-200 text-sm focus:outline-none focus:border-indigo-500 transition placeholder-slate-500">
+                </div>
+
+                <!-- Category Tabs -->
+                <div class="flex items-center gap-2 overflow-x-auto pb-2 lg:pb-0 scrollbar-none" id="statusFilterTabs">
+                    <button onclick="filterByTab('all')" class="tab-btn active px-4 py-2 rounded-xl text-xs font-bold transition bg-indigo-600 text-white" data-tab="all">
+                        All Applications <span class="ml-1 bg-indigo-950 text-indigo-200 px-2 py-0.5 rounded-md text-[10px]" id="cntAll">8</span>
+                    </button>
+                    <button onclick="filterByTab('pending')" class="tab-btn px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-800 text-slate-400 hover:text-white" data-tab="pending">
+                        Pending Review <span class="ml-1 bg-slate-950 text-slate-400 px-2 py-0.5 rounded-md text-[10px]" id="cntPending">3</span>
+                    </button>
+                    <button onclick="filterByTab('interview')" class="tab-btn px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-800 text-slate-400 hover:text-white" data-tab="interview">
+                        Interviews <span class="ml-1 bg-slate-950 text-slate-400 px-2 py-0.5 rounded-md text-[10px]" id="cntInterview">2</span>
+                    </button>
+                    <button onclick="filterByTab('hired')" class="tab-btn px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-800 text-slate-400 hover:text-white" data-tab="hired">
+                        Hired Candidates <span class="ml-1 bg-slate-950 text-slate-400 px-2 py-0.5 rounded-md text-[10px]" id="cntHired">2</span>
+                    </button>
+                    <button onclick="filterByTab('rejected')" class="tab-btn px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-800 text-slate-400 hover:text-white" data-tab="rejected">
+                        Rejected <span class="ml-1 bg-slate-950 text-slate-400 px-2 py-0.5 rounded-md text-[10px]" id="cntRejected">1</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Candidate Cards Grid -->
+            <div id="applicantGrid" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <!-- Dynamic Applicant Cards -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto border-t border-slate-800 bg-[#18181b] py-6 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p>© 2026 Winnie The Pooh Career Platform · HR Portal</p>
+            <div class="flex items-center gap-4 text-slate-400">
+                <a href="interviews.html" class="hover:text-indigo-400 transition"><i class="fa-solid fa-video mr-1"></i> Interview Room</a>
+                <span>·</span>
+                <a href="analytics_trends.html" class="hover:text-indigo-400 transition"><i class="fa-solid fa-chart-line mr-1"></i> Market Trends</a>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- ================= INTERACTIVE MODALS ================= -->
+
+    <!-- Modal 1: Candidate Profile / CV Details -->
+    <dialog id="profileModal" class="modal-animated rounded-2xl w-full max-w-2xl bg-slate-900 border border-slate-800 text-slate-100 shadow-2xl">
+        <div class="p-6 border-b border-slate-800 flex items-start justify-between gap-4 bg-[#18181b]">
+            <div class="flex items-center gap-4">
+                <div id="modalAvatar" class="w-12 h-12 rounded-xl bg-indigo-950 border border-indigo-700/50 text-indigo-300 font-bold flex items-center justify-center text-lg">
+                    AM
+                </div>
+                <div>
+                    <h3 id="modalName" class="text-xl font-bold text-white">Alex Morgan</h3>
+                    <p id="modalTitle" class="text-xs text-indigo-400 font-semibold mt-0.5">Product Designer Candidate</p>
+                </div>
+            </div>
+            <button onclick="closeModal('profileModal')" class="w-8 h-8 rounded-lg bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark text-sm"></i>
+            </button>
+        </div>
+
+        <div class="p-6 space-y-6 max-h-[70vh] overflow-y-auto custom-scroll text-xs leading-relaxed text-slate-300">
+            <!-- Bio & Summary -->
+            <div>
+                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Professional Summary</h4>
+                <p id="modalBio" class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-slate-300">
+                    Passionate designer with experience building intuitive user interfaces, design systems, and web applications.
+                </p>
+            </div>
+
+            <!-- Details Grid -->
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800">
+                    <span class="text-slate-500 text-[11px] block">Experience Level</span>
+                    <strong id="modalCareer" class="text-slate-200 font-semibold text-xs">Under 3 years</strong>
+                </div>
+                <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800">
+                    <span class="text-slate-500 text-[11px] block">Location</span>
+                    <strong id="modalLocation" class="text-slate-200 font-semibold text-xs">Kuala Lumpur, Malaysia</strong>
+                </div>
+            </div>
+
+            <!-- Skills -->
+            <div>
+                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Key Competencies & Skills</h4>
+                <div id="modalSkills" class="flex flex-wrap gap-2">
+                    <!-- Dynamic -->
+                </div>
+            </div>
+
+            <!-- Experience Timeline -->
+            <div>
+                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Work Experience & Education</h4>
+                <div id="modalTimeline" class="space-y-2 bg-slate-950 p-4 rounded-xl border border-slate-800">
+                    <!-- Dynamic -->
+                </div>
+            </div>
+        </div>
+
+        <div class="p-4 bg-[#18181b] border-t border-slate-800 flex justify-end gap-3">
+            <button onclick="closeModal('profileModal')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold rounded-xl transition text-xs">
+                Close
+            </button>
+        </div>
+    </dialog>
+
+
+    <!-- Modal 2: Interview Scheduler -->
+    <dialog id="scheduleModal" class="modal-animated rounded-2xl w-full max-w-lg bg-slate-900 border border-slate-800 text-slate-100 shadow-2xl">
+        <div class="p-6 border-b border-slate-800 flex items-center justify-between gap-4 bg-[#18181b]">
+            <div>
+                <div class="text-[10px] font-bold text-indigo-400 uppercase tracking-widest mb-1">Interview Room Sync</div>
+                <h3 class="text-lg font-bold text-white">Schedule Candidate Interview</h3>
+            </div>
+            <button onclick="closeModal('scheduleModal')" class="w-8 h-8 rounded-lg bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark text-sm"></i>
+            </button>
+        </div>
+
+        <form id="scheduleForm" onsubmit="handleScheduleSubmit(event)" class="p-6 space-y-5">
+            <div id="scheduleCandidateHeader" class="flex items-center gap-3 bg-slate-950 p-3.5 rounded-xl border border-slate-800">
+                <!-- Dynamic Candidate Info -->
+            </div>
+
+            <div class="space-y-3">
+                <label class="block text-xs font-bold text-slate-300">Select Date & Time (UTC+8 Malaysia Time)</label>
+                <input type="datetime-local" id="scheduleDateTime" required
+                    class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-indigo-500">
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Meeting Duration</label>
+                    <select id="scheduleDuration" class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-indigo-500">
+                        <option value="30">30 minutes</option>
+                        <option value="45" selected>45 minutes</option>
+                        <option value="60">60 minutes</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Interview Venue</label>
+                    <div class="px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-indigo-300 font-semibold flex items-center gap-2">
+                        <i class="fa-solid fa-video text-xs"></i> Virtual Room
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-3 bg-indigo-950/40 border border-indigo-800/40 rounded-xl text-[11px] text-slate-300 leading-relaxed flex items-start gap-2.5">
+                <i class="fa-solid fa-circle-info text-indigo-400 text-sm mt-0.5"></i>
+                <span>Once scheduled, this session will automatically sync with your <strong>Interview Meeting Room</strong> (interviews.html).</span>
+            </div>
+
+            <div class="pt-2 flex justify-end gap-3">
+                <button type="button" onclick="closeModal('scheduleModal')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold rounded-xl text-xs transition">
+                    Cancel
+                </button>
+                <button type="submit" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs transition shadow-lg shadow-indigo-600/30">
+                    Schedule & Sync Room
+                </button>
+            </div>
+        </form>
+    </dialog>
+
+
+    <!-- Modal 3: Direct Message / Candidate Conversation -->
+    <dialog id="messageModal" class="modal-animated rounded-2xl w-full max-w-lg bg-slate-900 border border-slate-800 text-slate-100 shadow-2xl">
+        <div class="p-5 border-b border-slate-800 flex items-center justify-between gap-4 bg-[#18181b]">
+            <div class="flex items-center gap-3">
+                <div id="msgAvatar" class="w-9 h-9 rounded-lg bg-indigo-950 text-indigo-300 font-bold flex items-center justify-center text-xs">
+                    AM
+                </div>
+                <div>
+                    <h3 id="msgCandidateName" class="text-sm font-bold text-white">Alex Morgan</h3>
+                    <p class="text-[11px] text-slate-400">Direct Candidate Communication</p>
+                </div>
+            </div>
+            <button onclick="closeModal('messageModal')" class="w-8 h-8 rounded-lg bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark text-sm"></i>
+            </button>
+        </div>
+
+        <div id="messageHistory" class="p-5 bg-[#18181b] min-h-[180px] max-h-[260px] overflow-y-auto space-y-3 custom-scroll border-b border-slate-800">
+            <!-- Dynamic Messages -->
+        </div>
+
+        <form id="sendMessageForm" onsubmit="handleSendMessage(event)" class="p-4 bg-slate-900 space-y-3">
+            <textarea id="msgInput" rows="3" required placeholder="Type direct message to candidate..."
+                class="w-full p-3 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-indigo-500 transition resize-none"></textarea>
+            
+            <div class="flex items-center justify-between pt-1">
+                <span class="text-[11px] text-slate-500">Press enter or click send</span>
+                <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs transition inline-flex items-center gap-1.5 shadow-md">
+                    Send <i class="fa-solid fa-paper-plane text-[10px]"></i>
+                </button>
+            </div>
+        </form>
+    </dialog>
+
+
+    <!-- Modal 4: Confirm Hire -->
+    <dialog id="hireModal" class="modal-animated rounded-2xl w-full max-w-md bg-slate-900 border border-slate-800 text-slate-100 shadow-2xl p-6">
+        <div class="text-center space-y-4">
+            <div class="w-14 h-14 rounded-2xl bg-emerald-950 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-2xl mx-auto shadow-lg shadow-emerald-900/20">
+                <i class="fa-solid fa-user-check"></i>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold text-white">Confirm Candidate Hire</h3>
+                <p id="hireModalText" class="text-xs text-slate-400 mt-1">Are you sure you want to offer this position?</p>
+            </div>
+            <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 text-left text-xs text-slate-400 space-y-1">
+                <p class="text-slate-300 font-semibold"><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> Action outcomes:</p>
+                <p>• Updates applicant status to <strong>Hired</strong>.</p>
+                <p>• Triggers onboarding confirmation process.</p>
+            </div>
+            <div class="flex items-center justify-end gap-3 pt-2">
+                <button type="button" onclick="closeModal('hireModal')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold rounded-xl text-xs transition">
+                    Cancel
+                </button>
+                <button type="button" id="confirmHireBtn" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs transition shadow-lg shadow-emerald-600/30">
+                    Confirm Hire
+                </button>
+            </div>
+        </div>
+    </dialog>
+
+
+    <!-- ================= JAVASCRIPT APPLICATION LOGIC ================= -->
+    <script>
+        // Sample Applications Data
+        let applicantsData = [
+            {
+                id: 'alex',
+                name: 'Alex Morgan',
+                jobTitle: 'Product Designer',
+                role: 'Senior UI/UX & Design Systems Specialist',
+                careerStatus: 'Under 3 years experience',
+                location: 'Kuala Lumpur, Malaysia',
+                bio: 'Product designer with 3 years of experience crafting modern web applications, scalable design systems, and responsive design solutions.',
+                skills: ['Product Design', 'Figma', 'UI/UX', 'Design Systems', 'Tailwind CSS'],
+                email: 'alex.morgan@yahoo.com',
+                phone: '+60 12-345 6789',
+                stage: 'pending',
+                age: 'Today',
+                experience: '3 Years (North Studio)',
+                education: 'Bachelor of Design (APU)',
+                messages: [
+                    { sender: 'candidate', text: 'Hello HR Team, thank you for considering my application!', time: '10:15 AM' }
+                ]
+            },
+            {
+                id: 'maya',
+                name: 'Maya Tan',
+                jobTitle: 'Frontend Developer',
+                role: 'Frontend Engineer at Orbit Studio',
+                careerStatus: '3–10 years experience',
+                location: 'Petaling Jaya, Malaysia',
+                bio: 'Passionate frontend developer specialized in React, TypeScript, and accessible UI performance optimization.',
+                skills: ['React', 'TypeScript', 'Tailwind CSS', 'Accessibility', 'Git'],
+                email: 'maya.tan@gmail.com',
+                phone: '+60 16-987 6543',
+                stage: 'pending',
+                age: 'Today',
+                experience: '4 Years (Orbit Studio)',
+                education: 'BSc Computer Science (UM)',
+                messages: []
+            },
+            {
+                id: 'daniel',
+                name: 'Daniel Lim',
+                jobTitle: 'Marketing Executive',
+                role: 'Digital Marketing Graduate',
+                careerStatus: 'Fresh graduate',
+                location: 'Subang Jaya, Malaysia',
+                bio: 'Creative marketing enthusiast focused on digital strategy, content marketing, and brand social media growth.',
+                skills: ['Content Strategy', 'Social Media', 'Copywriting', 'SEO'],
+                email: 'daniel.lim@hw.ac.uk',
+                phone: '+60 11-234 5678',
+                stage: 'pending',
+                age: 'Yesterday',
+                experience: 'Fresh Graduate',
+                education: 'Bachelor of Business Marketing',
+                messages: []
+            },
+            {
+                id: 'sarah',
+                name: 'Sarah Lee',
+                jobTitle: 'Product Designer',
+                role: 'UI / UX Designer at Bloom',
+                careerStatus: 'Under 3 years experience',
+                location: 'Kuala Lumpur, Malaysia',
+                bio: 'Experienced in design sprints, interactive wireframing, user testing, and developer handoffs.',
+                skills: ['UI / UX', 'Figma', 'Prototyping'],
+                email: 'sarah.lee@gmail.com',
+                phone: '+60 12-888 9900',
+                stage: 'interview',
+                age: '2 days ago',
+                experience: '2 Years (Bloom Labs)',
+                education: 'Diploma in Interactive Design',
+                messages: [
+                    { sender: 'hr', text: 'Hi Sarah, we would love to invite you for an interview.', time: 'Yesterday' }
+                ]
+            },
+            {
+                id: 'emily',
+                name: 'Emily Watson',
+                jobTitle: 'Frontend Developer',
+                role: 'Web Application Developer',
+                careerStatus: '3–10 years experience',
+                location: 'Cyberjaya, Malaysia',
+                bio: 'Frontend specialist building interactive web experiences, micro-frontends, and optimized web apps.',
+                skills: ['Vue.js', 'React', 'CSS Architecture'],
+                email: 'emily.watson@tech.io',
+                phone: '+60 17-444 3322',
+                stage: 'interview',
+                age: '3 days ago',
+                experience: '5 Years (CyberTech)',
+                education: 'BSc Software Engineering',
+                messages: []
+            },
+            {
+                id: 'kenji',
+                name: 'Kenji Sato',
+                jobTitle: 'Software Engineer',
+                role: 'Full Stack Engineer',
+                careerStatus: 'Over 10 years experience',
+                location: 'Penang, Malaysia',
+                bio: 'Senior software architect with extensive full-stack system development experience.',
+                skills: ['Node.js', 'Python', 'Cloud / AWS', 'Docker'],
+                email: 'kenji.sato@dev.com',
+                phone: '+60 19-555 1234',
+                stage: 'hired',
+                age: '1 week ago',
+                experience: '11 Years (Global Systems)',
+                education: 'MSc Computer Science',
+                messages: []
+            },
+            {
+                id: 'priya',
+                name: 'Priya Sharma',
+                jobTitle: 'AI Research Assistant',
+                role: 'AI & Data Science Specialist',
+                careerStatus: 'Fresh graduate',
+                location: 'Kuala Lumpur, Malaysia',
+                bio: 'Specialized in machine learning model evaluation, python analysis, and AI application prototyping.',
+                skills: ['Python', 'Machine Learning', 'Data Analysis'],
+                email: 'priya.sharma@ai.edu.my',
+                phone: '+60 13-777 8899',
+                stage: 'hired',
+                age: '2 weeks ago',
+                experience: 'Research Intern (AI Center)',
+                education: 'BSc Data Science',
+                messages: []
+            },
+            {
+                id: 'jason',
+                name: 'Jason Tan',
+                jobTitle: 'Marketing Executive',
+                role: 'Junior Content Creator',
+                careerStatus: 'Under 3 years experience',
+                location: 'Shah Alam, Malaysia',
+                bio: 'Content strategist interested in media production and copywriting.',
+                skills: ['Copywriting', 'Canva', 'Video Editing'],
+                email: 'jason.tan@outlook.com',
+                phone: '+60 14-222 1100',
+                stage: 'rejected',
+                age: '3 weeks ago',
+                experience: '1 Year (Creative Agency)',
+                education: 'Diploma in Mass Communication',
+                messages: []
+            }
+        ];
+
+        let currentTab = 'all';
+        let currentTargetApplicantId = null;
+
+        // Initialize Application
+        document.addEventListener('DOMContentLoaded', () => {
+            renderDashboard();
+        });
+
+        // Compute Counts & Badge Updates
+        function getCounts() {
+            return {
+                all: applicantsData.length,
+                pending: applicantsData.filter(a => a.stage === 'pending').length,
+                interview: applicantsData.filter(a => a.stage === 'interview').length,
+                hired: applicantsData.filter(a => a.stage === 'hired').length,
+                rejected: applicantsData.filter(a => a.stage === 'rejected').length
+            };
+        }
+
+        function updateStatsUI() {
+            const counts = getCounts();
+            document.getElementById('cntAll').textContent = counts.all;
+            document.getElementById('cntPending').textContent = counts.pending;
+            document.getElementById('cntInterview').textContent = counts.interview;
+            document.getElementById('cntHired').textContent = counts.hired;
+            document.getElementById('cntRejected').textContent = counts.rejected;
+        }
+
+        // Render Applicant Grid
+        function renderDashboard() {
+            updateStatsUI();
+            const grid = document.getElementById('applicantGrid');
+            const search = document.getElementById('pageSearchInput').value.toLowerCase();
+
+            let list = applicantsData.filter(item => {
+                const matchTab = currentTab === 'all' || item.stage === currentTab;
+                const matchQuery = item.name.toLowerCase().includes(search) ||
+                                   item.jobTitle.toLowerCase().includes(search) ||
+                                   item.skills.some(s => s.toLowerCase().includes(search));
+                return matchTab && matchQuery;
+            });
+
+            if (list.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-12 text-center border border-dashed border-slate-800 rounded-2xl bg-slate-900/40 p-8 space-y-3">
+                        <div class="w-12 h-12 rounded-xl bg-slate-800 text-slate-500 flex items-center justify-center text-xl mx-auto">
+                            <i class="fa-solid fa-user-slash"></i>
+                        </div>
+                        <h4 class="text-white font-bold text-sm">No applicants found</h4>
+                        <p class="text-slate-500 text-xs">Try adjusting your category filter or search keywords.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = list.map(item => createCardHTML(item)).join('');
+        }
+
+        // Helper: Card Component Builder
+        function createCardHTML(item) {
+            const initials = item.name.split(' ').map(n => n[0]).join('').toUpperCase();
+            
+            let badgeClass = 'status-pending';
+            let badgeText = 'Pending';
+            if (item.stage === 'interview') { badgeClass = 'status-interview'; badgeText = 'Interview Scheduled'; }
+            if (item.stage === 'hired') { badgeClass = 'status-hired'; badgeText = 'Hired'; }
+            if (item.stage === 'rejected') { badgeClass = 'status-rejected'; badgeText = 'Rejected'; }
+
+            return `
+                <article class="bg-slate-900 border border-slate-800 rounded-xl p-5 hover:border-indigo-500/50 transition duration-200 shadow-md flex flex-col justify-between space-y-4">
+                    <div class="space-y-3">
+                        <!-- Top Row -->
+                        <div class="flex items-center justify-between text-xs text-slate-400">
+                            <span class="flex items-center gap-1.5 font-medium text-slate-300">
+                                <i class="fa-solid fa-briefcase text-indigo-400"></i> ${item.jobTitle}
+                            </span>
+                            <span class="text-[11px] text-slate-500">${item.age}</span>
+                        </div>
+
+                        <!-- Candidate Header -->
+                        <div class="flex items-start justify-between gap-3">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 text-indigo-300 font-bold flex items-center justify-center text-xs flex-shrink-0">
+                                    ${initials}
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-bold text-sm hover:text-indigo-400 transition cursor-pointer" onclick="openProfileModal('${item.id}')">
+                                        ${item.name}
+                                    </h4>
+                                    <p class="text-slate-400 text-xs truncate max-w-[200px]">${item.role}</p>
+                                </div>
+                            </div>
+                            <span class="status-pill ${badgeClass}">${badgeText}</span>
+                        </div>
+
+                        <!-- Info Row -->
+                        <div class="text-xs text-slate-400 space-y-1">
+                            <p><i class="fa-solid fa-graduation-cap text-slate-500 mr-1.5"></i> ${item.careerStatus}</p>
+                            <p><i class="fa-solid fa-location-dot text-slate-500 mr-1.5"></i> ${item.location}</p>
+                        </div>
+
+                        <!-- Skills -->
+                        <div class="flex flex-wrap gap-1.5 pt-1">
+                            ${item.skills.slice(0, 3).map(s => `<span class="bg-slate-950 border border-slate-800 text-slate-300 text-[10px] font-medium px-2 py-0.5 rounded-md">${s}</span>`).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Actions Footer -->
+                    <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between gap-2 text-xs">
+                        <button onclick="openProfileModal('${item.id}')" class="text-indigo-400 hover:text-indigo-300 font-semibold flex items-center gap-1 transition">
+                            <i class="fa-solid fa-file-lines text-xs"></i> View CV
+                        </button>
+
+                        <div class="flex items-center gap-2">
+                            <button onclick="openMessageModal('${item.id}')" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition" title="Message Candidate">
+                                <i class="fa-solid fa-comment text-xs"></i>
+                            </button>
+
+                            ${item.stage !== 'hired' && item.stage !== 'rejected' ? `
+                                <button onclick="openScheduleModal('${item.id}')" class="px-3 py-1.5 rounded-lg bg-indigo-950 border border-indigo-700/50 text-indigo-300 hover:bg-indigo-900 transition font-semibold text-xs flex items-center gap-1">
+                                    <i class="fa-solid fa-calendar-plus text-[10px]"></i> Interview
+                                </button>
+                                <button onclick="openHireModal('${item.id}')" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white transition font-bold text-xs flex items-center gap-1">
+                                    <i class="fa-solid fa-check text-[10px]"></i> Hire
+                                </button>
+                            ` : item.stage === 'hired' ? `
+                                <span class="text-emerald-400 font-bold text-xs flex items-center gap-1"><i class="fa-solid fa-circle-check"></i> Confirmed</span>
+                            ` : `
+                                <button onclick="changeStage('${item.id}', 'pending')" class="text-slate-400 hover:text-slate-200 text-xs underline">Reopen</button>
+                            `}
+                        </div>
+                    </div>
+                </article>
+            `;
+        }
+
+        // Tab Filtering Handler
+        function filterByTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('#statusFilterTabs .tab-btn').forEach(btn => {
+                const isActive = btn.dataset.tab === tab;
+                btn.className = `tab-btn px-4 py-2 rounded-xl text-xs font-bold transition ${isActive ? 'bg-indigo-600 text-white' : 'bg-slate-800 text-slate-400 hover:text-white'}`;
+            });
+            renderDashboard();
+        }
+
+        function handlePageSearch() {
+            renderDashboard();
+        }
+
+        // Stage Management
+        function changeStage(id, newStage) {
+            const target = applicantsData.find(a => a.id === id);
+            if (target) {
+                target.stage = newStage;
+                renderDashboard();
+            }
+        }
+
+        // General Modal Close Helper
+        function closeModal(modalId) {
+            document.getElementById(modalId).close();
+        }
+
+        // Modal 1: Open Candidate Profile / CV
+        function openProfileModal(id) {
+            const item = applicantsData.find(a => a.id === id);
+            if (!item) return;
+
+            document.getElementById('modalAvatar').textContent = item.name.split(' ').map(n => n[0]).join('').toUpperCase();
+            document.getElementById('modalName').textContent = item.name;
+            document.getElementById('modalTitle').textContent = `${item.jobTitle} Candidate`;
+            document.getElementById('modalBio').textContent = item.bio;
+            document.getElementById('modalCareer').textContent = item.careerStatus;
+            document.getElementById('modalLocation').textContent = item.location;
+
+            document.getElementById('modalSkills').innerHTML = item.skills.map(s => 
+                `<span class="bg-slate-800 border border-slate-700 text-indigo-300 text-xs font-semibold px-2.5 py-1 rounded-lg">${s}</span>`
+            ).join('');
+
+            document.getElementById('modalTimeline').innerHTML = `
+                <p class="text-slate-300 font-semibold"><i class="fa-solid fa-briefcase text-indigo-400 mr-2"></i> ${item.experience}</p>
+                <p class="text-slate-400"><i class="fa-solid fa-graduation-cap text-indigo-400 mr-2"></i> ${item.education}</p>
+            `;
+
+            document.getElementById('profileModal').showModal();
+        }
+
+        // Modal 2: Open Schedule Interview
+        function openScheduleModal(id) {
+            currentTargetApplicantId = id;
+            const item = applicantsData.find(a => a.id === id);
+            if (!item) return;
+
+            document.getElementById('scheduleCandidateHeader').innerHTML = `
+                <div class="w-10 h-10 rounded-xl bg-indigo-950 border border-indigo-700/50 text-indigo-300 font-bold flex items-center justify-center text-xs">
+                    ${item.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+                </div>
+                <div>
+                    <h4 class="text-white font-bold text-xs">${item.name}</h4>
+                    <p class="text-slate-400 text-[11px]">${item.jobTitle}</p>
+                </div>
+            `;
+
+            const tmr = new Date(Date.now() + 86400000);
+            tmr.setHours(10, 0, 0, 0);
+            document.getElementById('scheduleDateTime').value = tmr.toISOString().slice(0, 16);
+
+            document.getElementById('scheduleModal').showModal();
+        }
+
+        function handleScheduleSubmit(e) {
+            e.preventDefault();
+            if (!currentTargetApplicantId) return;
+
+            changeStage(currentTargetApplicantId, 'interview');
+            closeModal('scheduleModal');
+            alert('Interview successfully scheduled! This session has been synced to your Interview Meeting Room (interviews.html).');
+        }
+
+        // Modal 3: Open Direct Messaging
+        function openMessageModal(id) {
+            currentTargetApplicantId = id;
+            const item = applicantsData.find(a => a.id === id);
+            if (!item) return;
+
+            document.getElementById('msgAvatar').textContent = item.name.split(' ').map(n => n[0]).join('').toUpperCase();
+            document.getElementById('msgCandidateName').textContent = item.name;
+
+            renderMessageHistory(item);
+            document.getElementById('messageModal').showModal();
+        }
+
+        function renderMessageHistory(item) {
+            const container = document.getElementById('messageHistory');
+            if (item.messages.length === 0) {
+                container.innerHTML = `<p class="text-center text-slate-500 text-xs py-6">No previous messages. Start a direct conversation!</p>`;
+                return;
+            }
+
+            container.innerHTML = item.messages.map(m => `
+                <div class="flex flex-col ${m.sender === 'hr' ? 'items-end' : 'items-start'}">
+                    <div class="max-w-[80%] p-3 rounded-xl text-xs ${m.sender === 'hr' ? 'bg-indigo-600 text-white rounded-br-none' : 'bg-slate-800 text-slate-200 rounded-bl-none'}">
+                        ${m.text}
+                    </div>
+                    <span class="text-[10px] text-slate-500 mt-1">${m.time}</span>
+                </div>
+            `).join('');
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function handleSendMessage(e) {
+            e.preventDefault();
+            const input = document.getElementById('msgInput');
+            const text = input.value.trim();
+            if (!text || !currentTargetApplicantId) return;
+
+            const item = applicantsData.find(a => a.id === currentTargetApplicantId);
+            if (item) {
+                item.messages.push({
+                    sender: 'hr',
+                    text: text,
+                    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                });
+                input.value = '';
+                renderMessageHistory(item);
+            }
+        }
+
+        // Modal 4: Open Confirm Hire
+        function openHireModal(id) {
+            currentTargetApplicantId = id;
+            const item = applicantsData.find(a => a.id === id);
+            if (!item) return;
+
+            document.getElementById('hireModalText').textContent = `Are you sure you want to offer the ${item.jobTitle} position to ${item.name}?`;
+            
+            document.getElementById('confirmHireBtn').onclick = () => {
+                changeStage(currentTargetApplicantId, 'hired');
+                closeModal('hireModal');
+            };
+
+            document.getElementById('hireModal').showModal();
+        }
+    </script>
+</body>
+</html>

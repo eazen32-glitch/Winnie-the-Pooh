@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>WinHire · Explore Jobs</title>
+  <link rel="icon" type="image/png" href="Wlogo.png" width="80">
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+  <style>
+    /* ===== ALIGNED WITH INTERVIEWS.HTML & MAINPAGE.HTML ===== */
+    :root {
+      color-scheme: dark;
+      --bg-page: #191b1f;
+      --bg-card: #20212c;
+      --bg-surface: #18181b;
+      --border-color: #3b3c4b;
+      --border-focus: #736be0;
+      --text-main: #f4f4f5;
+      --text-muted: #a5a9b8;
+      --accent: #a5b4fc;
+      --brand-primary: #7971ef;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg-page);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; color: inherit; }
+    a { color: inherit; text-decoration: none; }
+    [hidden] { display: none !important; }
+
+    :focus-visible {
+      outline: 2px solid #818cf8;
+      outline-offset: 4px;
+    }
+
+    /* Page Navigation Bar matching interviews.html */
+    .explore-page-nav {
+      border-bottom: 1px solid #353540;
+      background: #18181b;
+      padding: 18px max(24px, calc((100% - 920px) / 2));
+    }
+
+    .explore-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #c7d2fe;
+      font-size: 13px;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+
+    .explore-back:hover {
+      color: #ffffff;
+    }
+
+    /* Main Container matching interviews.html dimensions */
+    main#explore-jobs {
+      width: min(920px, calc(100% - 32px));
+      margin: 36px auto 64px;
+    }
+
+    /* Header Titles */
+    .page-title {
+      font-size: clamp(24px, 3.5vw, 32px);
+      line-height: 1.25;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .subtitle {
+      margin: 6px 0 24px;
+      color: var(--text-muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* Search Input */
+    .search {
+      position: relative;
+      display: block;
+      width: 100%;
+      height: 46px;
+      margin-bottom: 20px;
+    }
+
+    .search svg {
+      position: absolute;
+      left: 14px;
+      top: 15px;
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: #94a3b8;
+      stroke-width: 2.2;
+      pointer-events: none;
+    }
+
+    .search input {
+      width: 100%;
+      height: 100%;
+      padding: 10px 16px 10px 42px;
+      color: var(--text-main);
+      background: #27272a;
+      border: 1px solid #3f3f46;
+      border-radius: 12px;
+      font-size: 13px;
+      transition: border-color 0.2s ease;
+    }
+
+    .search input:focus {
+      outline: none;
+      border-color: #818cf8;
+    }
+
+    .search input::placeholder {
+      color: #71717a;
+    }
+
+    /* Toolbar & Filter Select */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    .filter-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    select {
+      height: 38px;
+      padding: 6px 14px;
+      border: 1px solid #3f3f46;
+      border-radius: 10px;
+      background: #27272a;
+      color: var(--text-main);
+      font-size: 12px;
+      outline: none;
+    }
+
+    select:focus {
+      border-color: #818cf8;
+    }
+
+    /* Jobs Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .job {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .job:hover, .job:focus-within {
+      border-color: var(--border-focus);
+      transform: translateY(-1px);
+    }
+
+    .job h2 {
+      font-size: 16px;
+      line-height: 1.4;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .job-title {
+      display: block;
+      padding: 0;
+      border: 0;
+      background: none;
+      color: inherit;
+      text-align: left;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .job-title::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+    }
+
+    .company {
+      color: #a5b4fc;
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    .description {
+      margin-top: 10px;
+      color: var(--text-muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .requirement {
+      margin-top: 12px;
+      color: #94a3b8;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .lock {
+      width: 13px;
+      height: 13px;
+      fill: currentColor;
+    }
+
+    .sdgs {
+      margin-top: 14px;
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .sdg {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid #383948;
+      border-radius: 6px;
+      padding: 2px 8px;
+      background: #18181b;
+      color: #c7d2fe;
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .empty {
+      grid-column: 1 / -1;
+      padding: 36px 20px;
+      border: 1px dashed var(--border-color);
+      border-radius: 16px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    /* Modal Dialogs matching mainpage.html overlay */
+    dialog {
+      width: min(580px, calc(100vw - 32px));
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 24px;
+      background: #0f172a;
+      color: var(--text-main);
+      border: 1px solid #1e293b;
+      border-radius: 18px;
+      font-size: 13px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    }
+
+    dialog::backdrop {
+      background: rgba(2, 6, 23, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    dialog h2 {
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 800;
+      padding-right: 40px;
+    }
+
+    dialog h3 {
+      color: #e2e8f0;
+      font-size: 13px;
+      font-weight: 700;
+      margin: 16px 0 8px;
+    }
+
+    dialog p:not(.company) {
+      margin-top: 10px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .close {
+      float: right;
+      padding: 6px 12px;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      background: #1e293b;
+      color: #cbd5e1;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .close:hover {
+      background: #334155;
+      color: #ffffff;
+    }
+
+    .chip {
+      display: inline-block;
+      margin: 2px 4px 2px 0;
+      padding: 3px 9px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      color: #cbd5e1;
+      font-size: 11px;
+    }
+
+    .dialog-note {
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 16px;
+    }
+
+    .home-link {
+      display: inline-block;
+      margin-top: 14px;
+      color: #818cf8;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .home-link:hover {
+      text-decoration: underline;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    @media (max-width: 640px) {
+      .grid { grid-template-columns: 1fr; }
+      main#explore-jobs { margin-top: 24px; }
+      .search { height: 42px; }
+      .search svg { top: 13px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="explore-page-nav" aria-label="Page navigation">
+    <a class="explore-back" href="mainpage.html">&#8592; Back to home</a>
+  </nav>
+
+  <!-- Main Content Area -->
+  <main id="explore-jobs">
+    <h1 class="page-title">Explore Jobs</h1>
+    <p class="subtitle">The required threshold score is shown on each listing. Meet or exceed it to apply.</p>
+
+    <!-- Search input -->
+    <label class="search">
+      <span class="sr-only">Search jobs, companies, skills or locations</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="7.5"/><path d="m16 16 6 6"/></svg>
+      <input id="search" type="search" placeholder="Search jobs, companies, skills or locations..." autocomplete="off">
+    </label>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <label class="filter-label" for="filter">
+        <span>Show</span>
+        <select id="filter">
+          <option value="all">All roles</option>
+          <option value="eligible">Roles I can apply to</option>
+        </select>
+      </label>
+      <span id="count" role="status" aria-live="polite">8 roles</span>
+    </div>
+
+    <!-- Job Cards Grid -->
+    <div class="grid" id="jobs">
+      
+      <!-- Job 1 -->
+      <article class="job" data-search="junior ml engineer novacloud federal territory of kuala lumpur build and ship models that power smart-city services. python machine learning sql docker mlops statistics">
+        <h2><button class="job-title" type="button" data-dialog="job-1">Junior ML Engineer</button></h2>
+        <p class="company">NovaCloud · Federal Territory of Kuala Lumpur</p>
+        <p class="description">Build and ship models that power smart-city services.</p>
+        <p class="requirement">
+          <svg class="lock" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2Zm2 0h6V7a3 3 0 0 0-6 0Z"/></svg>
+          Needs 60% match score to apply.
+        </p>
+        <div class="sdgs"><span class="sdg">SDG 9</span><span class="sdg">SDG 8</span></div>
+      </article>
+
+      <dialog id="job-1" aria-labelledby="title-1">
+        <form method="dialog"><button class="close" aria-label="Close job details">Close</button></form>
+        <h2 id="title-1">Junior ML Engineer</h2>
+        <p class="company">NovaCloud · Federal Territory of Kuala Lumpur</p>
+        <p>Build and ship models that power smart-city services.</p>
+        <h3>Required skills</h3><div><span class="chip">Python</span><span class="chip">Machine Learning</span><span class="chip">SQL</span></div>
+        <h3>Preferred skills</h3><div><span class="chip">Docker</span><span class="chip">MLOps</span><span class="chip">Statistics</span></div>
+        <h3>Sustainable Development Goals</h3><div><span class="sdg">SDG 9</span><span class="sdg">SDG 8</span></div>
+        <p class="dialog-note">Applications open at 60% match. Analyse your CV on the Home page to see your score.</p>
+        <a class="home-link" href="mainpage.html">Go to Home</a>
+      </dialog>
+
+      <!-- Job 2 -->
+      <article class="job" data-search="data analyst, clean energy buildgreen energy cyberjaya turn grid and solar data into decisions for lower-carbon power. data analysis sql data visualization python renewable energy excel">
+        <h2><button class="job-title" type="button" data-dialog="job-2">Data Analyst, Clean Energy</button></h2>
+        <p class="company">BuildGreen Energy · Cyberjaya</p>
+        <p class="description">Turn grid and solar data into decisions for lower-carbon power.</p>
+        <p class="requirement">
+          <svg class="lock" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2Zm2 0h6V7a3 3 0 0 0-6 0Z"/></svg>
+          Needs 55% match score to apply.
+        </p>
+        <div class="sdgs"><span class="sdg">SDG 7</span><span class="sdg">SDG 13</span></div>
+      </article>
+
+      <dialog id="job-2" aria-labelledby="title-2">
+        <form method="dialog"><button class="close" aria-label="Close job details">Close</button></form>
+        <h2 id="title-2">Data Analyst, Clean Energy</h2>
+        <p class="company">BuildGreen Energy · Cyberjaya</p>
+        <p>Turn grid and solar data into decisions for lower-carbon power.</p>
+        <h3>Required skills</h3><div><span class="chip">Data Analysis</span><span class="chip">SQL</span><span class="chip">Data Visualization</span></div>
+        <h3>Preferred skills</h3><div><span class="chip">Python</span><span class="chip">Renewable Energy</span><span class="chip">Excel</span></div>
+        <h3>Sustainable Development Goals</h3><div><span class="sdg">SDG 7</span><span class="sdg">SDG 13</span></div>
+        <p class="dialog-note">Applications open at 55% match. Analyse your CV on the Home page to see your score.</p>
+        <a class="home-link" href="mainpage.html">Go to Home</a>
+      </dialog>
+
+      <!-- Job 3 -->
+      <article class="job" data-search="generative ai specialist eduspark remote design ai tutors that reach students who lack access to teachers. generative ai python nlp api design curriculum design communication">
+        <h2><button class="job-title" type="button" data-dialog="job-3">Generative AI Specialist</button></h2>
+        <p class="company">EduSpark · Remote</p>
+        <p class="description">Design AI tutors that reach students who lack access to teachers.</p>
+        <p class="requirement">
+          <svg class="lock" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2Zm2 0h6V7a3 3 0 0 0-6 0Z"/></svg>
+          Needs 65% match score to apply.
+        </p>
+        <div class="sdgs"><span class="sdg">SDG 4</span><span class="sdg">SDG 9</span></div>
+      </article>
+
+      <dialog id="job-3" aria-labelledby="title-3">
+        <form method="dialog"><button class="close" aria-label="Close job details">Close</button></form>
+        <h2 id="title-3">Generative AI Specialist</h2>
+        <p class="company">EduSpark · Remote</p>
+        <p>Design AI tutors that reach students who lack access to teachers.</p>
+        <h3>Required skills</h3><div><span class="chip">Generative AI</span><span class="chip">Python</span><span class="chip">NLP</span></div>
+        <h3>Preferred skills</h3><div><span class="chip">API Design</span><span class="chip">Curriculum Design</span><span class="chip">Communication</span></div>
+        <h3>Sustainable Development Goals</h3><div><span class="sdg">SDG 4</span><span class="sdg">SDG 9</span></div>
+        <p class="dialog-note">Applications open at 65% match. Analyse your CV on the Home page to see your score.</p>
+        <a class="home-link" href="mainpage.html">Go to Home</a>
+      </dialog>
+
+      <!-- Job 4 -->
+      <article class="job" data-search="health data scientist medicai labs penang predict patient risk and improve care in under-served clinics. machine learning statistics python healthcare informatics deep learning data visualization">
+        <h2><button class="job-title" type="button" data-dialog="job-4">Health Data Scientist</button></h2>
+        <p class="company">MedicAI Labs · Penang</p>
+        <p class="description">Predict patient risk and improve care in under-served clinics.</p>
+        <p class="requirement">
+          <svg class="lock" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2Zm2 0h6V7a3 3 0 0 0-6 0Z"/></svg>
+          Needs 70% match score to apply.
+        </p>
+        <div class="sdgs"><span class="sdg">SDG 3</span><span class="sdg">SDG 10</span></div>
+      </article>
+
+      <dialog id="job-4" aria-labelledby="title-4">
+        <form method="dialog"><button class="close" aria-label="Close job details">Close</button></form>
+        <h2 id="title-4">Health Data Scientist</h2>
+        <p class="company">MedicAI Labs · Penang</p>
+        <p>Predict patient risk and improve care in under-served clinics.</p>
+        <h3>Required skills</h3><div><span class="chip">Machine Learning</span><span class="chip">Statistics</span><span class="chip">Python</span><span class="chip">Healthcare Informatics</span></div>
+        <h3>Preferred skills</h3><div><span class="chip">Deep Learning</span><span class="chip">Data Visualization</span></div>
+        <h3>Sustainable Development Goals</h3><div><span class="sdg">SDG 3</span><span class="sdg">SDG 10</span></div>
+        <p class="dialog-note">Applications open at 70% match. Analyse your CV on the Home page to see your score.</p>
+        <a class="home-link" href="mainpage.html">Go to Home</a>
+      </dialog>
+
+      <!-- Job 5 -->
+      <article class="job" data-search="water iot engineer aquasense seremban deploy sensor networks that detect leaks and pollution early. iot python cloud data analysis docker">
+        <h2><button class="job-title" type="button" data-dialog="job-5">Water IoT Engineer</button></h2>
+        <p class="company">AquaSense · Seremban</p>
+        <p class="description">Deploy sensor networks that detect leaks and pollution early.</p>
+        <p class="requirement">
+          <svg class="lock" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2Zm2 0h6V7a3 3 0 0 0-6 0Z"/></svg>
+          Needs 65% match score to apply.
+        </p>
+        <div class="sdgs"><span class="sdg">SDG 6</span><span class="sdg">SDG 11</span><span class="sdg">SDG 14</span></div>
+      </article>
+
+      <dialog id="job-5" aria-labelledby="title-5">
+        <form method="dialog"><button class="close" aria-label="Close job details">Close</button></form>
+        <h2 id="title-5">Water IoT Engineer</h2>
+        <p class="company">AquaSense · Seremban</p>
+        <p>Deploy sensor networks that detect leaks and pollution early.</p>
+        <h3>Required skills</h3><div><span class="chip">IoT</span><span class="chip">Python</span><span class="chip">Cloud</span></div>
+        <h3>Preferred skills</h3><div><span class="chip">Data Analysis</span><span class="chip">Docker</span></div>
+        <h3>Sustainable Development Goals</h3><div><span class="sdg">SDG 6</span><span class="sdg">SDG 11</span><span class="sdg">SDG 14</span></div>
+        <p class="dialog-note">Applications open at 65% match. Analyse your CV on the Home page to see your score.</p>
+        <a class="home-link" href="mainpage.html">Go to Home</a>
+      </dialog>
+
+      <!-- Job 6 -->
+      <article class="job" data-search="sustainability analyst harvest logic federal territory of kuala lumpur measure and cut the carbon footprint of food supply chains. sustainability reporting data analysis communication supply chain excel policy analysis">
+        <h2><button class="job-title" type="button" data-dialog="job-6">Sustainability Analyst</button></h2>
+        <p class="company">Harvest Logic · Federal Territory of Kuala Lumpur</p>
+        <p class="description">Measure and cut the carbon footprint of food supply chains.</p>
+        <p class="requirement">
+          <svg class="lock" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2Zm2 0h6V7a3 3 0 0 0-6 0Z"/></svg>
+          Needs 55% match score to apply.
+        </p>
+        <div class="sdgs"><span class="sdg">SDG 12</span><span class="sdg">SDG 13</span><span class="sdg">SDG 2</span></div>
+      </article>
+
+      <dialog id="job-6" aria-labelledby="title-6">
+        <form method="dialog"><button class="close" aria-label="Close job details">Close</button></form>
+        <h2 id="title-6">Sustainability Analyst</h2>
+        <p class="company">Harvest Logic · Federal Territory of Kuala Lumpur</p>
+        <p>Measure and cut the carbon footprint of food supply chains.</p>
+        <h3>Required skills</h3><div><span class="chip">Sustainability Reporting</span><span class="chip">Data Analysis</span><span class="chip">Communication</span></div>
+        <h3>Preferred skills</h3><div><span class="chip">Supply Chain</span><span class="chip">Excel</span><span class="chip">Policy Analysis</span></div>
+        <h3>Sustainable Development Goals</h3><div><span class="sdg">SDG 12</span><span class="sdg">SDG 13</span><span class="sdg">SDG 2</span></div>
+        <p class="dialog-note">Applications open at 55% match. Analyse your CV on the Home page to see your score.</p>
+        <a class="home-link" href="mainpage.html">Go to Home</a>
+      </dialog>
+
+      <!-- Job 7 -->
+      <article class="job" data-search="security engineer bdc asia cyberjaya protect public-sector digital services against attacks. cybersecurity cloud python docker api design">
+        <h2><button class="job-title" type="button" data-dialog="job-7">Security Engineer</button></h2>
+        <p class="company">BDC Asia · Cyberjaya</p>
+        <p class="description">Protect public-sector digital services against attacks.</p>
+        <p class="requirement">
+          <svg class="lock" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2Zm2 0h6V7a3 3 0 0 0-6 0Z"/></svg>
+          Needs 70% match score to apply.
+        </p>
+        <div class="sdgs"><span class="sdg">SDG 16</span><span class="sdg">SDG 9</span></div>
+      </article>
+
+      <dialog id="job-7" aria-labelledby="title-7">
+        <form method="dialog"><button class="close" aria-label="Close job details">Close</button></form>
+        <h2 id="title-7">Security Engineer</h2>
+        <p class="company">BDC Asia · Cyberjaya</p>
+        <p>Protect public-sector digital services against attacks.</p>
+        <h3>Required skills</h3><div><span class="chip">Cybersecurity</span><span class="chip">Cloud</span><span class="chip">Python</span></div>
+        <h3>Preferred skills</h3><div><span class="chip">Docker</span><span class="chip">API Design</span></div>
+        <h3>Sustainable Development Goals</h3><div><span class="sdg">SDG 16</span><span class="sdg">SDG 9</span></div>
+        <p class="dialog-note">Applications open at 70% match. Analyse your CV on the Home page to see your score.</p>
+        <a class="home-link" href="mainpage.html">Go to Home</a>
+      </dialog>
+
+      <!-- Job 8 -->
+      <article class="job" data-search="full-stack developer civitech malaysia remote build open portals that make public services easier to use. javascript react api design html/css ux design sql cloud">
+        <h2><button class="job-title" type="button" data-dialog="job-8">Full-Stack Developer</button></h2>
+        <p class="company">CiviTech Malaysia · Remote</p>
+        <p class="description">Build open portals that make public services easier to use.</p>
+        <p class="requirement">
+          <svg class="lock" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2Zm2 0h6V7a3 3 0 0 0-6 0Z"/></svg>
+          Needs 60% match score to apply.
+        </p>
+        <div class="sdgs"><span class="sdg">SDG 16</span><span class="sdg">SDG 10</span><span class="sdg">SDG 11</span></div>
+      </article>
+
+      <dialog id="job-8" aria-labelledby="title-8">
+        <form method="dialog"><button class="close" aria-label="Close job details">Close</button></form>
+        <h2 id="title-8">Full-Stack Developer</h2>
+        <p class="company">CiviTech Malaysia · Remote</p>
+        <p>Build open portals that make public services easier to use.</p>
+        <h3>Required skills</h3><div><span class="chip">JavaScript</span><span class="chip">React</span><span class="chip">API Design</span><span class="chip">HTML/CSS</span></div>
+        <h3>Preferred skills</h3><div><span class="chip">UX Design</span><span class="chip">SQL</span><span class="chip">Cloud</span></div>
+        <h3>Sustainable Development Goals</h3><div><span class="sdg">SDG 16</span><span class="sdg">SDG 10</span><span class="sdg">SDG 11</span></div>
+        <p class="dialog-note">Applications open at 60% match. Analyse your CV on the Home page to see your score.</p>
+        <a class="home-link" href="mainpage.html">Go to Home</a>
+      </dialog>
+
+      <p id="empty" class="empty" hidden></p>
+    </div>
+  </main>
+
+  <script>
+    const search = document.querySelector('#search');
+    const filter = document.querySelector('#filter');
+    const cards = [...document.querySelectorAll('.job')];
+    const empty = document.querySelector('#empty');
+
+    function filterJobs() {
+      const query = search.value.trim().toLowerCase();
+      let count = 0;
+      cards.forEach(card => {
+        card.hidden = !card.dataset.search.includes(query) || filter.value === 'eligible';
+        if (!card.hidden) count++;
+      });
+      document.querySelector('#count').textContent = `${count} role${count === 1 ? '' : 's'}`;
+      empty.hidden = count > 0;
+      empty.textContent = filter.value === 'eligible'
+        ? 'Analyse your CV on the Home page to find roles you can apply to.'
+        : 'No roles match. Clear the search or try a different skill, company or location.';
+    }
+
+    search.addEventListener('input', filterJobs);
+    filter.addEventListener('change', filterJobs);
+
+    document.querySelectorAll('[data-dialog]').forEach(button => button.addEventListener('click', () => {
+      document.getElementById(button.dataset.dialog).showModal();
+    }));
+
+    document.querySelectorAll('dialog').forEach(dialog => dialog.addEventListener('click', event => {
+      if (event.target !== dialog) return;
+      const bounds = dialog.getBoundingClientRect();
+      if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) dialog.close();
+    }));
+  </script>
+</body>
+</html>

@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Turn your current experience and future career goal into a practical roadmap with estimated preparation dates.">
+  <title>Plan your career</title>
+  <link rel="icon" type="image/png" href="Wlogo.png" width="80">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+  :root{--bg:#191b1f;--paper:#18181b;--ink:#e4e4e7;--muted:#a1a1aa;--line:#3f3f46;--accent:#818cf8;--soft:#27272a;--amber:#e5bd84;font-family:"Plus Jakarta Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--ink);font-synthesis:none}
+  *{box-sizing:border-box}body{margin:0;background:var(--bg);line-height:1.55}a{color:inherit}button,input,textarea,select{font:inherit}button,a,input,textarea,select{-webkit-tap-highlight-color:transparent}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.6}:focus-visible{outline:3px solid #818cf8;outline-offset:4px}[hidden]{display:none!important}h1,h2,h3,p{margin:0}button{color:inherit}svg{width:20px;height:20px;display:block}.shell{max-width:1370px;margin:auto;padding:0 42px}.hero{padding:43px 0 29px;display:flex;align-items:flex-end;justify-content:space-between;gap:35px}.eyebrow{font-size:10px;letter-spacing:2px;font-weight:700;color:var(--accent);margin-bottom:12px}h1{font-size:clamp(31px,3.3vw,47px);line-height:1.12;letter-spacing:-1.8px;font-weight:650}h1 em{font-style:normal;color:var(--accent)}.intro{color:var(--muted);font-size:14px;max-width:540px;margin-top:16px}.hero-meta{display:flex;gap:14px;align-items:center;flex-shrink:0;padding-bottom:6px}.hero-meta>span{width:39px;height:39px;border-radius:50%;display:grid;place-items:center;background:#23293c;color:var(--accent)}.hero-meta p{font-size:12px;color:var(--muted)}.hero-meta strong{display:block;font-size:13px;font-weight:600;color:var(--ink)}.workspace{display:grid;grid-template-columns:minmax(340px,460px) minmax(0,1fr);gap:28px;align-items:start;padding-bottom:45px}.card{background:var(--paper);border:1px solid var(--line);border-radius:20px}.form-card{padding:27px}.card-title{font-size:18px;letter-spacing:-.4px}.form-subtitle{font-size:12px;color:var(--muted);margin-top:5px}.form-block{padding-top:25px;margin-top:24px;border-top:1px solid #3f3f46}.form-block:first-of-type{margin-top:0;border-top:0}.step-heading{display:flex;align-items:center;gap:9px;margin-bottom:16px;font-size:13px}.step-heading span{width:23px;height:23px;border:1px solid #454168;background:#23293c;border-radius:7px;display:grid;place-items:center;font-size:10px;color:var(--accent)}.status-picker{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}.status-option{position:relative;display:grid;place-items:center;gap:4px;min-height:77px;border:1px solid var(--line);border-radius:11px;font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;text-align:center;padding:10px 4px}.status-option input{position:absolute;opacity:0;width:1px;height:1px}.status-option:has(input:checked){border-color:#818cf8;background:#23243b;color:var(--accent);box-shadow:inset 0 0 0 1px #818cf8}.status-option:has(input:focus-visible){outline:3px solid #818cf8;outline-offset:2px}.status-option svg{width:22px;height:22px}.field{display:block;margin-top:15px}.field>span,.field-label{display:block;font-size:12px;font-weight:600;margin-bottom:6px}.field input,.field textarea,.field select{display:block;width:100%;border:1px solid #3f3f46;border-radius:9px;padding:10px 12px;font-size:12px;background:#18181b;color:var(--ink);min-height:42px}.field textarea{resize:vertical;min-height:76px}.field input::placeholder,.field textarea::placeholder{color:#71717a}.field small{display:block;font-size:10px;color:var(--muted);margin-top:5px}.split{display:grid;grid-template-columns:1fr 1fr;gap:12px}.availability{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-top:15px;padding:13px 15px;background:#202024;border:1px solid #3f3f46;border-radius:10px}.availability label{font-size:12px;font-weight:600}.availability small{display:block;font-size:10px;color:var(--muted);font-weight:400}.availability input{width:65px;padding:8px;border:1px solid #3f3f46;border-radius:8px;font:inherit;color:var(--accent);background:#18181b}.consent{display:flex;gap:8px;align-items:flex-start;font-size:10px;color:var(--muted);margin-top:19px}.consent input{margin:3px 0 0;accent-color:var(--accent)}.button{display:flex;align-items:center;justify-content:center;gap:9px;border-radius:10px;padding:12px 17px;font-size:12px;font-weight:650;border:1px solid var(--line);background:#18181b;text-decoration:none;min-height:43px}.primary{background:var(--accent);border-color:var(--accent);color:#18181b}.generate{width:100%;margin-top:16px}.template-button{width:100%;margin-top:9px;background:#27272a}.service-status{font-size:10px;color:var(--muted);margin-top:10px;text-align:center}.notice{padding:12px 14px;border-radius:10px;font-size:12px;margin-top:13px;background:#30281e;color:#e5bd84;border:1px solid #5b4931}.privacy-note{font-size:10px;color:var(--muted);margin-top:15px;text-align:center}.sample-link{border:0;background:none;color:var(--accent);font-size:11px;text-decoration:underline;text-underline-offset:3px;padding:5px 0;margin-top:10px}.empty-card{padding:33px;overflow:hidden;background:linear-gradient(145deg,#18181b 55%,#202126)}.tag{display:inline-flex;align-items:center;gap:6px;border:1px solid #454168;background:#23293c;border-radius:30px;padding:5px 10px;font-size:10px;font-weight:600;color:#c7d2fe}.tag i{width:6px;height:6px;background:#818cf8;border-radius:50%}.empty-card h2{font-size:26px;line-height:1.25;letter-spacing:-.9px;max-width:350px;margin:21px 0 11px}.empty-card>p{color:var(--muted);font-size:13px;max-width:420px}.preview-path{margin-top:32px;padding-left:17px}.preview-node{position:relative;border-left:1px dashed #454168;padding:0 0 30px 29px}.preview-node:last-child{border-left:0;padding-bottom:0}.preview-node:before{content:"";position:absolute;width:13px;height:13px;background:#202126;border:3px solid #818cf8;border-radius:50%;left:-7px;top:4px}.preview-node strong{font-size:13px;font-weight:600}.preview-node p{font-size:11px;color:var(--muted);margin-top:5px}.preview-node small{font-size:9px;color:#a5b4fc;text-transform:uppercase;letter-spacing:1px}.how-it-works{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:22px}.how-it-works div{border-top:1px solid var(--line);padding-top:13px;font-size:11px;color:var(--muted)}.how-it-works strong{display:block;color:var(--ink);font-size:12px;margin-bottom:5px}.results-head{display:flex;justify-content:space-between;gap:15px;align-items:flex-start}.results-title{font-size:23px;letter-spacing:-.7px;line-height:1.3;margin-top:12px;overflow-wrap:anywhere}.results-summary{font-size:12px;color:var(--muted);margin-top:10px;white-space:pre-line}.summary-card{padding:26px;background:#202126;border-color:#454168}.mode-tag{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#a5b4fc;font-weight:700}.summary-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:18px;margin-top:22px;padding-top:18px;border-top:1px solid #3f3f46}.summary-grid .label{display:block;font-size:10px;color:var(--muted);margin-bottom:4px}.summary-grid strong{font-size:17px;font-weight:600;letter-spacing:-.3px}.summary-grid small{display:block;font-size:10px;color:var(--muted);margin-top:5px}.plan-note{font-size:11px;color:#a1a1aa;margin-top:18px;line-height:1.7}.toolbar{display:flex;gap:8px;align-items:center;margin:20px 0 17px;flex-wrap:wrap}.toolbar h2{font-size:16px;margin-right:auto}.toolbar .button{font-size:10px;padding:8px 11px;min-height:34px}.timeline{padding-left:14px}.milestone{position:relative;padding:0 0 22px 27px;border-left:1px solid #454168}.milestone:last-child{border-left-color:transparent;padding-bottom:0}.milestone-number{position:absolute;left:-14px;top:18px;width:27px;height:27px;border:1px solid #454168;border-radius:50%;background:var(--bg);display:grid;place-items:center;font-size:10px;color:var(--accent);font-weight:700}.milestone-card{padding:22px;border-radius:15px}.milestone-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}.milestone-date{font-size:10px;color:#a1a1aa}.hours-tag{background:#27272a;padding:3px 8px;border-radius:5px;font-size:9px;white-space:nowrap;color:#a5b4fc}.milestone h3{font-size:15px;letter-spacing:-.2px}.milestone p{font-size:11px;color:var(--muted);margin-top:8px}.milestone ul{padding-left:17px;font-size:11px;color:#cbd5e1;line-height:1.8;margin:11px 0}.outcome{border-top:1px solid #3f3f46;padding-top:10px;font-size:10px;color:#a1a1aa}.outcome strong{color:#c7d2fe}.dependency{font-size:10px;color:#e5bd84;background:#30281e;border-radius:7px;padding:9px 11px;margin-top:12px}.complete{display:flex;align-items:center;gap:7px;margin-top:13px;font-size:10px;color:#a1a1aa}.complete input{accent-color:var(--accent)}.milestone.done .milestone-card{background:#222333;border-color:#6366f1}.milestone.done .milestone-number{background:var(--accent);color:white;border-color:var(--accent)}.progress-row{display:flex;align-items:center;gap:12px;margin-top:18px;color:#c7d2fe;font-size:10px}.progress-track{height:5px;flex:1;background:#3f3f46;border-radius:10px;overflow:hidden}.progress-track span{display:block;height:100%;background:var(--accent);transition:width .2s}.details-card{padding:18px 21px;margin-top:18px}.details-card summary{font-size:12px;font-weight:600;cursor:pointer}.details-card ul{font-size:11px;color:var(--muted);padding-left:18px;line-height:1.8}.details-card h3{font-size:12px;margin-top:15px}.footer{border-top:1px solid var(--line);padding:19px 0 27px;color:#a1a1aa;font-size:10px;display:flex;justify-content:space-between;gap:15px}.busy-label{font-size:11px;color:var(--accent);padding:12px 0}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  @media(min-width:1000px){.form-card{position:relative}.result-column{position:sticky;top:24px}.result-column:has(#results:not([hidden])){position:relative}}
+  @media(max-width:940px){.shell{padding:0 24px}.workspace{grid-template-columns:minmax(300px,390px) minmax(0,1fr);gap:20px}.hero-meta{display:none}.empty-card{padding:25px}.summary-grid{grid-template-columns:1fr}.form-card{padding:23px}}
+  @media(max-width:740px){.shell{padding:0 18px}.hero{padding-top:30px}.workspace{grid-template-columns:1fr}.form-card{padding:23px}.empty-card h2{max-width:none}.how-it-works{gap:12px}.results-title{font-size:22px}.summary-grid{grid-template-columns:1fr 1fr}.footer{flex-direction:column;gap:4px}.milestone{padding-left:23px}.milestone-card{padding:19px}.summary-card{padding:23px}}
+  @media(max-width:400px){.split,.summary-grid{grid-template-columns:1fr}.hours-tag{font-size:8px}.status-option{font-size:10px}}
+  @media print{body{background:#18181b}.shell{padding:0;max-width:none}.topbar,.hero,#profile-card,#empty-state,.toolbar,.footer,.complete,#stale-notice,#form-error{display:none!important}.workspace{display:block}.result-column{position:static!important}.card{break-inside:avoid}.milestone{break-inside:avoid}.details-card{display:block}.details-card>summary{display:none}.details-card:not([open])>*:not(summary){display:block}.progress-row{display:none}}
+  @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+  /* Theme tokens match mainpage.html: charcoal surfaces, zinc borders and indigo accents. */
+  :root{color-scheme:dark}
+  .career-page-nav {border-bottom: 1px solid #353540; background: #18181b; padding: 20px max(20px, calc((100% - 1300px) / 2))}
+  .career-back { display: inline-flex; align-items: center; gap: 10px; color: #c7d2fe; text-decoration: none; font-size: 14px; }
+  .shell{padding-top:4px}
+  .hero{padding-top:34px}
+  .field input,.field textarea,.field select,.availability input{background:#27272a;color:#e2e8f0}
+  .field input:hover,.field textarea:hover,.field select:hover{border-color:#52525b}
+  .field input:focus,.field textarea:focus,.field select:focus{border-color:#818cf8}
+  .primary{background:#e4e4e7;border-color:#e4e4e7;color:#18181b}
+  .primary:not(:disabled):hover{background:#6366f1;border-color:#818cf8;color:#fff;box-shadow:0 6px 18px rgba(99,102,241,.25)}
+  .template-button:hover,.toolbar .button:hover{background:#3f3f46;border-color:#818cf8;color:#fff}
+  .empty-card{background:linear-gradient(145deg,#18181b 55%,#202126)}
+  .status-option:has(input:checked){color:#c7d2fe}
+  .footer{justify-content:flex-start}
+  @media print{
+    :root{--bg:#fff;--paper:#fff;--ink:#18181b;--muted:#52525b;--line:#d4d4d8;--accent:#4338ca;color-scheme:light}
+    body,.summary-card,.milestone-card,.details-card{background:#fff!important;color:#18181b!important}
+    .summary-card :is(p,small,.label),.milestone :is(p,ul,.outcome),.details-card ul{color:#52525b!important}
+    .dependency{background:#f4f4f5;color:#52525b}
+  }
+  </style>
+</head>
+<body>
+  <nav class="career-page-nav" aria-label="Page navigation">
+      <a class="career-back" href="mainpage.html?role=guest">&#8592; Back to home</a>
+  </nav>
+  <div class="shell">
+  <main>
+  <div class="hero"><div><p class="intro">Start with where you are. Build a practical route towards where you want to be, one achievable step at a time.</p></div><div class="hero-meta"><span aria-hidden="true">↗</span><p><strong>Your pace. Your pathway.</strong>Clear steps and estimated preparation dates.</p></div></div>
+  <div class="workspace">
+  <form class="card form-card" id="profile-card">
+  <h2 class="card-title">Tell us your starting point</h2><p class="form-subtitle">Enter your details below to generate your roadmap.</p>
+  <section class="form-block" aria-labelledby="starting-heading"><h3 class="step-heading" id="starting-heading"><span>01</span> Where you are now</h3>
+  <div class="status-picker" role="group" aria-label="Current status">
+  <label class="status-option"><input type="radio" name="status" value="student" checked><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="m2 9 10-5 10 5-10 5L2 9Zm4 3v5c4 3 8 3 12 0v-5M22 9v8"/></svg>Student</label>
+  <label class="status-option"><input type="radio" name="status" value="graduate"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 4h14v16H5zM8 8h8M8 11h5"/><circle cx="15" cy="15" r="2"/><path d="m14 17-1 4 2-1 2 1-1-4"/></svg>Fresh graduate</label>
+  <label class="status-option"><input type="radio" name="status" value="working"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V3h8v4M3 12c6 4 12 4 18 0M12 11v5"/></svg>Working</label>
+  </div>
+  <label class="field" id="experience-field" hidden><span>Years of work experience</span><input id="years" name="yearsExperience" type="number" min="0" max="60" step="0.5" value="0"></label>
+  <label class="field"><span id="current-role-label">What are you studying?</span><input id="current-role" name="currentRole" required minlength="2" maxlength="200" placeholder="e.g. Mechanical engineering, year 2"></label>
+  <label class="field"><span>Your highest qualification or current programme</span><input id="qualification" name="qualification" required minlength="2" maxlength="300" placeholder="e.g. Bachelor of Engineering, in progress"></label>
+  <label class="field"><span>Skills and relevant experience <small style="display:inline;font-weight:400">(optional)</small></span><textarea id="skills" name="skills" maxlength="1200" placeholder="e.g. CAD, Python basics, a summer placement..."></textarea></label>
+  </section>
+  <section class="form-block" aria-labelledby="goal-heading"><h3 class="step-heading" id="goal-heading"><span>02</span> Where you want to go</h3>
+  <label class="field"><span>Your career goal</span><input id="goal" name="goal" required minlength="3" maxlength="400" placeholder="e.g. Become a professional engineer"><small>For a certificate or licence, include its exact name if you know it.</small></label>
+  <div class="split"><label class="field"><span>Career area</span><select id="track" name="track"><option value="software">Software &amp; technology</option><option value="data">Data &amp; analytics</option><option value="engineering">Engineering</option><option value="other">Another field</option></select></label><label class="field"><span>Type of goal</span><select id="goal-type" name="goalType"><option value="career">Role or career change</option><option value="credential">Credential / registration</option></select></label></div>
+  <label class="field"><span>Country where you want to work or qualify</span><input id="country" name="country" required minlength="2" maxlength="100" placeholder="e.g. Malaysia"><small>Qualifications and professional pathways can differ by country.</small></label>
+  </section>
+  <section class="form-block" aria-labelledby="pace-heading"><h3 class="step-heading" id="pace-heading"><span>03</span> Make room for the next step</h3>
+  <div class="availability"><label for="hours">Weekly learning time<small>Choose a pace you can keep.</small></label><div style="display:flex;align-items:center;gap:5px"><input id="hours" name="hoursPerWeek" type="number" min="1" max="40" step="1" value="6" required aria-label="Learning hours per week"><span style="font-size:10px;color:var(--muted)">h/week</span></div></div>
+  <div class="split"><label class="field"><span>Start date</span><input id="start-date" name="startDate" type="date" min="2020-01-01" max="2100-01-01" required></label><label class="field"><span>Desired timeframe</span><select id="target-months" name="targetMonths"><option value="3">3 months</option><option value="6">6 months</option><option value="12" selected>12 months</option><option value="24">2 years</option><option value="36">3 years</option><option value="60">5 years</option></select></label></div>
+  </section>
+  <label class="consent" id="ai-consent" hidden><input id="consent" type="checkbox"><span>For AI generation, I agree to send these answers to Google Gemini to create this roadmap. The template demo stays in this browser.</span></label>
+  <button type="submit" class="button primary generate" id="generate-ai" disabled hidden>Create my AI roadmap <span aria-hidden="true">↗</span></button>
+  <button type="button" class="button template-button" id="generate-demo">Try a template roadmap</button>
+  <a id="connected-planner-link" class="button template-button" href="http://127.0.0.1:5054/career-planner.html" hidden>Open online planner to create with AI <span aria-hidden="true">↗</span></a>
+  <p class="service-status" id="service-status" role="status">Checking AI availability…</p>
+  <p id="form-error" class="notice" role="alert" hidden></p>
+  <button type="button" class="sample-link" id="sample-profile">Fill a fictional example</button>
+  </form>
+  <div class="result-column">
+  <section id="empty-state" class="card empty-card" aria-label="How your roadmap works"><span class="tag"><i></i> FROM POSSIBILITY TO A PLAN</span><h2>Get closer to your goals</h2><p>Your roadmap connects your starting point to practical milestones, with clear actions and a pace that works for you.</p><div class="preview-path" aria-hidden="true"><div class="preview-node"><small>Start here</small><br><strong>Understand your starting point</strong><p>Identify the skills you bring and the gaps to close.</p></div><div class="preview-node"><small>Build momentum</small><br><strong>Learn, practise, get feedback</strong><p>Turn learning into evidence you can show.</p></div><div class="preview-node"><small>Move towards your goal</small><br><strong>Prepare for the next opportunity</strong><p>Review your readiness and confirm any formal requirements.</p></div></div></section>
+  <section id="results" hidden aria-labelledby="plan-title">
+  <div id="stale-notice" class="notice" role="status" hidden>Your answers have changed. Create a new roadmap to update these steps and dates.</div>
+  <div class="card summary-card"><div class="results-head"><div><p class="mode-tag" id="plan-mode"></p><h2 class="results-title" id="plan-title" tabindex="-1"></h2></div><span aria-hidden="true" style="color:var(--accent);font-size:26px">↗</span></div><p id="plan-summary" class="results-summary"></p><div class="summary-grid"><div><span class="label">Estimated preparation workload</span><strong id="plan-duration"></strong><small id="plan-dates"></small></div><div><span class="label">Your desired timeframe</span><strong id="plan-target"></strong><small id="plan-target-note"></small></div></div><p class="plan-note" id="plan-note"></p><div class="progress-row"><span id="progress-label">0 milestones completed</span><div class="progress-track" role="progressbar" aria-label="Milestone completion" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progress-fill" style="width:0%"></span></div></div></div>
+  <div class="toolbar"><h2>Your roadmap</h2><button type="button" class="button" id="download-plan">Download plan ↓</button><button type="button" class="button" id="print-plan">Print</button></div>
+  <div class="timeline" id="timeline"></div>
+  <details class="card details-card" id="plan-details" open><summary>Assumptions &amp; requirements to confirm</summary><h3>Planning assumptions</h3><ul id="assumptions"></ul><h3 id="verification-heading">Confirm before committing</h3><ul id="verification"></ul></details>
+  </section>
+  </div>
+  </div>
+  </main><footer class="footer"><span>Learning estimates support planning. They do not confirm eligibility or guarantee a job or credential.</span></footer>
+  </div>
+<script>
+  /* Shared by the JavaScript backend and the standalone HTML build. */
+  (function (root, factory) {
+    const api = factory();
+    if (typeof module === 'object' && module.exports) module.exports = api;
+    else root.CareerRoadmap = api;
+  })(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+    'use strict';
+    const statuses = ['student', 'graduate', 'working'];
+    const tracks = ['software', 'data', 'engineering', 'other'];
+    const credentialKinds = ['career', 'credential'];
+    function text(value, name, min, max) {
+      if (typeof value !== 'string' || value.trim().length < min || value.trim().length > max)
+        throw new Error(`${name} must contain ${min}–${max} characters.`);
+      return value.trim();
+    }
+    function number(value, name, min, max) {
+      if (typeof value !== 'number' || !Number.isFinite(value) || value < min || value > max)
+        throw new Error(`${name} must be between ${min} and ${max}.`);
+      return value;
+    }
+    function dateISO(value) {
+      if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)) throw new Error('Choose a valid start date.');
+      const d = new Date(value + 'T00:00:00Z');
+      if (!Number.isFinite(d.getTime()) || d.toISOString().slice(0, 10) !== value || value < '2020-01-01' || value > '2100-01-01')
+        throw new Error('Choose a valid start date between 2020 and 2100.');
+      return value;
+    }
+    function list(value, name, min, max, itemMax = 600) {
+      if (!Array.isArray(value) || value.length < min || value.length > max) throw new Error(`${name} has an invalid number of entries.`);
+      return value.map(item => text(item, name, 1, itemMax));
+    }
+    function validateProfile(raw) {
+      if (!raw || typeof raw !== 'object' || Array.isArray(raw)) throw new Error('Submit a career profile.');
+      if (!statuses.includes(raw.status)) throw new Error('Choose student, fresh graduate, or working.');
+      if (!tracks.includes(raw.track)) throw new Error('Choose a career area.');
+      if (!credentialKinds.includes(raw.goalType)) throw new Error('Choose a goal type.');
+      const p = {
+        status: raw.status, track: raw.track, goalType: raw.goalType,
+        yearsExperience: raw.status === 'working' ? number(raw.yearsExperience, 'Experience', 0, 60) : 0,
+        currentRole: text(raw.currentRole, 'Current course or role', 2, 200),
+        qualification: text(raw.qualification, 'Qualification', 2, 300),
+        skills: text(raw.skills || '', 'Current skills', 0, 1200),
+        goal: text(raw.goal, 'Career goal', 3, 400),
+        country: text(raw.country, 'Target country', 2, 100),
+        hoursPerWeek: number(raw.hoursPerWeek, 'Hours per week', 1, 40),
+        startDate: dateISO(raw.startDate),
+        targetMonths: number(raw.targetMonths, 'Target months', 1, 120)
+      };
+      if (!Number.isInteger(p.hoursPerWeek) || !Number.isInteger(p.targetMonths)) throw new Error('Hours and target months must be whole numbers.');
+      return p;
+    }
+    const milestoneSchema = {
+      type: 'object',
+      properties: {
+        title: {type:'string'}, description: {type:'string'},
+        actions: {type:'array', items:{type:'string'}},
+        deliverable: {type:'string'},
+        hoursMin: {type:'integer'}, hoursMax: {type:'integer'},
+        externalDependency: {type:'boolean'}, dependencyNote: {type:'string'}
+      },
+      required: ['title','description','actions','deliverable','hoursMin','hoursMax','externalDependency','dependencyNote'],
+      additionalProperties: false
+    };
+    const schema = {
+      type: 'object',
+      properties: {
+        title: {type:'string'}, summary: {type:'string'},
+        assumptions: {type:'array', items:{type:'string'}},
+        verificationQuestions: {type:'array', items:{type:'string'}},
+        milestones: {type:'array', items:milestoneSchema}
+      },
+      required: ['title','summary','assumptions','verificationQuestions','milestones'],
+      additionalProperties: false
+    };
+    function validatePlan(raw, profile) {
+      if (!raw || typeof raw !== 'object' || Array.isArray(raw)) throw new Error('The roadmap response was incomplete.');
+      const plan = {
+        title: text(raw.title, 'Plan title', 3, 160),
+        summary: text(raw.summary, 'Plan summary', 3, 1600),
+        assumptions: list(raw.assumptions, 'Assumptions', 1, 8),
+        verificationQuestions: list(raw.verificationQuestions, 'Verification questions', 0, 8),
+        milestones: []
+      };
+      if (!Array.isArray(raw.milestones) || raw.milestones.length < 3 || raw.milestones.length > 8) throw new Error('The roadmap needs 3–8 milestones.');
+      plan.milestones = raw.milestones.map(m => {
+        if (!m || typeof m !== 'object') throw new Error('Invalid milestone.');
+        const low = number(m.hoursMin, 'Milestone hours', 1, 2000);
+        const high = number(m.hoursMax, 'Milestone hours', low, 2000);
+        if (!Number.isInteger(low) || !Number.isInteger(high) || typeof m.externalDependency !== 'boolean') throw new Error('Invalid milestone estimates.');
+        return {
+          title: text(m.title, 'Milestone title', 2, 160),
+          description: text(m.description, 'Milestone description', 3, 1000),
+          actions: list(m.actions, 'Milestone actions', 2, 6),
+          deliverable: text(m.deliverable, 'Milestone outcome', 3, 600),
+          hoursMin: low, hoursMax: high, externalDependency: m.externalDependency,
+          dependencyNote: text(m.dependencyNote, 'Dependency note', 0, 600)
+        };
+      });
+      // A model cannot remove the verification gate for a credential or engineering
+      // pathway. Formal eligibility is not established by a generated response.
+      const formalGoal = profile.goalType === 'credential' || profile.track === 'engineering' || /\b(certifi(?:ed|cation|cate)|licen[cs](?:ed|e|ing)|chartered|registered|professional engineer)\b/i.test(profile.goal);
+      if (formalGoal) {
+        const final = plan.milestones.at(-1);
+        final.externalDependency = true;
+        final.dependencyNote = 'Confirm eligibility, recognised qualifications, required experience, assessment and processing times with the relevant official body. The credential date is not established by this plan.';
+        if (!plan.verificationQuestions.length) plan.verificationQuestions.push('Which official body awards this credential, and what requirements apply to this qualification and country?');
+      } else {
+        const final = plan.milestones.at(-1);
+        final.externalDependency = true;
+        final.dependencyNote = final.dependencyNote || 'Hiring, admission or other external decisions can extend beyond the active preparation window. This plan does not establish an achievement date.';
+      }
+      return plan;
+    }
+    function addDays(iso, days) {
+      const d = new Date(iso + 'T00:00:00Z');
+      d.setUTCDate(d.getUTCDate() + days);
+      return d.toISOString().slice(0, 10);
+    }
+    function schedule(plan, profile) {
+      let minWeeks = 0, maxWeeks = 0;
+      const milestones = plan.milestones.map((m, index) => {
+        const low = Math.max(1, Math.ceil(m.hoursMin / profile.hoursPerWeek));
+        const high = Math.max(low, Math.ceil(m.hoursMax / profile.hoursPerWeek));
+        const startWeek = maxWeeks + 1;
+        minWeeks += low; maxWeeks += high;
+        return {...m, index, weeksMin:low, weeksMax:high, startWeek,
+          endWeekMin:minWeeks, endWeekMax:maxWeeks,
+          finishEarliest:addDays(profile.startDate, minWeeks * 7),
+          finishLatest:addDays(profile.startDate, maxWeeks * 7)};
+      });
+      const target = new Date(profile.startDate + 'T00:00:00Z');
+      const day = target.getUTCDate();
+      target.setUTCDate(1); target.setUTCMonth(target.getUTCMonth() + profile.targetMonths);
+      const last = new Date(Date.UTC(target.getUTCFullYear(), target.getUTCMonth() + 1, 0)).getUTCDate();
+      target.setUTCDate(Math.min(day, last));
+      const targetDate = target.toISOString().slice(0,10);
+      return {milestones, minWeeks, maxWeeks,
+        finishEarliest:addDays(profile.startDate, minWeeks * 7),
+        finishLatest:addDays(profile.startDate, maxWeeks * 7), targetDate,
+        targetFits:addDays(profile.startDate,maxWeeks*7) <= targetDate,
+        hasExternalDependencies:milestones.some(m=>m.externalDependency)};
+    }
+    function samplePlan(profile) {
+      const track = {
+        software: {
+          foundation:'Strengthen your programming foundations',
+          skills:'Practise one programming language, version control, debugging and basic testing.',
+          project:'Build a small application that solves a clear problem',
+          projectAction:'Build, test and document a small app; explain your choices and ask someone to review it.',
+          evidence:'An accessible demo, source code and a short explanation of what you learned.'
+        },
+        data: {
+          foundation:'Build a practical analysis toolkit',
+          skills:'Practise spreadsheet analysis, SQL, data cleaning, basic statistics and clear charts.',
+          project:'Complete an end-to-end data project',
+          projectAction:'Use a public dataset to answer a specific question; show cleaning steps, calculations and limitations.',
+          evidence:'A reproducible analysis, a dashboard and a concise report with caveats.'
+        },
+        engineering: {
+          foundation:'Map the technical and professional gaps',
+          skills:'Compare your academic and practical background with the official requirements for the specific engineering discipline and credential.',
+          project:'Build evidence of relevant engineering practice',
+          projectAction:'Find appropriate supervised work or projects and agree with a qualified mentor how to document your contribution.',
+          evidence:'A draft experience record and a mentor-reviewed gap list. This does not establish eligibility.'
+        },
+        other: {
+          foundation:'Choose and practise your priority skills',
+          skills:'Compare three real examples of your target role or credential and choose two skills to develop first.',
+          project:'Create evidence that matches your goal',
+          projectAction:'Agree on a small project or assessment exercise with someone familiar with your target field.',
+          evidence:'One reviewed piece of work demonstrating your priority skills.'
+        }
+      }[profile.track];
+      const credential = profile.goalType === 'credential' || profile.track === 'engineering' || /\b(certifi(?:ed|cation|cate)|licen[cs](?:ed|e|ing)|chartered|registered|professional engineer)\b/i.test(profile.goal);
+      const firstAction = profile.status === 'student'
+        ? 'Discuss this goal and your expected graduation date with your programme adviser; choose work that fits around your course.'
+        : profile.status === 'working'
+          ? `Review your ${profile.yearsExperience} years of work with a manager or mentor and identify evidence relevant to this goal.`
+          : 'Review your course projects, placements and qualification with a mentor to identify transferable experience.';
+      return validatePlan({
+        title: profile.goal,
+        summary: `A template-based starting plan for a ${profile.status === 'graduate' ? 'fresh graduate' : profile.status === 'working' ? 'working professional' : 'student'} with a background in ${profile.currentRole}. Adapt the work below to your existing skills and the requirements in ${profile.country}.`,
+        assumptions: [
+          `You can consistently set aside ${profile.hoursPerWeek} hours each week, starting ${profile.startDate}.`,
+          'The workload ranges below are illustrative planning estimates, not researched course durations. Experience alone does not automatically remove prerequisites.',
+          'The steps run in sequence. Waiting time for admissions, supervised experience, assessments, recruitment or official decisions is excluded.'
+        ],
+        verificationQuestions: credential ? [
+          `What is the exact credential and awarding or regulatory body in ${profile.country}?`,
+          'Does your qualification meet the entry requirements, and does your existing experience count?',
+          'What compulsory study, supervised practice, assessments, fees and processing times apply?'
+        ] : ['Which skills and qualifications appear consistently in real opportunities matching this goal?'],
+        milestones: [
+          {title:credential ? 'Confirm the official pathway first' : 'Turn your goal into a clear checklist',
+            description:'Establish your starting point before committing to a course or a deadline.',
+            actions:[firstAction, credential ? 'Identify the official body and request a requirement checklist for your qualification and country.' : 'Review real role descriptions and write a short list of required skills, evidence and entry criteria.'],
+            deliverable:'A written gap checklist and the next question to confirm with an adviser or official body.',
+            hoursMin:4,hoursMax:8,externalDependency:false,dependencyNote:''},
+          {title:track.foundation,description:track.skills,
+            actions:['Use a short diagnostic task to decide which foundations you already demonstrate.','Choose a structured learning resource for each gap and practise with weekly exercises.'],
+            deliverable:'Completed practice exercises and feedback on the gaps that remain.',
+            hoursMin:40,hoursMax:80,externalDependency:false,dependencyNote:''},
+          {title:track.project,description:'Turn study into visible, reviewable work.',
+            actions:[track.projectAction,'Ask a mentor or peer for specific feedback and revise the work.'],
+            deliverable:track.evidence,hoursMin:60,hoursMax:120,
+            externalDependency:profile.track === 'engineering',dependencyNote:profile.track === 'engineering' ? 'The required supervised-practice duration is unknown and is not represented by these project hours.' : ''},
+          {title:credential ? 'Review readiness for the formal route' : 'Prepare for opportunities and practise interviews',
+            description:credential ? 'Use the verified requirement checklist to decide what is ready and what still needs formal study, experience or assessment.' : 'Package your evidence and prepare to explain how it meets real role requirements.',
+            actions:[credential ? 'Ask the official body or a qualified adviser to confirm your remaining eligibility gaps.' : 'Update your CV and portfolio using specific, evidenced outcomes.',credential ? 'Confirm official application, examination and experience timelines before setting a credential target date.' : 'Practise relevant interviews or assessment tasks, then request feedback and improve.'],
+            deliverable:credential ? 'An adviser-reviewed next-step checklist; formal eligibility and award date remain to be confirmed.' : 'A reviewed application pack and a focused list of opportunities.',
+            hoursMin:12,hoursMax:24,externalDependency:true,
+            dependencyNote:credential ? 'Official requirements and decision times must be confirmed.' : 'Applications, interview availability and hiring decisions can extend beyond the preparation window.'}
+        ]
+      },profile);
+    }
+    return {validateProfile, validatePlan, schema, schedule, samplePlan, dateISO};
+  });
+
+  (() => {
+    'use strict';
+    const $ = selector => document.querySelector(selector);
+    const engine = window.CareerRoadmap;
+    const form = $('#profile-card');
+    const aiButton = $('#generate-ai'), demoButton = $('#generate-demo');
+    let current = null, busy = false, aiAvailable = false;
+    const escape = value => String(value ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    function date(value) { return new Date(value+'T00:00:00Z').toLocaleDateString('en-MY',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'}); }
+    const parts = new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Kuala_Lumpur',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+    $('#start-date').value = ['year','month','day'].map(type=>parts.find(p=>p.type===type).value).join('-');
+    function statusChanged() {
+      const status = form.querySelector('[name="status"]:checked').value;
+      $('#experience-field').hidden = status !== 'working';
+      $('#years').required = status === 'working';
+      $('#years').disabled = status !== 'working';
+      $('#current-role-label').textContent = status === 'student' ? 'What are you studying?' : status === 'working' ? 'Your current role or field' : 'What did you study?';
+      $('#current-role').placeholder = status === 'working' ? 'e.g. Junior mechanical engineer' : status === 'graduate' ? 'e.g. Computer science, graduated this year' : 'e.g. Mechanical engineering, year 2';
+    }
+    function readProfile() {
+      return engine.validateProfile({status:form.querySelector('[name="status"]:checked').value,
+        yearsExperience:Number($('#years').value),currentRole:$('#current-role').value,qualification:$('#qualification').value,
+        skills:$('#skills').value,goal:$('#goal').value,track:$('#track').value,goalType:$('#goal-type').value,
+        country:$('#country').value,hoursPerWeek:Number($('#hours').value),startDate:$('#start-date').value,targetMonths:Number($('#target-months').value)});
+    }
+    function error(message) { $('#form-error').textContent=message; $('#form-error').hidden=!message; }
+    function setBusy(value) {
+      busy=value; aiButton.disabled=value || !aiAvailable; demoButton.disabled=value; $('#sample-profile').disabled=value;
+      aiButton.textContent=value ? 'Drawing your roadmap…' : 'Create my AI roadmap ↗';
+      form.setAttribute('aria-busy',String(value));
+      // Freeze the profile while generating so dates and output cannot silently
+      // describe a different set of answers from the submitted request.
+      form.querySelectorAll('input,select,textarea').forEach(input=>input.disabled=value);
+      if (!value) statusChanged();
+    }
+    function progress() {
+      const items=[...document.querySelectorAll('[data-complete]')];
+      const done=items.filter(input=>input.checked).length;
+      const percent=items.length ? Math.round(100*done/items.length) : 0;
+      $('#progress-label').textContent=`${done} of ${items.length} milestones completed`;
+      $('#progress-fill').style.width=percent+'%';
+      $('.progress-track').setAttribute('aria-valuenow',String(percent));
+      items.forEach(input=>{
+        const card=input.closest('.milestone'); card.classList.toggle('done',input.checked);
+        card.querySelector('.milestone-number').textContent=input.checked ? '✓' : String(Number(input.dataset.complete)+1);
+      });
+    }
+    function render(response) {
+      const profile=engine.validateProfile(response.profile);
+      const plan=engine.validatePlan(response.plan,profile);
+      const timing=engine.schedule(plan,profile);
+      current={...response,profile,plan,timing};
+      $('#empty-state').hidden=true; $('#results').hidden=false; $('#stale-notice').hidden=true;
+      $('#download-plan').disabled=false;
+      $('#plan-mode').textContent=response.mode==='ai' ? 'PERSONALISED AI ROADMAP · REVIEW THE ASSUMPTIONS' : 'TEMPLATE DEMO · NOT AI-GENERATED';
+      $('#plan-title').textContent=plan.title; $('#plan-summary').textContent=plan.summary;
+      $('#plan-duration').textContent=`${timing.minWeeks}–${timing.maxWeeks} weeks at ${profile.hoursPerWeek} h/week`;
+      $('#plan-dates').textContent=`Active-work window: ${date(timing.finishEarliest)} – ${date(timing.finishLatest)}`;
+      $('#plan-target').textContent=date(timing.targetDate);
+      $('#plan-target-note').textContent=timing.targetFits ? 'The estimated active workload fits this window.' : 'The estimated active workload extends beyond this target.';
+      $('#plan-note').textContent=`Dates show sequential active-work estimates, excluding external waiting and compulsory calendar durations.${timing.hasExternalDependencies ? ' Your goal achievement date remains unconfirmed because the steps depend on requirements or decisions outside this plan.' : ' Completing this preparation does not guarantee a job or credential.'}`;
+      $('#timeline').innerHTML=timing.milestones.map(m=>`<article class="milestone"><span class="milestone-number" aria-hidden="true">${m.index+1}</span><div class="card milestone-card"><div class="milestone-top"><span class="milestone-date">${m.index===0 ? 'START HERE · ' : ''}Weeks ${m.startWeek}–${m.endWeekMax} · upper estimate</span><span class="hours-tag">${m.hoursMin}–${m.hoursMax} estimated hours</span></div><h3>${escape(m.title)}</h3><p>${escape(m.description)}</p><ul>${m.actions.map(action=>`<li>${escape(action)}</li>`).join('')}</ul><div class="outcome"><strong>What to produce:</strong> ${escape(m.deliverable)}</div>${m.externalDependency ? `<div class="dependency"><strong>Timing to confirm:</strong> ${escape(m.dependencyNote || 'External requirements or decisions can extend the timeline.')}</div>` : ''}<label class="complete"><input type="checkbox" data-complete="${m.index}"> Mark this milestone as complete</label></div></article>`).join('');
+      $('#assumptions').replaceChildren(...plan.assumptions.map(value=>{const li=document.createElement('li');li.textContent=value;return li;}));
+      $('#verification').replaceChildren(...plan.verificationQuestions.map(value=>{const li=document.createElement('li');li.textContent=value;return li;}));
+      $('#verification-heading').hidden=!plan.verificationQuestions.length;
+      document.querySelectorAll('[data-complete]').forEach(input=>input.addEventListener('change',progress));
+      progress(); $('#plan-title').focus({preventScroll:true});
+      if (window.innerWidth<741) $('#results').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});
+    }
+    async function generate(mode) {
+      if (busy) return;
+      error('');
+      if (!form.reportValidity()) return;
+      let profile;
+      try {profile=readProfile();} catch (e) {error(e.message);return;}
+      if (mode==='demo') {render({mode:'demo',profile,plan:engine.samplePlan(profile),generatedAt:new Date().toISOString()});return;}
+      if (!$('#consent').checked) {error('Please agree to send these answers to Gemini, or try the template demo.');$('#consent').focus();return;}
+      if (!aiAvailable) {error('AI generation is unavailable here. You can still try the template demo.');return;}
+      setBusy(true);
+      try {
+        const response=await fetch('/api/roadmap',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...profile,consent:true}),signal:AbortSignal.timeout(55000)});
+        let value;
+        try {value=await response.json();} catch {throw new Error('The roadmap service returned an unexpected response. Try again later.');}
+        if (!response.ok) throw new Error(value.error || 'The roadmap could not be generated.');
+        render(value);
+      } catch (e) {error(['TimeoutError','AbortError'].includes(e.name) ? 'This request took too long. Try again or use the template demo.' : e.message);}
+      finally {setBusy(false);}
+    }
+    form.addEventListener('submit',event=>{event.preventDefault();generate(aiAvailable ? 'ai' : 'demo');});
+    demoButton.addEventListener('click',()=>generate('demo'));
+    form.addEventListener('input',()=>{if(current){$('#stale-notice').hidden=false;$('#download-plan').disabled=true;}});
+    form.querySelectorAll('[name="status"]').forEach(input=>input.addEventListener('change',statusChanged));
+    $('#sample-profile').addEventListener('click',()=>{
+      form.querySelector('[name="status"][value="graduate"]').checked=true;
+      $('#current-role').value='Computer science, recently graduated';$('#qualification').value='Bachelor of Computer Science';
+      $('#skills').value='Basic Python, HTML and CSS; one final-year web project';$('#goal').value='Prepare for a junior software developer role';
+      $('#country').value='Malaysia';$('#track').value='software';$('#goal-type').value='career';$('#hours').value='6';$('#target-months').value='12';
+      statusChanged(); if(current){$('#stale-notice').hidden=false;$('#download-plan').disabled=true;}error('');
+    });
+    $('#download-plan').addEventListener('click',()=>{
+      if(!current)return;
+      const {profile:p,plan,timing:t}=current;
+      const lines=[plan.title,current.mode==='ai'?'AI-generated roadmap':'Template demo — not AI-generated','',plan.summary,'',
+        `Background: ${p.status}; ${p.currentRole}; ${p.qualification}`,`Target country: ${p.country}`,`Weekly availability: ${p.hoursPerWeek} hours`,
+        `Estimated active preparation: ${t.minWeeks}–${t.maxWeeks} weeks (${date(t.finishEarliest)} – ${date(t.finishLatest)})`,
+        'Excludes external waiting and mandatory calendar durations. Goal achievement date is not confirmed.',''];
+      t.milestones.forEach(m=>lines.push(`${m.index+1}. ${m.title}`,`Estimated active work: ${m.hoursMin}–${m.hoursMax} hours`,m.description,...m.actions.map(a=>'- '+a),'Outcome: '+m.deliverable,...(m.externalDependency?['Timing to confirm: '+m.dependencyNote]:[]),''));
+      lines.push('Assumptions',...plan.assumptions.map(a=>'- '+a),'','Confirm before committing',...plan.verificationQuestions.map(a=>'- '+a));
+      const url=URL.createObjectURL(new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'}));
+      const a=document.createElement('a');a.href=url;a.download='my-career-roadmap.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),500);
+    });
+    $('#print-plan').addEventListener('click',()=>window.print());
+    // Keep offline and unavailable states free of an unusable AI action.
+    function updateGenerationActions(offline = false) {
+      aiButton.hidden = !aiAvailable;
+      aiButton.disabled = busy || !aiAvailable;
+      $('#ai-consent').hidden = !aiAvailable;
+      $('#connected-planner-link').hidden = !offline;
+      demoButton.classList.toggle('primary', !aiAvailable);
+      demoButton.classList.toggle('template-button', aiAvailable);
+      demoButton.classList.toggle('generate', !aiAvailable);
+    }
+    async function checkAI() {
+      if(location.protocol==='file:'){
+        aiAvailable=false;
+        updateGenerationActions(true);
+        $('#service-status').textContent='You are viewing the offline copy. Try a template here, or open the online planner to use AI.';
+        return;
+      }
+      let serverReached=false;
+      try {
+        const response=await fetch('/api/roadmap',{headers:{Accept:'application/json'},signal:AbortSignal.timeout(8000)});
+        if(!response.ok)throw new Error('unavailable');
+        const status=await response.json();
+        serverReached=typeof status.aiConfigured==='boolean';
+        aiAvailable=status.aiConfigured===true;
+      } catch {aiAvailable=false;}
+      updateGenerationActions();
+      $('#service-status').textContent=aiAvailable
+        ? 'AI is connected. Your answers are sent only when you choose AI generation.'
+        : serverReached
+          ? 'The AI server is connected, but its Gemini key is not configured yet. The template demo is available.'
+          : 'The AI server is unavailable. Use the connected website, or try the template demo.';
+    }
+    statusChanged();checkAI();
+  })();
+</script>
+</body>
+</html>

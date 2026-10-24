@@ -1,0 +1,1000 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="WinHire job-seeker application cart workspace.">
+  <title>WinHire · My Applications</title>
+  <link rel="icon" type="image/png" href="Wlogo.png">
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+  <style>
+    /* ===== THEME & ALIGNMENT WITH INTERVIEWS.HTML & MAINPAGE.HTML ===== */
+    :root {
+      color-scheme: dark;
+      --bg-page: #191b1f;
+      --bg-card: #20212c;
+      --bg-surface: #18181b;
+      --bg-modal: #0f172a;
+      --border-color: #3b3c4b;
+      --border-focus: #736be0;
+      --text-main: #f4f4f5;
+      --text-muted: #a5a9b8;
+      --accent: #a5b4fc;
+      --brand-primary: #7971ef;
+      --brand-hover: #6366f1;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg-page);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, p { margin: 0; }
+    button, input, textarea { font: inherit; }
+    button { cursor: pointer; color: inherit; border: 0; }
+    a { color: inherit; text-decoration: none; }
+    [hidden] { display: none !important; }
+
+    :focus-visible {
+      outline: 2px solid #818cf8;
+      outline-offset: 3px;
+    }
+
+    /* Page Navigation Bar matching interviews.html */
+    .career-page-nav {
+      border-bottom: 1px solid #353540;
+      background: #18181b;
+      padding: 18px max(24px, calc((100% - 920px) / 2));
+    }
+
+    .applicant-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #c7d2fe;
+      font-size: 13px;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+
+    .applicant-back:hover {
+      color: #ffffff;
+    }
+
+    /* Main Container matching interviews.html dimensions */
+    main#seeker-cart-app {
+      width: min(920px, calc(100% - 32px));
+      margin: 32px auto 64px;
+    }
+
+    .page-title {
+      font-size: clamp(24px, 3.5vw, 30px);
+      line-height: 1.25;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .subtitle {
+      margin: 6px 0 24px;
+      color: var(--text-muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* Shared Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      height: 36px;
+      padding: 0 14px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--brand-primary);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: var(--brand-hover);
+    }
+
+    .btn-secondary {
+      background: #27272a;
+      border: 1px solid #3f3f46;
+      color: var(--text-main);
+    }
+
+    .btn-secondary:hover {
+      background: #3f3f46;
+      color: #ffffff;
+    }
+
+    .btn-message {
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(129, 140, 248, 0.3);
+      color: #c7d2fe;
+    }
+
+    .btn-message:hover {
+      background: rgba(99, 102, 241, 0.25);
+      color: #ffffff;
+    }
+
+    .btn-text {
+      background: transparent;
+      color: var(--text-muted);
+      padding: 0;
+    }
+
+    .btn-text:hover {
+      color: #818cf8;
+    }
+
+    .btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .icon-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      display: grid;
+      place-items: center;
+      background: #1e293b;
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+    }
+
+    .icon-btn:hover {
+      background: #334155;
+      color: #ffffff;
+    }
+
+    /* Search & Filter Controls */
+    .tools-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .search-box {
+      position: relative;
+      width: 100%;
+      height: 42px;
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 14px;
+      top: 13px;
+      color: #71717a;
+      font-size: 14px;
+    }
+
+    .search-box input {
+      width: 100%;
+      height: 100%;
+      padding: 8px 14px 8px 40px;
+      background: #27272a;
+      border: 1px solid #3f3f46;
+      border-radius: 12px;
+      color: var(--text-main);
+      font-size: 13px;
+      transition: border-color 0.2s ease;
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: #818cf8;
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      border-bottom: 1px solid #27272a;
+      padding-bottom: 12px;
+    }
+
+    .tab-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      background: #27272a;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover {
+      color: #ffffff;
+    }
+
+    .tab-btn.active {
+      background: var(--brand-primary);
+      color: #ffffff;
+    }
+
+    .tab-badge {
+      background: rgba(0, 0, 0, 0.25);
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
+    /* Applications Cards Grid */
+    .applications-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .app-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .app-card:hover {
+      border-color: var(--border-focus);
+      transform: translateY(-1px);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      color: #71717a;
+      margin-bottom: 12px;
+    }
+
+    .new-tag {
+      color: #22d3ee;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .new-tag::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #22d3ee;
+    }
+
+    .company-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .company-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: #27272a;
+      border: 1px solid #3f3f46;
+      color: var(--accent);
+      font-size: 16px;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .company-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .company-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .job-role {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .status-pill[data-status="pending"] { background: rgba(148, 163, 184, 0.15); color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.3); }
+    .status-pill[data-status="interview"] { background: rgba(251, 146, 60, 0.15); color: #fb923c; border: 1px solid rgba(251, 146, 60, 0.3); }
+    .status-pill[data-status="hired"] { background: rgba(52, 211, 153, 0.15); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3); }
+    .status-pill[data-status="rejected"] { background: rgba(248, 113, 113, 0.15); color: #f87171; border: 1px solid rgba(248, 113, 113, 0.3); }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .decision-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 14px;
+      padding: 12px 14px;
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .decision-banner i {
+      color: #818cf8;
+      font-size: 14px;
+      margin-top: 2px;
+    }
+
+    .decision-banner strong {
+      color: #ffffff;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid #27272a;
+    }
+
+    .actions-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .msg-badge {
+      background: var(--brand-primary);
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 1px 5px;
+      border-radius: 4px;
+      margin-left: 4px;
+    }
+
+    .empty-state {
+      padding: 48px 20px;
+      border: 1px dashed var(--border-color);
+      border-radius: 16px;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .empty-state i {
+      font-size: 32px;
+      color: #3f3f46;
+      margin-bottom: 12px;
+    }
+
+    /* Modal Dialogs Matching mainpage.html */
+    dialog {
+      width: min(600px, calc(100vw - 32px));
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 0;
+      background: var(--bg-modal);
+      color: var(--text-main);
+      border: 1px solid #1e293b;
+      border-radius: 18px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    }
+
+    dialog::backdrop {
+      background: rgba(2, 6, 23, 0.75);
+      backdrop-filter: blur(8px);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      border-bottom: 1px solid #1e293b;
+      background: #18181b;
+    }
+
+    .modal-header h2 {
+      font-size: 18px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .modal-body {
+      padding: 24px;
+      max-height: 60vh;
+      overflow-y: auto;
+      font-size: 13px;
+    }
+
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid #1e293b;
+      background: #18181b;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .facts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      padding: 14px;
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .facts-grid dt {
+      font-size: 10px;
+      color: #71717a;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .facts-grid dd {
+      margin: 2px 0 0;
+      font-size: 12px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .section-title {
+      font-size: 11px;
+      color: #818cf8;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+      margin: 20px 0 8px;
+    }
+
+    /* Message Thread */
+    .thread-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 150px;
+      max-height: 280px;
+      overflow-y: auto;
+      padding: 12px 0;
+    }
+
+    .msg-bubble {
+      max-width: 80%;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .msg-bubble.company {
+      background: #18181b;
+      border: 1px solid #27272a;
+      color: #e4e4e7;
+      align-self: flex-start;
+    }
+
+    .msg-bubble.seeker {
+      background: var(--brand-primary);
+      color: #ffffff;
+      align-self: flex-end;
+    }
+
+    textarea.msg-input {
+      width: 100%;
+      padding: 12px;
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 10px;
+      color: var(--text-main);
+      font-size: 13px;
+      resize: none;
+    }
+
+    textarea.msg-input:focus {
+      outline: none;
+      border-color: #818cf8;
+    }
+
+    /* Slot Selector */
+    .slot-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 10px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .slot-option:hover, .slot-option:has(input:checked) {
+      border-color: #818cf8;
+      background: rgba(99, 102, 241, 0.1);
+    }
+
+    @media (max-width: 640px) {
+      .facts-grid { grid-template-columns: 1fr; }
+      .card-footer { flex-direction: column; align-items: flex-start; }
+      .actions-group { width: 100%; justify-content: flex-end; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="career-page-nav" aria-label="Page navigation">
+    <a class="applicant-back" href="mainpage.html?role=jobseeker">&#8592; Back to home</a>
+  </nav>
+
+  <!-- Main Container -->
+  <main id="seeker-cart-app">
+    <h1 class="page-title">My Applications</h1>
+    <p class="subtitle">Track your submitted applications, view decision status, and respond to interview invites.</p>
+
+    <!-- Search & Filters -->
+    <div class="tools-bar">
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input id="searchInput" type="search" placeholder="Search company, position, or location..." onkeyup="renderApplications()">
+      </div>
+
+      <div class="filter-tabs" id="filterTabs">
+        <button class="tab-btn active" onclick="setFilter('all')" data-tab="all">
+          All <span class="tab-badge" id="cntAll">0</span>
+        </button>
+        <button class="tab-btn" onclick="setFilter('pending')" data-tab="pending">
+          Pending <span class="tab-badge" id="cntPending">0</span>
+        </button>
+        <button class="tab-btn" onclick="setFilter('interview')" data-tab="interview">
+          Interviews <span class="tab-badge" id="cntInterview">0</span>
+        </button>
+        <button class="tab-btn" onclick="setFilter('hired')" data-tab="hired">
+          Hired <span class="tab-badge" id="cntHired">0</span>
+        </button>
+        <button class="tab-btn" onclick="setFilter('rejected')" data-tab="rejected">
+          Rejected <span class="tab-badge" id="cntRejected">0</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Applications List -->
+    <div class="applications-list" id="applicationsList">
+      <!-- Dynamic Render -->
+    </div>
+  </main>
+
+  <!-- Modal 1: Details Modal -->
+  <dialog id="detailsModal">
+    <div class="modal-header">
+      <div>
+        <h2 id="modalRole">Position Details</h2>
+        <p id="modalCompany" class="subtitle" style="margin: 0; font-size: 12px;"></p>
+      </div>
+      <button class="icon-btn" onclick="closeModal('detailsModal')"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body" id="detailsBody">
+      <!-- Dynamic details -->
+    </div>
+    <div class="modal-footer" id="detailsActions">
+      <button class="btn btn-secondary" onclick="closeModal('detailsModal')">Close</button>
+    </div>
+  </dialog>
+
+  <!-- Modal 2: Interview Scheduler Modal -->
+  <dialog id="interviewModal">
+    <div class="modal-header">
+      <h2>Schedule Interview Session</h2>
+      <button class="icon-btn" onclick="closeModal('interviewModal')"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <form onsubmit="handleConfirmSlot(event)">
+      <div class="modal-body" id="interviewBody">
+        <!-- Dynamic Slots -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('interviewModal')">Cancel</button>
+        <button type="submit" id="btnConfirmTime" class="btn btn-primary" disabled>Confirm Time Slot</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Modal 3: Direct Messaging Modal -->
+  <dialog id="messageModal">
+    <div class="modal-header">
+      <div>
+        <h2 id="msgCompanyName">Company Chat</h2>
+        <p id="msgRoleName" class="subtitle" style="margin: 0; font-size: 12px;"></p>
+      </div>
+      <button class="icon-btn" onclick="closeModal('messageModal')"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="thread-container" id="chatThread">
+        <!-- Messages -->
+      </div>
+      <div style="margin-top: 14px;">
+        <textarea id="replyText" class="msg-input" rows="3" placeholder="Write a reply to the employer..." oninput="checkReplyInput()"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('messageModal')">Close</button>
+      <button id="btnSendReply" class="btn btn-primary" onclick="sendReply()" disabled>Send Reply <i class="fa-solid fa-paper-plane"></i></button>
+    </div>
+  </dialog>
+
+  <script>
+    // Sample Job Seeker Applications Data
+    let applicationsData = [
+      {
+        id: 'north-product',
+        company: 'North Studio',
+        mark: 'N',
+        role: 'Product Designer',
+        stage: 'interview',
+        location: 'Kuala Lumpur, Malaysia',
+        workMode: 'Hybrid',
+        jobType: 'Full-time',
+        appliedDate: '18 Oct 2026',
+        description: 'Help shape thoughtful web and mobile products from early research through to polished user interfaces.',
+        about: 'An independent design studio creating useful digital products and distinctive brand experiences.',
+        selectedSlot: null,
+        slots: ['2026-10-27T10:00:00+08:00', '2026-10-28T14:00:00+08:00'],
+        duration: 30,
+        unreadMsg: 1,
+        messages: [
+          { sender: 'company', text: 'Hi! Thank you for applying. We enjoyed reviewing your portfolio.', time: '10:15 AM' },
+          { sender: 'company', text: 'We would love to invite you for a 30-minute interview meeting.', time: '10:18 AM' }
+        ]
+      },
+      {
+        id: 'bloom-marketing',
+        company: 'Bloom Labs',
+        mark: 'B',
+        role: 'Marketing Executive',
+        stage: 'hired',
+        location: 'Petaling Jaya, Malaysia',
+        workMode: 'Hybrid',
+        jobType: 'Full-time',
+        appliedDate: '12 Oct 2026',
+        description: 'Support marketing campaigns and help tell the story of our consumer wellbeing products.',
+        about: 'A product team building digital tools for everyday mental health and wellbeing.',
+        selectedSlot: null,
+        slots: [],
+        duration: 0,
+        unreadMsg: 0,
+        messages: [
+          { sender: 'company', text: 'Congratulations! We have confirmed your application as hired. Welcome aboard!', time: 'Yesterday' }
+        ]
+      },
+      {
+        id: 'orbit-frontend',
+        company: 'Orbit Digital',
+        mark: 'O',
+        role: 'Frontend Developer',
+        stage: 'pending',
+        location: 'Cyberjaya, Malaysia',
+        workMode: 'Remote',
+        jobType: 'Full-time',
+        appliedDate: '20 Oct 2026',
+        description: 'Build responsive web interfaces and reusable components for customer-facing applications.',
+        about: 'A digital services agency working with fast-growing regional technology companies.',
+        selectedSlot: null,
+        slots: [],
+        duration: 0,
+        unreadMsg: 0,
+        messages: [
+          { sender: 'company', text: 'Thanks for applying! Our engineering team is currently reviewing your profile.', time: '3 days ago' }
+        ]
+      },
+      {
+        id: 'forma-ux',
+        company: 'Forma Collective',
+        mark: 'F',
+        role: 'UX Designer',
+        stage: 'rejected',
+        location: 'Kuala Lumpur, Malaysia',
+        workMode: 'On-site',
+        jobType: 'Full-time',
+        appliedDate: '05 Oct 2026',
+        description: 'Help make e-commerce browsing and purchasing journeys seamless and accessible.',
+        about: 'A lifestyle retail brand focused on considered design products.',
+        selectedSlot: null,
+        slots: [],
+        duration: 0,
+        unreadMsg: 0,
+        messages: []
+      }
+    ];
+
+    let currentFilter = 'all';
+    let activeAppId = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderApplications();
+    });
+
+    function setFilter(filter) {
+      currentFilter = filter;
+      document.querySelectorAll('#filterTabs .tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.tab === filter);
+      });
+      renderApplications();
+    }
+
+    function updateCounts() {
+      document.getElementById('cntAll').textContent = applicationsData.length;
+      document.getElementById('cntPending').textContent = applicationsData.filter(a => a.stage === 'pending').length;
+      document.getElementById('cntInterview').textContent = applicationsData.filter(a => a.stage === 'interview').length;
+      document.getElementById('cntHired').textContent = applicationsData.filter(a => a.stage === 'hired').length;
+      document.getElementById('cntRejected').textContent = applicationsData.filter(a => a.stage === 'rejected').length;
+    }
+
+    function renderApplications() {
+      updateCounts();
+      const list = document.getElementById('applicationsList');
+      const query = document.getElementById('searchInput').value.toLowerCase().trim();
+
+      const filtered = applicationsData.filter(app => {
+        const matchesFilter = currentFilter === 'all' || app.stage === currentFilter;
+        const matchesSearch = app.company.toLowerCase().includes(query) ||
+                              app.role.toLowerCase().includes(query) ||
+                              app.location.toLowerCase().includes(query);
+        return matchesFilter && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        list.innerHTML = `
+          <div class="empty-state">
+            <i class="fa-solid fa-folder-open"></i>
+            <h3 style="color:#fff; font-size:15px; font-weight:700;">No applications found</h3>
+            <p style="font-size:12px; margin-top:4px;">Try searching with different keywords or filter categories.</p>
+          </div>
+        `;
+        return;
+      }
+
+      list.innerHTML = filtered.map(app => `
+        <article class="app-card">
+          <div class="card-top">
+            <span>Applied ${app.appliedDate}</span>
+            ${app.unreadMsg > 0 ? '<span class="new-tag">New Message</span>' : ''}
+          </div>
+
+          <div class="company-row">
+            <div class="company-avatar">${app.mark}</div>
+            <div class="company-info">
+              <h3 class="company-name">${app.company}</h3>
+              <p class="job-role">${app.role}</p>
+            </div>
+            <span class="status-pill" data-status="${app.stage}">
+              <i class="fa-solid fa-circle" style="font-size:6px;"></i> ${app.stage.toUpperCase()}
+            </span>
+          </div>
+
+          <div class="card-meta">
+            <span><i class="fa-solid fa-location-dot"></i> ${app.location} (${app.workMode})</span>
+            <span><i class="fa-solid fa-briefcase"></i> ${app.jobType}</span>
+          </div>
+
+          <div class="decision-banner">
+            ${getDecisionNote(app)}
+          </div>
+
+          <div class="card-footer">
+            <button class="btn btn-text" onclick="openDetails('${app.id}')">
+              View details <i class="fa-solid fa-arrow-right"></i>
+            </button>
+            <div class="actions-group">
+              <button class="btn btn-message" onclick="openMessages('${app.id}')">
+                <i class="fa-solid fa-comment"></i> Message ${app.unreadMsg > 0 ? `<span class="msg-badge">${app.unreadMsg}</span>` : ''}
+              </button>
+              ${app.stage === 'interview' ? `
+                <button class="btn btn-primary" onclick="openScheduler('${app.id}')">
+                  <i class="fa-solid fa-calendar"></i> ${app.selectedSlot ? 'View Interview' : 'Choose Time'}
+                </button>
+              ` : ''}
+            </div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function getDecisionNote(app) {
+      if (app.stage === 'pending') {
+        return `<i class="fa-solid fa-clock"></i> <div><strong>Under Review</strong><br>The employer is currently evaluating your application.</div>`;
+      }
+      if (app.stage === 'hired') {
+        return `<i class="fa-solid fa-circle-check" style="color:#34d399;"></i> <div><strong>Hired!</strong><br>${app.company} has marked your application as accepted.</div>`;
+      }
+      if (app.stage === 'rejected') {
+        return `<i class="fa-solid fa-circle-xmark" style="color:#f87171;"></i> <div><strong>Not Selected</strong><br>The review process has concluded for this position.</div>`;
+      }
+      if (app.selectedSlot) {
+        return `<i class="fa-solid fa-calendar-check" style="color:#34d399;"></i> <div><strong>Interview Confirmed</strong><br>${app.selectedSlot}</div>`;
+      }
+      return `<i class="fa-solid fa-calendar-plus"></i> <div><strong>Interview Invitation</strong><br>Please select an available date and time slot.</div>`;
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).close();
+    }
+
+    /* Modal 1: Open Details */
+    function openDetails(id) {
+      const app = applicationsData.find(a => a.id === id);
+      if (!app) return;
+
+      document.getElementById('modalRole').textContent = app.role;
+      document.getElementById('modalCompany').textContent = app.company;
+
+      document.getElementById('detailsBody').innerHTML = `
+        <div class="decision-banner">${getDecisionNote(app)}</div>
+        <dl class="facts-grid">
+          <div><dt>Location</dt><dd>${app.location}</dd></div>
+          <div><dt>Work Mode</dt><dd>${app.workMode}</dd></div>
+          <div><dt>Job Type</dt><dd>${app.jobType}</dd></div>
+        </dl>
+        <p class="section-title">About the Company</p>
+        <p style="color:#a5a9b8;">${app.about}</p>
+        <p class="section-title">Role Overview</p>
+        <p style="color:#a5a9b8;">${app.description}</p>
+      `;
+
+      document.getElementById('detailsModal').showModal();
+    }
+
+    /* Modal 2: Open Scheduler */
+    function openScheduler(id) {
+      activeAppId = id;
+      const app = applicationsData.find(a => a.id === id);
+      if (!app) return;
+
+      const body = document.getElementById('interviewBody');
+      if (app.slots.length === 0) {
+        body.innerHTML = `<p style="color:#a5a9b8;">No available interview slots right now. Please message the employer.</p>`;
+        document.getElementById('btnConfirmTime').disabled = true;
+      } else {
+        body.innerHTML = app.slots.map((slot, index) => {
+          const dateObj = new Date(slot);
+          const formatted = dateObj.toLocaleString('en-GB', { dateStyle: 'full', timeStyle: 'short' });
+          return `
+            <label class="slot-option">
+              <input type="radio" name="slotRadio" value="${formatted}" onchange="document.getElementById('btnConfirmTime').disabled = false;">
+              <div>
+                <strong style="color:#fff; font-size:13px;">${formatted}</strong>
+                <p style="color:#a5a9b8; font-size:11px; margin:0;">Duration: ${app.duration} mins (Virtual Room)</p>
+              </div>
+            </label>
+          `;
+        }).join('');
+      }
+
+      document.getElementById('interviewModal').showModal();
+    }
+
+    function handleConfirmSlot(e) {
+      e.preventDefault();
+      const selected = document.querySelector('input[name="slotRadio"]:checked');
+      if (!selected || !activeAppId) return;
+
+      const app = applicationsData.find(a => a.id === activeAppId);
+      if (app) {
+        app.selectedSlot = selected.value;
+        renderApplications();
+        closeModal('interviewModal');
+        alert('Interview time slot confirmed!');
+      }
+    }
+
+    /* Modal 3: Messaging */
+    function openMessages(id) {
+      activeAppId = id;
+      const app = applicationsData.find(a => a.id === id);
+      if (!app) return;
+
+      app.unreadMsg = 0; // Clear unread
+      document.getElementById('msgCompanyName').textContent = app.company;
+      document.getElementById('msgRoleName').textContent = app.role;
+
+      renderThread(app);
+      document.getElementById('messageModal').showModal();
+      renderApplications();
+    }
+
+    function renderThread(app) {
+      const container = document.getElementById('chatThread');
+      if (app.messages.length === 0) {
+        container.innerHTML = `<p style="text-center; color:#71717a; font-size:12px;">No messages exchanged yet.</p>`;
+        return;
+      }
+
+      container.innerHTML = app.messages.map(m => `
+        <div class="msg-bubble ${m.sender}">
+          <p>${m.text}</p>
+          <span style="font-size:10px; opacity:0.7; display:block; margin-top:4px;">${m.time}</span>
+        </div>
+      `).join('');
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function checkReplyInput() {
+      const text = document.getElementById('replyText').value.trim();
+      document.getElementById('btnSendReply').disabled = text.length === 0;
+    }
+
+    function sendReply() {
+      const textarea = document.getElementById('replyText');
+      const text = textarea.value.trim();
+      if (!text || !activeAppId) return;
+
+      const app = applicationsData.find(a => a.id === activeAppId);
+      if (app) {
+        app.messages.push({
+          sender: 'seeker',
+          text: text,
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        });
+        textarea.value = '';
+        checkReplyInput();
+        renderThread(app);
+      }
+    }
+  </script>
+</body>
+</html>
