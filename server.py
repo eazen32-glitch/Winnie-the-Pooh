@@ -236,5 +236,5 @@ class H(BaseHTTPRequestHandler):
         pass
 
 if __name__ == "__main__":
-    print("FutureFit running at http://localhost:8000 (Ctrl+C to stop)")
+    print("WinHire running at http://localhost:8000 (Ctrl+C to stop)")
     ThreadingHTTPServer(("0.0.0.0", 8000), H).serve_forever()
