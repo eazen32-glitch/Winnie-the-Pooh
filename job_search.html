@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WinHire · Job Search</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#191b1f;color:#e2e8f0;font-family:"Plus Jakarta Sans",system-ui,sans-serif;font-size:14px;line-height:1.5}
+h1,h2,h3,p{margin:0}button,input,select{font:inherit}
+:focus-visible{outline:2px solid #818cf8;outline-offset:2px}[hidden]{display:none!important}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:30px;background:#18181b;border-bottom:1px solid #3f3f46;padding:12px 25px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:20px;color:#fff;display:flex;align-items:center;gap:10px}.brand i{color:#818cf8}
+.pages{display:flex;gap:50px}
+.nav-link{position:relative;color:#a1a1aa;font-size:14px;font-weight:500;background:none;border:0;padding:0;cursor:pointer;transition:color .2s;text-decoration:none}
+.nav-link:hover,.nav-link.active{color:#fff}.nav-link.active::after{content:"";position:absolute;left:0;bottom:-8px;width:100%;height:2px;background:#94a3b8}
+.badge{padding:6px 12px;border-radius:12px;background:#0f172a;border:1px solid #1e293b;font-size:12px;font-weight:700;color:#a5b4fc}
+.wrap{width:90%;max-width:1100px;margin:30px auto 50px}
+h2{font-size:25px;font-weight:700;color:#fff}.sub{color:#a1a1aa;font-size:12px;margin:4px 0 20px}
+.search{position:relative;height:50px;margin-bottom:14px}.search i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#94a3b8}
+.search input{width:100%;height:100%;padding:10px 16px 10px 40px;background:#27272a;border:1px solid #3f3f46;border-radius:8px;color:#e2e8f0}
+::placeholder{color:#a1a1aa}
+.filters{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:16px;color:#a1a1aa}
+select{background:#27272a;color:#e2e8f0;border:1px solid #3f3f46;border-radius:8px;padding:8px 12px}
+.notice{border:1px dashed #52525b;background:#18181b;padding:14px 18px;margin-bottom:18px;color:#cbd5e1}
+.notice a{color:#a5b4fc;font-weight:600}
+.row{display:grid;grid-template-columns:1fr 190px 190px;gap:20px;align-items:center;background:#18181b;border:1px solid #3f3f46;padding:18px 20px;margin-bottom:12px;cursor:pointer;transition:border-color .25s;width:100%;text-align:left;color:inherit}
+.row:hover{border-color:#818cf8}.row.best{border-color:#6366f1;box-shadow:0 0 0 1px #6366f1 inset}
+@media(max-width:800px){.row{grid-template-columns:1fr}}
+.row h3{font-size:17px;color:#fff}.co{color:#a5b4fc;font-weight:600;font-size:13px}
+.pick{display:inline-block;background:#4f46e5;color:#fff;font-size:11px;font-weight:700;padding:2px 8px;margin-bottom:6px}
+.sal{font-weight:700;color:#fff}.muted{color:#a1a1aa}.small{font-size:12px}
+.pct{font-size:26px;font-weight:800;color:#fff}
+.bar-m{position:relative;height:8px;background:#27272a;border-radius:4px;margin:6px 0}.bar-m i{display:block;height:100%;border-radius:4px;background:#818cf8}
+.bar-m.low i{background:#fb7185}.bar-m b{position:absolute;top:-5px;width:2px;height:18px;background:#e4e4e7}
+.ok{color:#4ade80;font-weight:600}.err{color:#fb7185;font-weight:600}
+.chip{display:inline-block;padding:2px 10px;border-radius:99px;background:#23293c;color:#cbd5e1;font-size:12px;margin:2px 4px 2px 0}
+.chip.m{background:#4f46e5;color:#fff}.chip.p{border:1px solid #818cf8;background:transparent;color:#c7d2fe}.chip.x{border:1px dashed #fb7185;background:transparent;color:#fb7185}
+.sdg{display:inline-block;padding:2px 8px;border:1px solid #3f3f46;color:#a1a1aa;font-size:11px;margin:2px 4px 2px 0}
+.empty{border:1px dashed #3f3f46;padding:40px;text-align:center;color:#a1a1aa}
+dialog{border:1px solid #3f3f46;border-radius:16px;max-width:680px;width:calc(100% - 24px);padding:26px;background:#0b1120;color:#e2e8f0}
+dialog::backdrop{background:rgba(2,6,23,.7)}dialog h3{color:#fff;margin:16px 0 8px}
+.line{display:grid;grid-template-columns:170px 1fr 44px;gap:12px;align-items:center;margin:8px 0}
+.btn{display:inline-flex;gap:8px;align-items:center;padding:10px 18px;border-radius:12px;font-weight:600;cursor:pointer;background:#e4e4e7;color:#18181b;border:1px solid #e4e4e7}
+.btn:hover:not(:disabled){background:#6366f1;color:#fff;border-color:#818cf8}.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.sec{background:rgba(39,39,42,.65);color:#e4e4e7;border-color:#52525b}
+.apply input{background:#27272a;border:1px solid #3f3f46;border-radius:8px;color:#e2e8f0;padding:10px 12px;margin-right:8px}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand"><i class="fa-solid fa-seedling"></i>WinHire</div>
+  <div class="pages">
+    <a class="nav-link" href="index.html">Home</a>
+    <a class="nav-link active" href="job_search.html">Job Search</a>
+    <a class="nav-link" href="index.html">My Dashboard</a>
+  </div>
+  <div class="badge" id="cvBadge">No CV yet</div>
+</div>
+
+<div class="wrap">
+  <h2>Job Search</h2>
+  <p class="sub">See who is hiring, what they pay, and which role fits you best. Salaries are sample monthly ranges.</p>
+  <div class="search"><i class="fa-solid fa-magnifying-glass"></i><input id="q" placeholder="Search by job title, company, skill or location..." autofocus></div>
+  <div class="filters">
+    <label>Location <select id="loc"><option value="">All</option></select></label>
+    <label>Min salary <select id="minsal"><option value="0">Any</option><option value="4000">RM 4,000+</option><option value="6000">RM 6,000+</option><option value="8000">RM 8,000+</option></select></label>
+    <label>Sort by <select id="sort"><option value="match">Best match</option><option value="salary">Highest salary</option></select></label>
+    <label><input type="checkbox" id="onlyok"> Only roles I can apply to</label>
+    <span id="count"></span>
+  </div>
+  <div id="notice" class="notice" hidden></div>
+  <div id="list"></div>
+</div>
+<dialog id="dlg"></dialog>
+
+<script>
+const $=s=>document.querySelector(s);
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=n=>n.toLocaleString('en-US');
+let JOBS=[],SDG={},STATE=null;
+const R=()=>STATE?Object.fromEntries(STATE.results.map(r=>[r.job_id,r])):{};
+const salary=j=>`${j.currency} ${fmt(j.salary_min)} – ${fmt(j.salary_max)} / ${j.period}`;
+const meter=(s,t)=>`<div class="bar-m ${s<t?'low':''}" role="img" aria-label="${s}% match, ${t}% needed"><i style="width:${s}%"></i><b style="left:${t}%"></b></div>`;
+
+async function load(){
+  const d=await (await fetch('/api/jobs')).json();JOBS=d.jobs;SDG=d.sdgs;
+  [...new Set(JOBS.map(j=>j.location))].sort().forEach(l=>$('#loc').insertAdjacentHTML('beforeend',`<option>${esc(l)}</option>`));
+  try{const id=localStorage.getItem('cv_id');if(id){const r=await fetch('/api/matches?cv_id='+id);
+    if(r.ok){STATE=await r.json();$('#cvBadge').textContent=`CV analysed · ${STATE.profile.skills.length} skills`}else localStorage.removeItem('cv_id')}}catch(_){}
+  const n=$('#notice');n.hidden=false;
+  n.innerHTML=STATE?`<i class="fa-solid fa-circle-check"></i> Roles are ranked using your CV. The white tick marks the score needed to apply.`
+    :`<i class="fa-solid fa-circle-info"></i> No CV analysed yet. <a href="index.html">Analyse your CV on the Home page</a> to see how well you match each role.`;
+  render();
+}
+['q','loc','minsal','sort','onlyok'].forEach(i=>$('#'+i).addEventListener('input',render));
+
+function render(){
+  const q=$('#q').value.trim().toLowerCase(),r=R(),min=+$('#minsal').value;
+  let list=JOBS.filter(j=>(!q||[j.title,j.company,j.location,j.about,...j.required,...j.preferred].join(' ').toLowerCase().includes(q))
+    &&(!$('#loc').value||j.location===$('#loc').value)&&j.salary_max>=min&&(!$('#onlyok').checked||!STATE||r[j.id].eligible));
+  list.sort($('#sort').value==='salary'||!STATE?(a,b)=>b.salary_max-a.salary_max:(a,b)=>r[b.id].score-r[a.id].score);
+  $('#count').textContent=`${list.length} result${list.length===1?'':'s'}`;
+  const topIds=STATE?[...STATE.results].sort((a,b)=>b.score-a.score).slice(0,3).map(x=>x.job_id):[];
+  $('#list').innerHTML=list.map(j=>{const m=r[j.id],rank=topIds.indexOf(j.id);return `<button class="row ${rank===0?'best':''}" data-id="${j.id}">
+    <div>${rank>=0?`<span class="pick">${rank===0?'BEST MATCH FOR YOU':'TOP '+(rank+1)+' FOR YOU'}</span><br>`:''}
+      <h3>${esc(j.title)}</h3><div class="co">${esc(j.company)} is hiring · ${esc(j.location)}</div>
+      <p class="muted small" style="margin-top:4px">${esc(j.about)}</p>
+      <div>${j.sdgs.map(g=>`<span class="sdg">SDG ${g}</span>`).join('')}</div></div>
+    <div><div class="muted small">Salary</div><div class="sal">${salary(j)}</div></div>
+    <div>${m?`<div class="pct">${m.score}% <span class="muted small">match</span></div>${meter(m.score,j.threshold)}
+      <div class="small ${m.eligible?'ok':'err'}">${m.eligible?'You can apply':`Needs ${j.threshold}% to apply`}</div>`
+      :`<div class="muted small">Needs ${j.threshold}% match to apply</div>`}</div></button>`}).join('')
+    ||'<div class="empty">No jobs match your search. Try different words or clear the filters.</div>';
+  document.querySelectorAll('.row').forEach(b=>b.onclick=()=>open_(+b.dataset.id));
+}
+
+function open_(id){
+  const j=JOBS.find(x=>x.id===id),m=R()[id],d=$('#dlg');
+  const lab={required:'Required skills',preferred:'Preferred skills',experience:'Experience',education:'Education'};
+  d.innerHTML=`<div style="display:flex;gap:12px"><div style="flex:1"><h2 style="font-size:22px">${esc(j.title)}</h2><div class="co">${esc(j.company)} · ${esc(j.location)}</div><div class="sal" style="margin-top:4px">${salary(j)}</div></div><button class="btn sec" id="close" style="height:40px">Close</button></div>
+  <p class="muted" style="margin:10px 0">${esc(j.about)}</p>
+  <p><b>Requires:</b> ${j.required.map(s=>`<span class="chip">${esc(s)}</span>`).join('')}<br><b>Preferred:</b> ${j.preferred.map(s=>`<span class="chip">${esc(s)}</span>`).join('')}</p>
+  ${m?`<h3>Your match: ${m.score}%</h3>${meter(m.score,j.threshold)}<p class="muted" style="margin:8px 0">${esc(m.explanation)}</p>
+   ${Object.entries(m.breakdown).map(([k,v])=>`<div class="line"><span>${lab[k]} (${v.weight}%)</span><div class="bar-m"><i style="width:${v.score}%"></i></div><span>${v.score}%</span></div>`).join('')}
+   <p>${m.matched.map(s=>`<span class="chip m">${esc(s)}</span>`).join('')}${m.partial.map(p=>`<span class="chip p">${esc(p.skill)} (related)</span>`).join('')}${m.missing.map(s=>`<span class="chip x">${esc(s)}</span>`).join('')}</p>
+   <h3>Apply</h3>${m.eligible?`<div class="apply"><input id="nm" placeholder="Full name" aria-label="Full name"><input id="em" type="email" placeholder="Email" aria-label="Email"><button class="btn" id="apply">Submit application</button></div>`
+   :`<p class="err">You need ${j.threshold}% to apply and you are at ${m.score}%. Learn the missing skills, then analyse your updated CV.</p><button class="btn" disabled style="margin-top:8px">Submit application</button>`}
+   <p id="amsg" style="margin-top:10px"></p>`
+  :`<p class="muted" style="margin-top:14px">Analyse your CV on the <a href="index.html" style="color:#a5b4fc">Home page</a> to see your match. Applications open at ${j.threshold}%.</p>`}`;
+  d.showModal();$('#close').onclick=()=>d.close();
+  const a=$('#apply');if(a)a.onclick=async()=>{
+    const res=await fetch('/api/apply',{method:'POST',body:JSON.stringify({cv_id:STATE.cv_id,job_id:id,name:$('#nm').value,email:$('#em').value})});
+    const out=await res.json();$('#amsg').className=res.ok?'ok':'err';$('#amsg').textContent=out.message||out.error;if(res.ok)a.disabled=true};
+}
+load();
+</script>
+</body>
+</html>

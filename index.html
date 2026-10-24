@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WinHire: Find Your Job Here</title>
+<title>WinHire</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300..800&display=swap" rel="stylesheet">
@@ -109,10 +109,11 @@ footer{text-align:center;color:#52525b;font-size:12px;padding:10px 0 30px}
 </head>
 <body>
 <div class="bar">
-  <div class="brand"><i class="fa-solid fa-seedling"></i>WinHireFindJob</div>
+  <div class="brand"><i class="fa-solid fa-seedling"></i>WinHire</div>
   <div class="pages">
     <button class="nav-link active" data-tab="home">Home</button>
     <button class="nav-link" data-tab="jobs">Explore Jobs</button>
+    <a class="nav-link" href="job_search.html" style="text-decoration:none">Job Search</a>
     <button class="nav-link" data-tab="dash">My Dashboard</button>
   </div>
   <div class="badge"><span class="dot"></span><span id="cvBadge">No CV yet</span></div>
@@ -201,6 +202,9 @@ async function load(){
   $('#trending').innerHTML=hot.map(k=>`<button data-skill="${esc(k)}">${esc(k)}</button>`).join('<span class="sep">·</span>');
   document.querySelectorAll('[data-skill]').forEach(b=>b.onclick=()=>{$('#q').value=b.dataset.skill;renderJobs();show('jobs')});
   renderJobs();
+  try{const id=localStorage.getItem('cv_id');if(id){const r=await fetch('/api/matches?cv_id='+id);
+    if(r.ok){STATE=await r.json();$('#cvBadge').textContent=`CV analysed · ${STATE.profile.skills.length} skills`;renderDash();renderJobs()}
+    else localStorage.removeItem('cv_id')}}catch(_){}
 }
 
 $('#sample').onclick=async()=>{$('#paste').value=(await (await fetch('/api/sample')).json()).text};
@@ -211,7 +215,7 @@ $('#go').onclick=async()=>{
   try{
     const r=await fetch('/api/analyze',{method:'POST',headers:f?{'X-Filename':f.name}:{'X-Source':'text'},body:f||txt});
     const d=await r.json();if(!r.ok)throw new Error(d.error);
-    STATE=d;$('#cvBadge').textContent=`CV analysed · ${d.profile.skills.length} skills`;
+    STATE=d;try{localStorage.setItem('cv_id',d.cv_id)}catch(_){};$('#cvBadge').textContent=`CV analysed · ${d.profile.skills.length} skills`;
     renderDash();renderJobs();show('dash');
   }catch(e){$('#msg').textContent=e.message}
   b.disabled=false;b.firstChild.textContent='Analyse My CV ';

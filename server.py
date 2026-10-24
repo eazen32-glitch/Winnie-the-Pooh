@@ -3,6 +3,7 @@
 import os, io, json, re, uuid, zipfile
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from urllib.parse import urlparse, parse_qs
 
 HERE = Path(__file__).parent
 
@@ -86,6 +87,12 @@ JOBS = [
     J(8, "Full-Stack Developer", "CiviTech Malaysia", "Remote", [16, 10, 11], ["JavaScript", "React", "API Design", "HTML/CSS"], ["UX Design", "SQL", "Cloud"], 2, 2, 60, 
                                                                                "Build open portals that make public services easier to use."),
 ] # Can be added in the future
+
+SALARY = {1:(4000,6000), 2:(3500, 5000), 3:(6000,9000), 4:(7000,10500),
+          5:(5000,7500), 6:(4000,5800), 7:(7000, 11000), 8:(4500,8000)}
+for j in JOBS:
+    j["salary_min"], j["salary_max"] = SALARY[j["id"]]
+    j["currency"], j["period"] = "RM", "month"
 
 W = dict(required=.60, preferred=.15, experience=.15, education=.10) #Weighing
 EDU_NAME = {0: "not stated", 1:"diploma", 2:"bachelor", 3:"master", 4: "PhD"}
@@ -196,6 +203,15 @@ class H(BaseHTTPRequestHandler):
             return self.send(200, (HERE / "index.html").read_bytes(), "text/html; charset=utf-8")
         if path == "/api/jobs": 
             return self.send(200, dict(jobs=JOBS, sdgs=SDG, skills={k:v["t"] for k,v in SKILLS.items()}))
+        if path == "/job_search.html":
+            return self.send(200, (HERE / "job_search.html").read_bytes(), "text/html; charset=utf-8")
+        if path == "/api/matches":  # lets other pages reload the analysed CV
+            cv_id = parse_qs(urlparse(self.path).query).get("cv_id", [""])[0]
+            prof = CVS.get(cv_id)
+            if not prof: 
+                return self.send(404, dict(error="CV not found"))
+            results = [score_job(prof, j) for j in JOBS]
+            return self.send(200, dict(cv_id=cv_id, profile=prof, results=results, dashboard=dashboard(prof, results)))
         if path == "/api/sample":
             return self.send(200, dict(text=(HERE / "sample_cv.txt").read_text(encoding="utf8")))
         self.send(404, dict(error = "Not found"))
