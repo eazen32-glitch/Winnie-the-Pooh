@@ -1363,7 +1363,7 @@
                         <p class="text-sm sm:text-base text-gray-400 leading-relaxed">Explore trending job opportunities, discover in-demand skills, and find career paths that match your strengths in an AI-driven economy.</p>
 
                         <div class="hero-actions">
-                            <button onclick="switchTab('jobs')" class="hero-btn-primary">
+                            <button onclick="window.location.href='explore_jobs.html'" class="hero-btn-primary">
                                 Explore Job Catalog
                                 <i class="fa-solid fa-arrow-right"></i>
                             </button>
@@ -1395,7 +1395,7 @@
                         </p>
 
                         <div class="hero-actions">
-                            <button onclick="openAiModalWithPrompt('Analyse my current skills, strengths, weaknesses, and skill gaps for my target career. Ask me for any information you need first.')"
+                            <button onclick="window.location.href='career-planner.html'"
                                 class="hero-btn-primary">
                                 Start Career Analysis
                                 <i class="fa-solid fa-arrow-right"></i>
@@ -1430,7 +1430,7 @@
                         </p>
 
                         <div class="hero-actions">
-                            <button onclick="window.location.href='build-cv.html'"
+                            <button onclick="window.location.href='user-profile.html'"
                                 class="hero-btn-primary">
                                 Build Your CV
                                 <i class="fa-solid fa-arrow-right"></i>
@@ -1476,7 +1476,7 @@
 
                 <!-- 1. Explore Jobs -->
                 <div class="function-item">
-                    <div onclick="switchTab('jobs')" class="function-card">
+                    <div onclick="window.location.href='explore_jobs.html'" class="function-card">
                         <div class="function-icon">
                             <i class="fa-solid fa-briefcase"></i>
                         </div>
@@ -1502,7 +1502,7 @@
 
                 <!-- 3. Build CV -->
                 <div class="function-item">
-                    <div onclick="window.location.href='build-cv.html'" class="function-card">
+                    <div onclick="window.location.href='user-profile.html'" class="function-card">
                         <div class="function-icon">
                             <i class="fa-solid fa-file-lines"></i>
                         </div>
@@ -1645,7 +1645,7 @@
                                 <i class="fa-solid fa-arrow-right"></i>
                             </button>
 
-                            <button onclick="openHrTool('jobs')" class="hero-btn-secondary">
+                            <button onclick="window.location.href='hr-vacancies.html'" class="hero-btn-secondary">
                                 <i class="fa-solid fa-plus"></i>
                                 Post New Job
                             </button>
@@ -1695,7 +1695,7 @@
                         </p>
 
                         <div class="hero-actions">
-                            <button onclick="openHrTool('applicants')" class="hero-btn-primary">
+                            <button onclick="window.location.href='applicant-cart.html'" class="hero-btn-primary">
                                 Review Applicants
                                 <i class="fa-solid fa-arrow-right"></i>
                             </button>
@@ -1751,7 +1751,7 @@
                 <!-- 2. Manage Jobs -->
                 <button type="button"
                         class="hr-function-card"
-                        onclick="openHrTool('jobs')">
+                        onclick="window.location.href='hr-vacancies.html'">
                     <span class="hr-function-icon">
                         <i class="fa-solid fa-clipboard-list"></i>
                     </span>
@@ -1766,7 +1766,7 @@
                 <!-- 3. Job Listings -->
                 <button type="button"
                         class="hr-function-card"
-                        onclick="openHrTool('company')">
+                        onclick="window.location.href='hr-vacancies.html'">
                     <span class="hr-function-icon">
                         <i class="fa-solid fa-building"></i>
                     </span>
@@ -1781,7 +1781,7 @@
                 <!-- 4. Applicant Management -->
                 <button type="button"
                         class="hr-function-card"
-                        onclick="openHrTool('applicants')">
+                        onclick="window.location.href='applicant-cart.html'">
                     <span class="hr-function-icon">
                         <i class="fa-solid fa-user-group"></i>
                     </span>
@@ -1796,7 +1796,7 @@
                 <!-- 5. Interview Meeting Room -->
                 <button type="button"
                         class="hr-function-card"
-                        onclick="window.location.href='interviews.html'">
+                        onclick="window.location.href='applicant-cart.html'">
                     <span class="hr-function-icon">
                         <i class="fa-solid fa-video"></i>
                     </span>
