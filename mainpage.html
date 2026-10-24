@@ -676,7 +676,7 @@
         .skills-radar .search-box > span {
             position: absolute;
             left: 13px;
-            color: #94a3b8;
+            color: #a1a1aa;
         }
 
         .skills-radar .search-box svg {
@@ -688,9 +688,9 @@
             width: 100%;
             height: 42px;
             padding: 9px 12px 9px 38px;
-            border: 1px solid #273248;
+            background-color: #27272a;
+            border: 1px solid #3f3f46;
             border-radius: 9px;
-            background: #111827;
             color: #e5e7eb;
             font-size: 12px;
         }
@@ -728,7 +728,7 @@
         }
 
         .skills-radar .segmented button.selected {
-            background: #4338ca;
+            background: #3a3766;
             color: #fff;
             font-weight: 700;
             box-shadow: 0 3px 10px rgba(79, 70, 229, .2);
@@ -757,7 +757,7 @@
             padding: 0;
             border: 1px solid #273248;
             border-radius: 14px;
-            background: #111827;
+            background: #191e29;
         }
 
         .skills-radar .radar-table-card {
@@ -778,7 +778,7 @@
         .skills-radar .radar-table th {
             padding: 16px 18px;
             border-bottom: 1px solid #273248;
-            background: #0f172a;
+            background: #141929;
             color: #94a3b8;
             font-size: 12px;
             font-weight: 700;
@@ -798,7 +798,7 @@
         }
 
         .skills-radar .radar-table tbody tr:hover {
-            background: #172036;
+            background: #181f30;
         }
 
         .skills-radar .radar-table tbody tr:last-child td {
@@ -1053,53 +1053,219 @@
             line-height: 1.4;
         }
 
-/* Keep this rule if you don't already have it */
-.hidden {
-  display: none !important;
-}
+        /* ================= HR VIEW HOME PAGE ================= */
+        #page-hr {
+            width: 100%;
+            min-height: 100vh;
+            margin: 0;
+            padding: 32px;
+            box-sizing: border-box;
+            background: #18181b;
+            color: #f8fafc;
+            font-family: "Plus Jakarta Sans", sans-serif;
+        }
 
-/* ================= HR VIEW HOME PAGE ================= */
-#page-hr {
-    width: 100%;
-    min-height: 100vh;
-    margin: 0;
-    padding: 24px 32px;
-    box-sizing: border-box;
-    background: #f8fafc;
-    color: #1e293b;
-    font-family: Arial, sans-serif;
-}
+        #page-hr * {
+            box-sizing: border-box;
+        }
 
-#page-hr * {
-    box-sizing: border-box;
-}
+        #page-hr .hr-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto 32px auto;
+        }
 
-#page-hr h1,
-#page-hr h2,
-#page-hr h3 {
-    margin-top: 0;
-}
+        .hr-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #818cf8;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
 
-/* HR content containers */
-#page-hr .hr-container {
-    width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
-}
+        .hr-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 8px 0;
+        }
 
-/* HR dashboard cards */
-#page-hr .hr-card {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
-}
+        .hr-subtitle {
+            color: #94a3b8;
+            font-size: 14px;
+            max-width: 600px;
+            margin: 0;
+            line-height: 1.6;
+        }
 
-/* Keep hidden views hidden */
-.hidden {
-    display: none !important;
-}
+        /* HR Overview Stats Grid */
+        .hr-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto 40px auto;
+        }
+
+        .hr-stat {
+            background: #0f172a;
+            border: 1px solid #1e293b;
+            border-radius: 14px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hr-stat-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #94a3b8;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .hr-stat-icon {
+            color: #818cf8;
+            font-size: 16px;
+        }
+
+        .hr-stat-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 12px 0 4px 0;
+        }
+
+        .hr-stat-note {
+            color: #64748b;
+            font-size: 12px;
+            margin: 0;
+        }
+
+        /* Section Titles */
+        .hr-section-title {
+            font-family: "Plus Jakarta Sans", sans-serif;
+            color: #ffffff;
+            font-size: clamp(24px, 3vw, 32px);
+            font-weight: 800;
+            line-height: 1.25;
+            margin: 0 0 10px 0;
+        }
+
+        .hr-section-subtitle {
+            font-family: "Plus Jakarta Sans", sans-serif;
+            color: #94a3b8;
+            max-width: 720px;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 1.6;
+            margin: 0 0 24px 0;
+        }
+
+        /* HR Tools Grid */
+        .hr-functions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto 40px auto;
+        }
+
+        .hr-function-card {
+            background: #0f172a;
+            border: 1px solid #1e293b;
+            border-radius: 14px;
+            padding: 24px;
+            text-align: left;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .hr-function-card:hover {
+            border-color: #6366f1;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.15);
+        }
+
+        .hr-function-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: rgba(99, 102, 241, 0.1);
+            color: #818cf8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+
+        .hr-function-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0 0 8px 0;
+        }
+
+        .hr-function-card p {
+            font-size: 12px;
+            color: #94a3b8;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .hr-card-arrow {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            color: #475569;
+            font-size: 14px;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .hr-function-card:hover .hr-card-arrow {
+            color: #818cf8;
+            transform: translateX(3px);
+        }
+
+        /* Information Notice Banner */
+        .hr-notice {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            color: #818cf8;
+        }
+
+        .hr-notice h3 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #f8fafc;
+            margin: 0 0 2px 0;
+        }
+
+        .hr-notice p {
+            font-size: 12px;
+            color: #94a3b8;
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        .hidden {
+        display: none !important;
+        }
     </style>
 </head>
 <body>
@@ -1111,8 +1277,8 @@
         <div class="pages">
             <a href="mainpage.html" id="navHome" class="nav-link active">Home</a>
             <a href="analytics_trends.html" id="navExplore" class="nav-link">Explore Jobs</a>
-            <a href="#" id="navBuildCV" class="nav-link">Build CV</a>
-            <a href="#" id="navCart" class="nav-link">Your Cart</a>
+            <a href="user-profile.html" id="navBuildCV" class="nav-link">Build CV</a>
+            <a href="job-seeker-cart.html" id="navCart" class="nav-link">Your Cart</a>
         </div>
         
         <div class="me">
@@ -1131,7 +1297,7 @@
             </button>
 
             <!-- User Profile Modal Trigger -->
-            <button onclick="openProfileModal()" class="w-9 h-9 rounded-xl gradient-btn border-slate-500 flex items-center justify-center text-white font-bold shadow-md hover:opacity-90 transition" title="User Profile">
+            <button onclick="handleProfileNavigation()" class="w-9 h-9 rounded-xl gradient-btn border-slate-500 flex items-center justify-center text-white font-bold shadow-md hover:opacity-90 transition" title="User Profile">
                 <i class="fa-solid fa-user text-xs"></i>
             </button>
         </div>
@@ -1264,7 +1430,7 @@
                         </p>
 
                         <div class="hero-actions">
-                            <button onclick="window.location.href='app.py'"
+                            <button onclick="window.location.href='build-cv.html'"
                                 class="hero-btn-primary">
                                 Build Your CV
                                 <i class="fa-solid fa-arrow-right"></i>
@@ -1336,7 +1502,7 @@
 
                 <!-- 3. Build CV -->
                 <div class="function-item">
-                    <div onclick="window.location.href='app.py'" class="function-card">
+                    <div onclick="window.location.href='build-cv.html'" class="function-card">
                         <div class="function-icon">
                             <i class="fa-solid fa-file-lines"></i>
                         </div>
@@ -1349,7 +1515,7 @@
 
                 <!-- 4. Career Plan -->
                 <div class="function-item">
-                    <div onclick="openAiModalWithPrompt('Help me create a personalised 6-month career development and learning roadmap based on my current skills, career goals, and the impact of AI on my target industry.')" class="function-card">
+                    <div onclick="window.location.href='career-planner.html'" class="function-card">
                         <div class="function-icon">
                             <i class="fa-solid fa-route"></i>
                         </div>
@@ -1454,76 +1620,119 @@
     
     <!-- ================= PAGE 2: HR VIEW ================= -->
     <div id="page-hr" class="hidden">
-        <!-- HR WELCOME -->
-        <section class="hr-container">
-            <span class="hr-eyebrow">
-                <i class="fa-solid fa-building"></i>
-                Employer Workspace
-            </span>
+        <!-- HR HERO CAROUSEL -->
+        <section class="hero">
+            <div id="hrHeroCarousel" class="relative min-h-[380px] sm:min-h-[420px] flex items-center bg-[#18181b]">
 
-            <h1 class="hr-title">
-                Welcome to Your HR Dashboard
-            </h1>
+                <!-- Slide 1 -->
+                <div class="hr-carousel-slide carousel-slide absolute inset-0 transition-opacity duration-700 ease-in-out opacity-100 flex items-center p-6 sm:p-12 bg-[#18181b]">
+                    <div class="max-w-2xl space-y-4 px-8 sm:px-10">
+                        <span class="hero-label">
+                            <img src="Wlogo.png" alt="" class="hero-label-logo">
+                            Employer Workspace
+                        </span>
 
-            <p class="hr-subtitle">
-                Manage your company's job opportunities, explore changing
-                workforce trends, and connect with candidates in an
-                AI-driven job market.
-            </p>
-        </section>
+                        <h2 class="text-2xl sm:text-4xl font-black text-white leading-tight">
+                            Welcome to Your <span class="text-gray-300">HR Dashboard</span>
+                        </h2>
+                        <p class="text-sm sm:text-base text-gray-400 leading-relaxed">
+                            Manage your company's job opportunities, explore changing workforce trends, and connect with candidates in an AI-driven job market.
+                        </p>
 
-        <!-- OVERVIEW CARDS -->
-        <section class="hr-overview">
+                        <div class="hero-actions">
+                            <button onclick="window.location.href='analytics_trends.html'" class="hero-btn-primary">
+                                Explore Market Trends
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
 
-            <article class="hr-stat">
-                <div class="hr-stat-top">
-                    <span>Job Listings</span>
-                    <span class="hr-stat-icon">
-                        <i class="fa-solid fa-briefcase"></i>
-                    </span>
+                            <button onclick="openHrTool('jobs')" class="hero-btn-secondary">
+                                <i class="fa-solid fa-plus"></i>
+                                Post New Job
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div class="hr-stat-value">—</div>
-                <p class="hr-stat-note">Manage your published opportunities</p>
-            </article>
 
-            <article class="hr-stat">
-                <div class="hr-stat-top">
-                    <span>Applicants</span>
-                    <span class="hr-stat-icon">
-                        <i class="fa-solid fa-users"></i>
-                    </span>
-                </div>
-                <div class="hr-stat-value">—</div>
-                <p class="hr-stat-note">Review your candidate pipeline</p>
-            </article>
+                <!-- Slide 2 -->
+                <div class="hr-carousel-slide carousel-slide absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0 flex items-center p-6 sm:p-12 bg-[#18181b]">
+                    <div class="max-w-2xl space-y-4 px-8 sm:px-10">
+                        <span class="hero-label">
+                            <img src="Wlogo.png" alt="" class="hero-label-logo">
+                            Data-Driven Hiring
+                        </span>
 
-            <article class="hr-stat">
-                <div class="hr-stat-top">
-                    <span>Job Listings</span>
-                    <span class="hr-stat-icon">
-                        <i class="fa-solid fa-building"></i>
-                    </span>
-                </div>
-                <div class="hr-stat-value"
-                    style="font-size:20px; margin-top:24px;">
-                    Your Company
-                </div>
-                <p class="hr-stat-note">Keep your employer information updated</p>
-            </article>
+                        <h2 class="text-2xl sm:text-4xl font-black text-white leading-tight">
+                            Analyse <span class="text-gray-300">Skill Demands</span>
+                        </h2>
 
+                        <p class="text-sm sm:text-base text-gray-400 leading-relaxed">
+                            Leverage real-time skill radar signals to adjust your hiring strategies and find candidate talent before your competitors do.
+                        </p>
+
+                        <div class="hero-actions">
+                            <button onclick="window.location.href='analytics_trends.html'" class="hero-btn-primary">
+                                View Skill Radar
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="hr-carousel-slide carousel-slide absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0 flex items-center p-6 sm:p-12 bg-[#18181b]">
+                    <div class="max-w-2xl space-y-4 px-8 sm:px-10">
+                        <span class="hero-label">
+                            <img src="Wlogo.png" alt="" class="hero-label-logo">
+                            Streamlined Recruitment
+                        </span>
+
+                        <h2 class="text-2xl sm:text-4xl font-black text-white leading-tight">
+                            Manage <span class="text-gray-300">Applicants Effortlessly</span>
+                        </h2>
+
+                        <p class="text-sm sm:text-base text-gray-400 leading-relaxed">
+                            Filter candidate applications, schedule interviews, and host virtual meetings directly within your employer portal.
+                        </p>
+
+                        <div class="hero-actions">
+                            <button onclick="openHrTool('applicants')" class="hero-btn-primary">
+                                Review Applicants
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+
+                            <button onclick="window.location.href='interviews.html'" class="hero-btn-secondary">
+                                <i class="fa-solid fa-video"></i>
+                                Interview Room
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Carousel Controls -->
+            <button onclick="prevHrSlide()" class="carousel-arrow carousel-arrow-left">
+                <i class="fa-solid fa-chevron-left text-xs"></i>
+            </button>
+
+            <button onclick="nextHrSlide()" class="carousel-arrow carousel-arrow-right">
+                <i class="fa-solid fa-chevron-right text-xs"></i>
+            </button>
+
+            <!-- Indicator Dots -->
+            <div id="hrCarouselIndicators" class="carousel-indicators">
+                <button onclick="goToHrSlide(0)" aria-label="Go to slide 1" class="carousel-dot active"></button>
+                <button onclick="goToHrSlide(1)" aria-label="Go to slide 2" class="carousel-dot"></button>
+                <button onclick="goToHrSlide(2)" aria-label="Go to slide 3" class="carousel-dot"></button>
+            </div>
         </section>
 
         <!-- HR FUNCTIONS -->
         <section>
             <h2 class="hr-section-title">Your HR Tools</h2>
-
-            <p class="hr-section-subtitle">
-                Everything you need to understand the job market and
-                manage your hiring activities.
-            </p>
+            <p class="hr-section-subtitle">Everything you need to understand the job market and manage your hiring activities.</p>
 
             <div class="hr-functions">
-
                 <!-- 1. Analytics & Trends -->
                 <button type="button"
                         class="hr-function-card"
@@ -1614,20 +1823,6 @@
                     <i class="fa-solid fa-arrow-right hr-card-arrow"></i>
                 </button>
 
-            </div>
-        </section>
-
-        <!-- INFORMATION NOTICE -->
-        <section class="hr-notice">
-            <i class="fa-solid fa-lightbulb"></i>
-            <div>
-                <h3>Make informed hiring decisions</h3>
-                <p>
-                    Use Analytics &amp; Trends to explore emerging skills
-                    and job-market signals. These insights are intended
-                    to support planning, not replace human judgement
-                    in recruitment.
-                </p>
             </div>
         </section>
     </div>
@@ -1734,17 +1929,17 @@
 
         if (navExplore) {
             navExplore.textContent = currentRole === "hr" ? "Analytics & Trends" : "Explore Jobs";
-            navExplore.href = currentRole === "hr" ? "analytics_trends.html" : "mainpage.html#jobs";
+            navExplore.href = currentRole === "hr" ? "analytics_trends.html" : "explore_jobs.html";
         }
 
         if (navBuildCV) {
             navBuildCV.textContent = currentRole === "hr" ? "Job Listings" : "Build CV";
-            navBuildCV.href = currentRole === "hr" ? "#job-listings" : "app.py";
+            navBuildCV.href = currentRole === "hr" ? "hr-vacancies.html" : "user-profile.html";
         }
 
         if (navCart) {
             navCart.textContent = currentRole === "hr" ? "Applicants" : "Your Cart";
-            navCart.href = currentRole === "hr" ? "#applicants" : "#cart";
+            navCart.href = currentRole === "hr" ? "applicant-cart.html" : "job-seeker-cart.html";
         }
 
         // Reset active state to Home
@@ -1754,6 +1949,7 @@
         // Save active roles globally
         window.currentMainPageRole = currentRole;
         window.currentView = currentRole;
+        localStorage.setItem('userRole', currentRole);
     }
 
     // Convenient functions for testing
@@ -2037,7 +2233,107 @@
     document.addEventListener("DOMContentLoaded", () => {
         setMainPageRole(window.currentMainPageRole || "guest");
     });
+    /* Default homepage for a new visitor. */
+    document.addEventListener("DOMContentLoaded", () => {
+        setMainPageRole(window.currentMainPageRole || "guest");
+    });
+    /* Check URL parameter/hash or default to guest view */
+    document.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const roleParam = urlParams.get('role');
 
+        if (roleParam === 'hr' || window.location.hash === '#hr') {
+            setMainPageRole('hr');
+            // Clean up URL so refreshes don't lock HR mode indefinitely
+            const cleanUrl = window.location.pathname + window.location.hash;
+            window.history.replaceState({}, document.title, cleanUrl);
+        } else {
+            setMainPageRole(window.currentMainPageRole || "guest");
+        }
+    });
+
+    /* ================= HR HERO CAROUSEL ================= */
+    let currentHrSlideIndex = 0;
+    let hrSlideInterval = null;
+
+    function showHrSlide(index) {
+        const slides = document.querySelectorAll('#hrHeroCarousel .hr-carousel-slide');
+        const dots = document.querySelectorAll('#hrCarouselIndicators .carousel-dot');
+
+        if (slides.length === 0) return;
+
+        currentHrSlideIndex = (index + slides.length) % slides.length;
+
+        slides.forEach((slide, i) => {
+            const isActive = i === currentHrSlideIndex;
+            slide.classList.toggle('active-slide', isActive);
+            slide.style.opacity = isActive ? '1' : '0';
+            slide.style.zIndex = isActive ? '10' : '0';
+            slide.style.pointerEvents = isActive ? 'auto' : 'none';
+        });
+
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === currentHrSlideIndex);
+        });
+    }
+
+    function nextHrSlide() {
+        showHrSlide(currentHrSlideIndex + 1);
+    }
+
+    function prevHrSlide() {
+        showHrSlide(currentHrSlideIndex - 1);
+    }
+
+    function goToHrSlide(index) {
+        showHrSlide(index);
+        initHrCarousel();
+    }
+
+    function initHrCarousel() {
+        if (hrSlideInterval !== null) {
+            clearInterval(hrSlideInterval);
+        }
+        hrSlideInterval = setInterval(nextHrSlide, 5000);
+    }
+
+    function initializeHrHeroCarousel() {
+        showHrSlide(0);
+        initHrCarousel();
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        initializeHrHeroCarousel();
+    });
+
+    function handleProfileNavigation() {
+        // Read the current active role from window.currentMainPageRole (set by setMainPageRole)
+        // or fallback to localStorage / guest mode
+        const currentRole = window.currentMainPageRole || localStorage.getItem('userRole') || 'guest';
+
+        switch (currentRole.toLowerCase()) {
+            case 'jobseeker':
+            case 'student':
+            case 'job_seeker':
+                window.location.href = 'user-profile.html';
+                break;
+
+            case 'hr':
+            case 'employer':
+                window.location.href = 'company-profile.html';
+                break;
+
+            case 'guest':
+            default:
+                // Since Guest Mode is active, prompt the user to switch mode or log in
+                if (typeof handleGuestNavClick === 'function') {
+                    handleGuestNavClick(); // Opens your existing role switch popup modal
+                } else {
+                    alert('Please sign in or select a user mode to access your profile.');
+                }
+                break;
+        }
+    }
 </script>
 </body>
 </html>

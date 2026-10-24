@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#191b1f">
+  <meta name="description" content="Offline HR vacancy manager demo">
+  <title>HR Vacancies · NextStep</title>
+  <style>
+    :root {
+      --bg-color: #191b1f;
+      --card-bg: #23272e;
+      --border-color: #323842;
+      --text-main: #f0f3f6;
+      --text-muted: #9da7b3;
+      --accent-color: #3b82f6;
+      --accent-hover: #2563eb;
+      --badge-bg: rgba(59, 130, 246, 0.15);
+      --badge-text: #60a5fa;
+      --danger: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      padding: 2rem;
+      line-height: 1.5;
+    }
+    .vacancy-page-nav { 
+      border-bottom: 1px solid #353540; 
+      background: #18181b; 
+      padding: 20px max(20px, calc((100% - 1000px) / 2)); 
+    }
+    .vacancy-back { 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 10px; color: #c7d2fe; 
+      text-decoration: none; 
+      font-size: 14px; }
+        
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .btn {
+      background-color: var(--accent-color);
+      color: #ffffff;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn:hover {
+      background-color: var(--accent-hover);
+    }
+
+    .btn-danger {
+      background-color: transparent;
+      color: var(--danger);
+      border: 1px solid var(--danger);
+    }
+
+    .btn-danger:hover {
+      background-color: var(--danger);
+      color: #ffffff;
+    }
+
+    .controls {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .search-bar {
+      flex: 1;
+      padding: 0.6rem 1rem;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background-color: var(--card-bg);
+      color: var(--text-main);
+      outline: none;
+    }
+
+    .search-bar:focus {
+      border-color: var(--accent-color);
+    }
+
+    .vacancy-list {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .vacancy-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .vacancy-info h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .vacancy-meta {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .badge {
+      background-color: var(--badge-bg);
+      color: var(--badge-text);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    /* Modal Form Styling */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 2rem;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .modal h2 {
+      margin-bottom: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.875rem;
+      margin-bottom: 0.4rem;
+      color: var(--text-muted);
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 0.6rem;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      outline: none;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <nav class="vacancy-page-nav" aria-label="Page navigation">
+      <a class="vacancy-back" href="mainpage.html?role=hr">&#8592; Back to home</a>
+  </nav>
+  <div class="container">
+    <header>
+      <h1>HR Vacancies Management</h1>
+      <button class="btn" id="openModalBtn">+ Post New Vacancy</button>
+    </header>
+
+    <div class="controls">
+      <input type="text" id="searchInput" class="search-bar" placeholder="Filter vacancies by title or department...">
+    </div>
+
+    <div class="vacancy-list" id="vacancyList"></div>
+  </div>
+
+  <!-- Create Vacancy Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <h2>Post New Vacancy</h2>
+      <form id="vacancyForm">
+        <div class="form-group">
+          <label for="jobTitle">Job Title</label>
+          <input type="text" id="jobTitle" required placeholder="e.g. Senior Firmware Engineer">
+        </div>
+        <div class="form-group">
+          <label for="department">Department</label>
+          <input type="text" id="department" required placeholder="e.g. Hardware Engineering">
+        </div>
+        <div class="form-group">
+          <label for="type">Employment Type</label>
+          <select id="type">
+            <option value="Full-time">Full-time</option>
+            <option value="Part-time">Part-time</option>
+            <option value="Contract">Contract</option>
+            <option value="Internship">Internship</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-danger" id="closeModalBtn">Cancel</button>
+          <button type="submit" class="btn">Publish</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Initial mock data
+    let vacancies = [
+      { id: 1, title: 'Embedded Systems Engineer', department: 'R&D', type: 'Full-time' },
+      { id: 2, title: 'IoT Software Intern', department: 'Software', type: 'Internship' },
+      { id: 3, title: 'Hardware QA Engineer', department: 'Quality Assurance', type: 'Full-time' }
+    ];
+
+    const vacancyList = document.getElementById('vacancyList');
+    const searchInput = document.getElementById('searchInput');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const openModalBtn = document.getElementById('openModalBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const vacancyForm = document.getElementById('vacancyForm');
+
+    function renderVacancies(filterText = '') {
+      vacancyList.innerHTML = '';
+      
+      const filtered = vacancies.filter(v => 
+        v.title.toLowerCase().includes(filterText.toLowerCase()) ||
+        v.department.toLowerCase().includes(filterText.toLowerCase())
+      );
+
+      if (filtered.length === 0) {
+        vacancyList.innerHTML = '<p style="color: var(--text-muted);">No vacancies found.</p>';
+        return;
+      }
+
+      filtered.forEach(v => {
+        const card = document.createElement('div');
+        card.className = 'vacancy-card';
+        card.innerHTML = `
+          <div class="vacancy-info">
+            <h3>${v.title}</h3>
+            <div class="vacancy-meta">
+              <span>Department: ${v.department}</span>
+              <span class="badge">${v.type}</span>
+            </div>
+          </div>
+          <button class="btn btn-danger" onclick="deleteVacancy(${v.id})">Remove</button>
+        `;
+        vacancyList.appendChild(card);
+      });
+    }
+
+    function deleteVacancy(id) {
+      vacancies = vacancies.filter(v => v.id !== id);
+      renderVacancies(searchInput.value);
+    }
+
+    // Event Listeners
+    openModalBtn.addEventListener('click', () => modalOverlay.style.display = 'flex');
+    closeModalBtn.addEventListener('click', () => modalOverlay.style.display = 'none');
+
+    vacancyForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const newJob = {
+        id: Date.now(),
+        title: document.getElementById('jobTitle').value,
+        department: document.getElementById('department').value,
+        type: document.getElementById('type').value
+      };
+      vacancies.unshift(newJob);
+      renderVacancies(searchInput.value);
+      vacancyForm.reset();
+      modalOverlay.style.display = 'none';
+    });
+
+    searchInput.addEventListener('input', (e) => {
+      renderVacancies(e.target.value);
+    });
+
+    // Initial Render
+    renderVacancies();
+  </script>
+</body>
+</html>

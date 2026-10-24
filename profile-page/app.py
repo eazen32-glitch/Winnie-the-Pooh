@@ -117,6 +117,11 @@ def create_app(database=None, testing=False):
         db.execute("INSERT OR IGNORE INTO profile (id, data) VALUES (1, ?)", (json.dumps(DEFAULT_PROFILE),))
         db.commit()
 
+    @app.get("/")
+    def mainpage():
+        """Render the main landing page."""
+        return render_template("mainpage.html")
+    
     def read_profile():
         with closing(sqlite3.connect(app.config["DATABASE"])) as db:
             return json.loads(db.execute("SELECT data FROM profile WHERE id = 1").fetchone()[0])
