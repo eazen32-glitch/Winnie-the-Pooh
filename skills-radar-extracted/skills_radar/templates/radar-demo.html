@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Extracted skills radar</title>
+  <link rel="stylesheet" href="{{ url_for('skills_radar.static', filename='radar.css') }}">
+  <script src="{{ url_for('skills_radar.static', filename='radar.js') }}" defer></script>
+</head>
+<body style="margin:0;background:#f6f7f3">
+  {% include 'radar-section.html' %}
+</body>
+</html>

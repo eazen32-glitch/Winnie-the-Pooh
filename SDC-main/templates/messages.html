@@ -1,0 +1,37 @@
+<section class="view" data-section="messages" hidden>
+  <div class="page-heading">
+    <div>
+      <p class="eyebrow">A CONVERSATION CAN OPEN A DOOR</p>
+      <h1>Messages<span>.</span></h1>
+      <p class="page-description">Ask about a role, clarify requirements and keep your conversation with the right person.</p>
+    </div>
+    <button type="button" id="messages-refresh" class="button button-secondary">Refresh messages</button>
+  </div>
+  <div class="workflow-notice">These are private conversations between synthetic demo accounts inside this prototype. No message is sent to an external company or email address. Messages refresh every 10 seconds while this page is open.</div>
+  <div id="messages-status" class="workflow-message" role="status" hidden></div>
+  <div id="messages-guest" class="messages-empty" hidden>
+    <h2>Keep your conversations together.</h2>
+    <p>Sign in as a jobseeker or HR to contact the other person directly. Guests can continue exploring jobs.</p>
+    <button type="button" id="messages-signin" class="button button-primary">Sign in to message</button>
+  </div>
+  <div id="messages-workspace" class="messages-layout" hidden>
+    <aside class="messages-inbox" aria-label="Your conversations">
+      <div class="messages-inbox-heading"><h2>Conversations</h2><span id="messages-total-unread" class="messages-unread-label"></span></div>
+      <div id="messages-threads" class="messages-threads"></div>
+      <button type="button" id="messages-more-threads" class="button button-secondary button-small" hidden>More conversations</button>
+    </aside>
+    <div class="messages-conversation">
+      <div id="messages-select-prompt" class="messages-empty"><h2>Start with a question.</h2><p>Use “Contact HR” on a job, or “Message candidate” in your applicant inbox. Choose a conversation here to continue it.</p></div>
+      <div id="messages-detail" hidden>
+        <header class="messages-detail-header"><h2 id="messages-counterpart"></h2><p id="messages-job"></p></header>
+        <button type="button" id="messages-older" class="button button-secondary button-small" hidden>Load older messages</button>
+        <div id="messages-history" class="messages-history" role="log" aria-label="Conversation messages" aria-live="polite" aria-relevant="additions"></div>
+        <form id="message-compose" class="messages-compose">
+          <label for="message-body">Your message</label>
+          <textarea id="message-body" name="body" rows="3" maxlength="2000" required placeholder="Ask about the role, skills or interview…"></textarea>
+          <div class="messages-compose-footer"><span id="message-length" class="muted small">0 / 2,000</span><button type="submit" id="message-send" class="button button-primary">Send message</button></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

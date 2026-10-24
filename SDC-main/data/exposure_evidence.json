@@ -1,0 +1,348 @@
+{
+  "schema_version": 1,
+  "dataset_id": "ilo-nask-2025-isco08",
+  "source": {
+    "id": "gmyrek-et-al-2025-ilo-wp140",
+    "title": "Generative AI and Jobs: A Refined Global Index of Occupational Exposure",
+    "authors": [
+      "Pawel Gmyrek",
+      "Janine Berg",
+      "Karol Kamiński",
+      "Filip Konopczyński",
+      "Agnieszka Ładna",
+      "Balint Nafradi",
+      "Konrad Rosłaniec",
+      "Marek Troszyński"
+    ],
+    "publisher": "International Labour Organization",
+    "series": "ILO Working Paper 140",
+    "year": 2025,
+    "publication_date": "2025-05",
+    "url": "https://doi.org/10.54394/HETP0387",
+    "publication_url": "https://www.ilo.org/publications/generative-ai-and-jobs-refined-global-index-occupational-exposure",
+    "dataset_url": "https://github.com/pgmyrek/2025_GenAI_scores_ISCO08",
+    "dataset_publisher": "First author's public companion-data repository, linked by the working paper (printed page 37, Figure 16 note).",
+    "accessed_at": "2026-10-23",
+    "citation": "Gmyrek, P., Berg, J., Kamiński, K., Konopczyński, F., Ładna, A., Nafradi, B., Rosłaniec, K., Troszyński, M. (2025). Generative AI and Jobs: A Refined Global Index of Occupational Exposure. ILO Working Paper 140. Geneva: International Labour Office. © ILO. https://doi.org/10.54394/HETP0387"
+  },
+  "scope": {
+    "geography": "Global occupational classification (ISCO-08); not a Malaysia-specific or country-specific occupational estimate.",
+    "population": "Task descriptions for 427 ISCO-08 four-digit occupations (3,265 task rows). These are occupational task scores, not a sample of job-loss outcomes or a forecast for individual workers.",
+    "reference_period": "GenAI capabilities assessed at the start of 2025.",
+    "time_horizon": "Static technical-capability snapshot at the start of 2025; no future job-loss forecast horizon is specified.",
+    "calibration": "1,640 people in Poland; 52,558 survey points on 2,861 tasks; expert review and task score reconciliation; GPT-4o/Gemini Flash1.5 used with calibrated reference knowledge to extend scores to ISCO-08 tasks."
+  },
+  "methodology": {
+    "metric_name": "GenAI occupational exposure score",
+    "source_field": "mean_score_2025",
+    "is_probability": false,
+    "interpretation": "Published mean of technical GenAI exposure scores across the source occupation's listed tasks. Task scores range from 0 (current GenAI cannot perform the task) to 1 (it could perform the entire task). Displaying the mean on a 0–100 scale does not make it a percentage of tasks, jobs or workers, or a probability of replacement.",
+    "display_transform": "100 × the published mean_score_2025; retain the workbook's stored two-decimal mean and show index points out of 100.",
+    "task_weighting": "Equal weights for listed ISCO task descriptions, not observed time spent on each task. See paper printed page 38, footnote 18.",
+    "uncertainty": "Scores depend on judgements about technical capabilities, task descriptions and survey/model/expert calibration. No confidence interval, validation against job-loss outcomes or individual replacement probability is supplied for these displayed occupation means. Our catalogue-to-ISCO mappings add uncertainty.",
+    "scenario_relationship": "Published scores do not change with the application's moderate/fast scenarios or user-edited task assumptions. Those are a separate, authored what-if index.",
+    "limitations": [
+      "Technical exposure is not a probability that a job will be replaced, a forecast of actual adoption or an estimate of job losses.",
+      "The mean is a technical-potential index. It is not the share of tasks, work time, jobs or workers that will be automated.",
+      "All listed tasks have equal weight; workers and employers have different task mixes and constraints.",
+      "The global ISCO-08 task classification does not provide Malaysia-specific, employer-specific or individual estimates.",
+      "Catalogue mappings are editorial broader occupation proxies. The published metric belongs to the named source ISCO group, not to the catalogue role as a separately studied occupation.",
+      "Data Scientist and Sustainability Specialist have especially limited proxies; their scope caveats must be shown with the score.",
+      "SD_2025 describes variation among task scores within an occupation. It is not a confidence interval or a measure of model prediction error.",
+      "The source is a static 2025 capability assessment; the application does not extrapolate it to the present or a future year."
+    ],
+    "paper_locations": {
+      "link_to_dataset": "printed page37 (PDFpage40), Figure16 note",
+      "equal_weight_limitation": "printed page38 (PDFpage41), footnote18",
+      "subjectivity": "printed page39 (PDFpage42)",
+      "not_actual_employment_impact": "printed page44 (PDFpage47)",
+      "static_snapshot": "printed page45 (PDFpage48)",
+      "source_table": "Annex1 TableA1, printed pages48–61"
+    },
+    "licence": {
+      "name": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "url": "https://creativecommons.org/licenses/by/4.0/",
+      "attribution": "© ILO. Gmyrek et al. (2025), ILO Working Paper 140. https://doi.org/10.54394/HETP0387",
+      "changes": "Six occupation-level factual records extracted; occupation-group means rescaled for display to 0–100 index points; editorial catalogue mappings and explanatory text added. No changes to the published source means, standard deviations or exposure categories.",
+      "adaptation_disclaimer": "This is an adaptation of a copyrighted work of the International Labour Organization (ILO). This adaptation has not been prepared, reviewed or endorsed by the ILO and should not be considered an official ILO adaptation. The ILO disclaims all responsibility for its content and accuracy. Responsibility rests solely with the author(s) of the adaptation."
+    }
+  },
+  "provenance": {
+    "repository_url": "https://github.com/pgmyrek/2025_GenAI_scores_ISCO08",
+    "repository_commit": "ce5fc25c2a0db2757c5bfa797c4cfc8b408431ea",
+    "file": "Final_Scores_ISCO08_Gmyrek_et_al_2025.xlsx",
+    "worksheet": "Sheet1",
+    "source_file_sha256": "c1940b87e7293b1eb95b530b6d3da7cd806b61d217c4bff1e69372b2cff5c90a",
+    "download_url": "https://raw.githubusercontent.com/pgmyrek/2025_GenAI_scores_ISCO08/ce5fc25c2a0db2757c5bfa797c4cfc8b408431ea/Final_Scores_ISCO08_Gmyrek_et_al_2025.xlsx",
+    "fetched_at": "2026-10-23",
+    "columns": {
+      "source_code": "C (ISCO_08)",
+      "source_title": "D (Title)",
+      "mean": "Q (mean_score_2025)",
+      "task_score_sd": "S (SD_2025)",
+      "exposure_category": "T (potential25)"
+    },
+    "row_numbering": "One-based Excel worksheet row numbers including the header row.",
+    "extraction": "Copy the stored occupation mean, standard deviation and category (repeated on each task row); count the listed source rows once per occupation. Do not recompute unrounded means or treat repeated occupation values as independent observations.",
+    "paper_crosscheck": "Published means cross-checked in Annex 1 Table A1: printed page 48 (2120), 49 (2511, 2512, 2529), 50 (2424), 51 (2133)."
+  },
+  "occupations": {
+    "2120": {
+      "code": "2120",
+      "title": "Mathematicians, Actuaries and Statisticians",
+      "mean_score_2025": 0.56,
+      "SD_2025": 0.09,
+      "potential25": "Exposed: Gradient 3",
+      "task_count": 10,
+      "source_rows": [
+        336,
+        337,
+        338,
+        339,
+        340,
+        341,
+        342,
+        343,
+        344,
+        345
+      ]
+    },
+    "2133": {
+      "code": "2133",
+      "title": "Environmental Protection Professionals",
+      "mean_score_2025": 0.38,
+      "SD_2025": 0.04,
+      "potential25": "Minimal Exposure",
+      "task_count": 7,
+      "source_rows": [
+        366,
+        367,
+        368,
+        369,
+        370,
+        371,
+        372
+      ]
+    },
+    "2424": {
+      "code": "2424",
+      "title": "Training and Staff Development Professionals",
+      "mean_score_2025": 0.41,
+      "SD_2025": 0.09,
+      "potential25": "Exposed: Gradient 2",
+      "task_count": 8,
+      "source_rows": [
+        804,
+        805,
+        806,
+        807,
+        808,
+        809,
+        810,
+        811
+      ]
+    },
+    "2511": {
+      "code": "2511",
+      "title": "Systems Analysts",
+      "mean_score_2025": 0.49,
+      "SD_2025": 0.05,
+      "potential25": "Exposed: Gradient 2",
+      "task_count": 7,
+      "source_rows": [
+        848,
+        849,
+        850,
+        851,
+        852,
+        853,
+        854
+      ]
+    },
+    "2512": {
+      "code": "2512",
+      "title": "Software Developers",
+      "mean_score_2025": 0.53,
+      "SD_2025": 0.07,
+      "potential25": "Exposed: Gradient 3",
+      "task_count": 8,
+      "source_rows": [
+        855,
+        856,
+        857,
+        858,
+        859,
+        860,
+        861,
+        862
+      ]
+    },
+    "2529": {
+      "code": "2529",
+      "title": "Database and Network Professionals Not Elsewhere Classified",
+      "mean_score_2025": 0.49,
+      "SD_2025": 0.06,
+      "potential25": "Exposed: Gradient 2",
+      "task_count": 8,
+      "source_rows": [
+        896,
+        897,
+        898,
+        899,
+        900,
+        901,
+        902,
+        903
+      ]
+    }
+  },
+  "mappings": {
+    "business-intelligence-analyst": {
+      "source_code": null,
+      "relation": "unavailable",
+      "rationale": "No unambiguous ISCO-08 occupation mapping was established for this O*NET business-intelligence specialty. The dataset does not isolate Business Intelligence Analysts.",
+      "caveat": "Database administration, statistics and management-analysis groups have different task mixes; none is substituted for this role."
+    },
+    "data-scientist": {
+      "source_code": "2120",
+      "relation": "broader_proxy",
+      "rationale": "The statistical analysis, modelling and interpretation tasks of ISCO-08 2120 overlap with statistical data-science work. This is a broader mathematical, actuarial and statistical group, not a source estimate for Data Scientists.",
+      "caveat": "Limited proxy for statistical data-science tasks. The source also includes actuarial and mathematical work and does not isolate data scientists, machine-learning engineers or AI engineers."
+    },
+    "software-developer": {
+      "source_code": "2512",
+      "relation": "broader_proxy",
+      "rationale": "ISCO-08 2512 covers software requirements, design, development, testing and maintenance, aligning with the catalogue role at a broader international occupation-group level.",
+      "caveat": "The ISCO group aggregates software jobs across settings; its task mean is not an estimate of an individual developer's work, employer or probability of losing a job."
+    },
+    "information-security-analyst": {
+      "source_code": "2529",
+      "relation": "broader_proxy",
+      "rationale": "The tasks listed under ISCO-08 2529 include safeguarding files, security awareness, access controls, risk assessments, encryption and firewalls, overlapping with information-security analysis.",
+      "caveat": "A broader not-elsewhere-classified database and network group is used as a proxy; the source does not isolate the O*NET Information Security Analyst specialty."
+    },
+    "sustainability-specialist": {
+      "source_code": "2133",
+      "relation": "broader_proxy",
+      "rationale": "Environmental management systems, environmental audits and compliance tasks in ISCO-08 2133 overlap with the environmental part of sustainability work.",
+      "caveat": "Environmental sustainability only: this group also includes field and laboratory work, and does not cover all ESG, social sustainability or corporate reporting specialties. It is not a role-specific Sustainability Specialist estimate."
+    },
+    "learning-development-specialist": {
+      "source_code": "2424",
+      "relation": "broader_proxy",
+      "rationale": "ISCO-08 2424 covers identifying training needs, preparing learning materials, delivering training and evaluating outcomes, aligning with the catalogue training-and-development role at a broader occupation-group level.",
+      "caveat": "The international group combines varied training settings and delivery methods; its mean is not a measured exposure score for a particular training specialist."
+    },
+    "project-management-specialist": {
+      "source_code": null,
+      "relation": "unavailable",
+      "rationale": "No unambiguous ISCO-08 occupation mapping was established for this cross-industry O*NET project-management role. The dataset does not isolate Project Management Specialists.",
+      "caveat": "Business-services managers and management analysts have different responsibilities; their means are not substituted for project management."
+    },
+    "computer-systems-analyst": {
+      "source_code": "2511",
+      "relation": "broader_proxy",
+      "rationale": "ISCO-08 2511 covers user requirements, business processes, functional specifications and improvements to computer systems, aligning with the catalogue role at a broader international occupation-group level.",
+      "caveat": "The source aggregates systems-analysis tasks across workplaces. Actual exposure depends on the worker's task mix and technology adoption."
+    }
+  },
+  "historical": {
+    "source": {
+      "id": "frey-osborne-2013",
+      "title": "The Future of Employment: How Susceptible Are Jobs to Computerisation?",
+      "authors": [
+        "Carl Benedikt Frey",
+        "Michael A. Osborne"
+      ],
+      "publisher": "Oxford Martin School / University of Oxford",
+      "year": 2013,
+      "publication_date": "2013-09-17",
+      "url": "https://www.oxfordmartin.ox.ac.uk/downloads/academic/The_Future_of_Employment.pdf",
+      "mirror_url": "https://raw.githubusercontent.com/BroderickHigby/job_automation/83d78265a3f5d56242b2f6c63d79902e870bc715/sources/The_Future_of_Employment.pdf",
+      "accessed_at": "2026-10-23",
+      "citation": "Frey, C. B. and Osborne, M. A. (2013). The Future of Employment: How Susceptible Are Jobs to Computerisation? Working paper, 17 September 2013. Oxford Martin School, University of Oxford. Appendix, pages 57–60.",
+      "version_note": "These values come from the September 2013 working paper, not a separate estimate from its later journal publication."
+    },
+    "scope": {
+      "geography": "United States.",
+      "population": "702 detailed occupations in the source's 2010 US SOC-based model, not observed individual job-loss outcomes.",
+      "reference_period": "2013 model assumptions using 2010 US occupational employment and O*NET task data.",
+      "time_horizon": "The paper describes an unspecified number of years, perhaps a decade or two, from its 2013 perspective (page 44). It does not supply a fixed forecast deadline."
+    },
+    "methodology": {
+      "metric_name": "Probability of computerisation (2013 model)",
+      "interpretation": "The source model's conditional probability that a historical occupation is fully computerisable, based on its 2013 assumptions about machine learning and mobile robotics. This is not an observed job-loss rate or a current probability of an individual losing a job.",
+      "uncertainty": "Conditional historical model estimate; no occupation-level confidence interval is supplied with these appendix entries. No validation against subsequent job-loss outcomes is provided here. The historical-to-current role mapping adds uncertainty.",
+      "limitations": [
+        "This is a historical model of computerisation, not a 2025 or current estimate of generative-AI replacement risk.",
+        "The paper explicitly makes no attempt to estimate how many jobs will actually be automated (page 44). Technology adoption, employment changes and individual outcomes are different questions.",
+        "The stated horizon is unspecified, perhaps a decade or two from 2013; the application does not convert that wording into a forecast deadline.",
+        "Probabilities belong to the exact historical source occupation and code. Software subgroups are shown separately, without an average for the broader catalogue role.",
+        "The historical probabilities and the 2025 ILO technical-exposure index use different definitions and cannot be interpreted as a trend or compared as the same metric.",
+        "The PDF was inspected through an identified third-party mirror. Its current byte equality with the official Oxford-hosted file could not be verified."
+      ],
+      "licence": {
+        "name": "No explicit reuse licence located for the paper.",
+        "attribution": "Frey and Osborne (2013), University of Oxford. Four small numerical facts and bibliographic metadata extracted with citation; the paper is not redistributed.",
+        "changes": "Separate appendix entries transcribed and linked to current catalogue roles with explicit historical mapping caveats. Probabilities unchanged; multiplied by 100 only to display percentages."
+      }
+    },
+    "provenance": {
+      "repository_url": "https://github.com/BroderickHigby/job_automation",
+      "repository_commit": "83d78265a3f5d56242b2f6c63d79902e870bc715",
+      "file": "The_Future_of_Employment.pdf",
+      "source_file_sha256": "1d0ef561ebef9ececda63403a40860aa172be953fe2b050d27de8987c9e852fc",
+      "download_url": "https://raw.githubusercontent.com/BroderickHigby/job_automation/83d78265a3f5d56242b2f6c63d79902e870bc715/sources/The_Future_of_Employment.pdf",
+      "fetched_at": "2026-10-23",
+      "locator": "Appendix table, Rank / Probability / SOC code / Occupation. Page numbers are both printed and PDF page numbers for the inspected file.",
+      "limitation": "Primary paper content obtained through public third-party mirror. Oxford canonical endpoint is proxy-blocked; byte equality to current official file has NOT been established. PDF itself shows authors and September17,2013, includes appendix as described; PDF metadata names MichaelOsborne original file."
+    },
+    "estimates": [
+      {
+        "source_code": "15-1121",
+        "source_title": "Computer Systems Analysts",
+        "probability": 0.0065,
+        "page": 57,
+        "rank": 32,
+        "catalog_role_id": "computer-systems-analyst",
+        "relation": "historical_counterpart",
+        "rationale": "Same occupation title in the historical source. The source uses the 2010 US SOC classification; this is a historical occupation counterpart, not a newly fitted estimate for the current catalogue role.",
+        "caveat": "Historical US occupation-level model estimate. It does not measure current GenAI exposure or an individual worker's probability of replacement."
+      },
+      {
+        "source_code": "13-1151",
+        "source_title": "Training and Development Specialists",
+        "probability": 0.014,
+        "page": 58,
+        "rank": 64,
+        "catalog_role_id": "learning-development-specialist",
+        "relation": "historical_counterpart",
+        "rationale": "Same occupation title in the historical source. The source uses the 2010 US SOC classification; this is a historical occupation counterpart, not a newly fitted estimate for the current catalogue role.",
+        "caveat": "Historical US occupation-level model estimate. It does not measure current GenAI exposure or an individual worker's probability of replacement."
+      },
+      {
+        "source_code": "15-1132",
+        "source_title": "Software Developers, Applications",
+        "probability": 0.042,
+        "page": 59,
+        "rank": 130,
+        "catalog_role_id": "software-developer",
+        "relation": "historical_suboccupation",
+        "rationale": "A historical software-developer subgroup with the stated specialty; shown separately from the other subgroup, without averaging or treating either as an estimate for all Software Developers.",
+        "caveat": "The catalogue role covers a broader range of software work. Two historical subgroup probabilities cannot be combined into a full-role estimate without a defensible aggregation model and population weights."
+      },
+      {
+        "source_code": "15-1133",
+        "source_title": "Software Developers, Systems Software",
+        "probability": 0.13,
+        "page": 60,
+        "rank": 181,
+        "catalog_role_id": "software-developer",
+        "relation": "historical_suboccupation",
+        "rationale": "A historical software-developer subgroup with the stated specialty; shown separately from the other subgroup, without averaging or treating either as an estimate for all Software Developers.",
+        "caveat": "The catalogue role covers a broader range of software work. Two historical subgroup probabilities cannot be combined into a full-role estimate without a defensible aggregation model and population weights."
+      }
+    ],
+    "unavailable_reason": "No reviewed, suitably specific historical source occupation estimate has been selected for this catalogue role. No percentage is inferred from a neighbouring or composite occupation."
+  }
+}

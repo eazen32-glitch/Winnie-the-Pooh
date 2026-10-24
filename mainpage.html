@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winnie The Pooh</title>
+    <link rel="icon" type="image/png" href="Wlogo.png" width="80">
+
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com">
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#EEF2FF',
+                            100: '#E0E7FF',
+                            500: '#6366F1',
+                            600: '#4F46E5',
+                            700: '#4338CA',
+                            900: '#1E1B4B',
+                        },
+                        cyan: {
+                            400: '#22D3EE',
+                            500: '#06B6D4',
+                        },
+                        dark: {
+                            bg: '#020617',
+                            card: '#0F172A',
+                            border: '#1E293B',
+                            glass: 'rgba(15, 23, 42, 0.85)'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #191b1f;
+        }
+        .bar {
+            display: flex;          
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+            background-color: #18181b;
+            border-bottom: 1px solid #3f3f46;
+        }        
+        .bar nav {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        .bar nav img {
+            width: 230px;
+        }
+        .pages {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            color: white;
+        }
+        .nav-link {
+            position: relative;
+            color: #a1a1aa;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            white-space: nowrap;
+            transition: color 0.2s ease;
+        }
+        .nav-link:hover {
+            color: #ffffff;
+        }
+        .nav-link.active {
+            color: #ffffff;
+        }
+        .nav-link.active::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 100%;
+            height: 2px;
+            background-color: #94a3b8;
+        }
+        .me {
+            display: flex;
+            align-items: center;
+            padding: 0 25px;
+            gap: 15px;            
+            color: white;
+        }
+        .bar p {
+            margin: 0;
+        }
+
+        /* ===== CALENDAR POPUP ===== */
+        .calendar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+
+            /* Blur the homepage behind the calendar */
+            background: rgba(3, 7, 18, 0.35);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .calendar-overlay.active {
+            display: flex;
+        }
+
+        #calendarFrame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 0;
+            display: block;
+            background: transparent;
+            box-shadow: none;
+        }
+        .calendar-close {
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            z-index: 2;
+            color: #cbd5e1;
+            background: #1e293b;
+            border: none;
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .trending {
+            border-top: 1px solid #334155;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 12px;
+            padding-left: 20px;
+            padding-top: 6px;
+            padding-bottom: 6px;
+        }
+        .trending-label {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            flex-shrink: 0;
+            color: #94a3b8;
+            font-size: 14px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .trending-label i {
+            color: #fb3c3c;
+        }
+        .trending-skills {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none;
+        }
+        .trending-skills::-webkit-scrollbar {
+            display: none;
+        }
+        .trending-skills button {
+            padding: 0;
+            border: none;
+            background: none;
+            color: #cbd5e1;
+            font: inherit;
+            font-size: 12px;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        .trending-skills button:hover {
+            color: #a5b4fc;
+        }
+        .trending-separator {
+            color: #475569;
+            font-size: 15px;
+        }
+
+        .hero {
+            position: relative;
+            width: 80%;
+            margin: 30px auto;
+            overflow: hidden;
+            border: 1px solid #3f3f46;
+            background-color: #18181b;
+        }
+        #heroCarousel {
+            position: relative;
+            isolation: isolate;
+        }
+        .search {
+            position: relative;
+            width: 65%;
+            max-width: 900px;
+            height: 50px;
+            margin: 20px auto;
+        }
+        .search input {
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            padding: 10px 16px 10px 40px;
+            background-color: #27272a;
+            border: 1px solid #3f3f46;
+            border-radius: 8px;
+            color: #e2e8f0;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+        .search input::placeholder {
+            color: #a1a1aa;
+        }
+        .hero-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 3px 8px;
+            background-color: #23293c;
+            color: #e5e7eb;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            border: none;
+            border-radius: 0;
+            font-style: italic;
+        }
+        .hero-label-logo {
+            width: 25px;
+            height: 25px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding-top: 8px;
+        }
+        .hero-actions button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .hero-actions button.hidden {
+            display: none;
+        }
+        .hero-btn-primary {
+            background-color: #e4e4e7;
+            color: #18181b;
+            border: 1px solid #e4e4e7;
+        }
+        .hero-btn-secondary {
+            background-color: rgba(39, 39, 42, 0.65);
+            color: #e4e4e7;
+            border: 1px solid #52525b;
+        }
+        .hero-btn-secondary i {
+            color: #a1a1aa;
+            transition: color 0.25s ease;
+        }
+
+        /* Slides */
+        .carousel-slide {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 700ms ease-in-out;
+        }
+        .carousel-slide.active-slide {
+            z-index: 10;
+            opacity: 1;
+            pointer-events: auto;
+        }
+        /* Button layout */
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding-top: 8px;
+        }
+        .hero-actions button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition:
+                background-color 0.25s ease,
+                color 0.25s ease,
+                border-color 0.25s ease,
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+        .hero-actions button.hidden {
+            display: none;
+        }
+        /* Primary button */
+        .hero-btn-primary {
+            background-color: #e4e4e7;
+            color: #18181b;
+            border: 1px solid #e4e4e7;
+        }
+        .carousel-slide.active-slide .hero-btn-primary:not(.hidden):hover {
+            background-color: #6366f1;
+            color: #ffffff;
+            border-color: #818cf8;
+            transform: scale(1.04);
+            box-shadow: 0 6px 18px rgba(99, 102, 241, 0.35);
+        }
+        /* Secondary button */
+        .hero-btn-secondary {
+            background-color: rgba(39, 39, 42, 0.65);
+            color: #e4e4e7;
+            border: 1px solid #52525b;
+        }
+        .hero-btn-secondary i {
+            color: #a1a1aa;
+            transition: color 0.25s ease;
+        }
+        .carousel-slide.active-slide .hero-btn-secondary:not(.hidden):hover {
+            background-color: #3f3f46;
+            color: #ffffff;
+            border-color: #a5b4fc;
+            transform: scale(1.04);
+            box-shadow: 0 6px 18px rgba(99, 102, 241, 0.25);
+        }
+        .carousel-slide.active-slide .hero-btn-secondary:hover i {
+            color: #ffffff;
+        }
+        /* Arrow animation */
+        .hero-btn-primary i {
+            font-size: 12px;
+            transition: transform 0.25s ease;
+        }
+        .carousel-slide.active-slide .hero-btn-primary:hover i {
+            transform: translateX(3px);
+        }
+        /* Carousel arrows */
+        .carousel-arrow {
+            position: absolute;
+            z-index: 20;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            background-color: #27272a;
+            border: 1px solid #3f3f46;
+            color: #d4d4d8;
+            cursor: pointer;
+            transition: background-color 0.25s ease, color 0.25s ease;
+        }
+        .carousel-arrow:hover {
+            background-color: #3f3f46;
+            color: #ffffff;
+        }
+        .carousel-arrow-left {
+            left: 16px;
+        }
+        .carousel-arrow-right {
+            right: 16px;
+        }
+        /* Carousel indicators */
+        .carousel-indicators {
+            position: absolute;
+            z-index: 20;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background-color: rgba(24, 24, 27, 0.9);
+            border: 1px solid #3f3f46;
+            border-radius: 20px;
+        }
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            padding: 0;
+            border: none;
+            border-radius: 50%;
+            background-color: #52525b;
+            cursor: pointer;
+            transition:
+                width 0.3s ease,
+                background-color 0.3s ease;
+        }
+        .carousel-dot:hover {
+            background-color: #a1a1aa;
+        }
+        .carousel-dot.active {
+            width: 20px;
+            border-radius: 5px;
+            background-color: #818cf8;
+        }
+        /* Smaller screens */
+        @media (max-width: 640px) {
+            .hero {
+                width: 95%;
+            }
+
+            .carousel-slide > div {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+
+            .hero-actions button {
+                padding: 10px 14px;
+                font-size: 12px;
+            }
+
+            .carousel-arrow {
+                width: 32px;
+                height: 32px;
+            }
+
+            .carousel-arrow-left {
+                left: 8px;
+            }
+
+            .carousel-arrow-right {
+                right: 8px;
+            }
+        }
+        
+        /* ===== FEATURE GRID ===== */
+        .functions-grid {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            justify-items: center;
+            gap: 24px;
+            row-gap: 50px;
+        }
+        .function-item {
+            grid-column: span 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            gap: 16px;
+        }
+        /* Center the last two circles */
+        .function-item:nth-child(4) {
+            grid-column: 2 / span 2;
+        }
+        .function-item:nth-child(5) {
+            grid-column: 4 / span 2;
+        }
+        /* ===== ENTIRE CIRCULAR CARD ===== */
+        .function-card {
+            width: 220px;
+            height: 220px;
+            padding: 24px;
+            border-radius: 50%;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+
+            /* Dark blue background with indigo border */
+            background-color: rgba(23, 29, 44, 0.65);
+            border: 1px solid #454168;
+
+            cursor: pointer;
+            transition:
+                background-color 0.3s ease,
+                border-color 0.3s ease,
+                transform 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+        /* Blue hover effect */
+        .function-card:hover {
+            background-color: rgba(36, 34, 95, 0.8);
+            border-color: #818cf8;
+            transform: translateY(-5px);
+            box-shadow:
+                0 8px 24px rgba(79, 70, 229, 0.2),
+                0 0 15px rgba(99, 102, 241, 0.15);
+        }
+        /* ===== ICONS ===== */
+        .function-icon {
+            color: #818cf8;
+            font-size: 38px;
+            transition: color 0.3s ease;
+        }
+        .function-card:hover .function-icon {
+            color: #ffffff;
+        }
+        /* ===== TITLES BELOW CIRCLES ===== */
+        .function-item h4 {
+            margin: 0;
+            color: #c7d2fe;
+            font-size: 17px;
+            font-weight: 700;
+            line-height: 1.4;
+            text-align: center;
+            transition: color 0.3s ease;
+        }
+        .function-item:hover h4 {
+            color: #ffffff;
+        }
+        /* ===== DESCRIPTION INSIDE CIRCLES ===== */
+        .function-card p {
+            color: #cbd5e1;
+            font-size: 11px;
+            line-height: 1.5;
+            margin: 0;
+        }
+        /* ===== SECTION HEADING ===== */
+        .functions {
+            font-size: 25px;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 28px;
+        }
+        .functions-subtitle {
+            margin-top: 4px;
+            color: #a1a1aa;
+            font-size: 12px;
+            line-height: 1.6;
+            margin-left: 28px;
+        }
+    </style>
+</head>
+<body>
+    <div class="bar">
+        <nav>
+            <img src="SDCdarklogo.png" alt="Website Logo" width="250">
+        </nav>        
+        <!-- Navigation Links -->
+        <div class="pages">
+            <a href="#" class="nav-link active">Home</a>
+            <a href="#" class="nav-link">Explore Jobs</a>
+            <a href="#" class="nav-link">Build CV</a>
+            <a href="#" class="nav-link">Your Cart</a>
+        </div>
+        
+        <div class="me">
+            <!-- Calendar Button -->
+            <button onclick="openCalendarPopup()"
+                class="relative p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-cyan-400 hover:border-indigo-500/50 transition group"
+                title="Calendar">
+                <i class="fa-solid fa-calendar-days text-sm"></i>
+            </button>
+
+            <!-- Current Role Mode Badge & Switch Button -->
+            <button onclick="openRoleGateModal()" class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-indigo-500/50 transition">
+                <span id="roleBadgeDot" class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse"></span>
+                <span id="roleBadgeText" class="text-xs font-bold tracking-wide text-indigo-300">Guest Mode</span>
+                <span class="text-[10px] text-slate-500 font-normal hidden sm:inline">(Switch)</span>
+            </button>
+
+            <!-- User Profile Modal Trigger -->
+            <button onclick="openProfileModal()" class="w-9 h-9 rounded-xl gradient-btn flex items-center justify-center text-white font-bold shadow-md hover:opacity-90 transition" title="User Profile">
+                <i class="fa-solid fa-user text-xs"></i>
+            </button>
+        </div>
+    </div>
+    
+    <div id="calendarPopup" class="calendar-overlay">
+        <iframe
+            id="calendarFrame"
+            src="calendar-button.html?popup=1"
+            title="Calendar"
+        ></iframe>
+    </div>
+
+    <!-- TRENDING SKILLS -->
+    <div class="trending">
+        <span class="trending-label">
+            <i class="fa-solid fa-fire"></i>
+            Trending Skills 2026
+        </span>
+
+        <div class="trending-skills">
+            <button onclick="executeSearch('Software Engineering')">Software Engineering</button>
+            <span class="trending-separator">·</span>
+            <button onclick="executeSearch('AI')">AI</button>
+            <span class="trending-separator">·</span>
+            <button onclick="executeSearch('Post-Quantum')">Post-Quantum Crypto</button>
+            <span class="trending-separator">·</span>
+            <button onclick="executeSearch('EE')">EE</button>
+            <span class="trending-separator">·</span>
+            <button onclick="executeSearch('Autonomous')">Autonomous Systems</button>
+        </div>
+    </div>
+        
+    <!-- ================= PAGE 1: HOME OVERVIEW ================= -->
+    <div id="page-home" class="space-y-10">
+
+        <!-- HERO CAROUSEL -->
+        <section class="hero">
+            <!-- Search Bar -->
+            <div class="search">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                <input
+                    type="text"
+                    id="globalSearchInput"
+                    onkeyup="handleGlobalSearch()"
+                    placeholder="Search jobs, skills, or trends...">
+            </div>
+
+            <div id="heroCarousel" class="relative min-h-[380px] sm:min-h-[420px] flex items-center bg-[#18181b]">
+
+                <!-- Slide 1 -->
+                <div class="carousel-slide absolute inset-0 transition-opacity duration-700 ease-in-out opacity-100 flex items-center p-6 sm:p-12 bg-[#18181b]">
+                    <div class="max-w-2xl space-y-4 px-8 sm:px-10">
+                        <span class="hero-label">
+                            <img src="Wlogo.png"
+                                alt="" class="hero-label-logo">
+                            Plan Your Career With AI
+                        </span>
+
+                        <h2 class="text-2xl sm:text-4xl font-black text-white leading-tight">
+                            Discover <span class="text-gray-300">Trending Jobs</span>
+                        </h2>
+                        <p class="text-sm sm:text-base text-gray-400 leading-relaxed">Explore trending job opportunities, discover in-demand skills, and find career paths that match your strengths in an AI-driven economy.</p>
+
+                        <div class="hero-actions">
+                            <button onclick="switchTab('jobs')" class="hero-btn-primary">
+                                Explore Job Catalog
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+
+                            <button onclick="openAiModalWithPrompt('Calculate my AI job replacement risk percentage')"
+                                class="hero-btn-secondary">
+                                <i class="fa-solid fa-calculator"></i>
+                                Calculate AI Risk %
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 2 -->
+                <div class="carousel-slide absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0 flex items-center p-6 sm:p-12 bg-[#18181b]">
+                    <div class="max-w-2xl space-y-4 px-8 sm:px-10">
+
+                        <span class="hero-label">
+                            <img src="Wlogo.png" alt="" class="hero-label-logo">
+                            Discover Your Strengths
+                        </span>
+
+                        <h2 class="text-2xl sm:text-4xl font-black text-white leading-tight">
+                            Find <span class="text-gray-300">Yourself</span>
+                        </h2>
+
+                        <p class="text-sm sm:text-base text-gray-400 leading-relaxed">
+                            Discover your unique strengths and align them with the evolving
+                            job market using AI-powered insights.
+                        </p>
+
+                        <div class="hero-actions">
+                            <button onclick="openAiModalWithPrompt('Analyse my current skills, strengths, weaknesses, and skill gaps for my target career. Ask me for any information you need first.')"
+                                class="hero-btn-primary">
+                                Start Career Analysis
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+
+                            <button onclick="openAiModalWithPrompt('Help me identify the skills I should develop to improve my career opportunities.')"
+                                class="hero-btn-secondary">
+                                <i class="fa-solid fa-lightbulb"></i>
+                                Upgrade Yourself
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- Slide 3 -->
+                <div class="carousel-slide absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0 flex items-center p-6 sm:p-12 bg-[#18181b]">
+                    <div class="max-w-2xl space-y-4 px-8 sm:px-10">
+
+                        <span class="hero-label">
+                            <img src="Wlogo.png" alt="" class="hero-label-logo">
+                            Prepare for Your Future
+                        </span>
+
+                        <h2 class="text-2xl sm:text-4xl font-black text-white leading-tight">
+                            Get Ready
+                            <span class="text-gray-300">And Build Your CV Now!</span>
+                        </h2>
+
+                        <p class="text-sm sm:text-base text-gray-400 leading-relaxed">
+                            Prepare for the future of work by creating a compelling CV
+                            that showcases your skills and experience.
+                        </p>
+
+                        <div class="hero-actions">
+                            <button onclick="openCvBuilderTab()"
+                                class="hero-btn-primary">
+                                Build Your CV
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+
+                            <button onclick="openAiModalWithPrompt('Help me improve my CV and identify the skills and experience I should highlight for my target career.')"
+                                class="hero-btn-secondary">
+                                <i class="fa-solid fa-file-lines"></i>
+                                Get CV Advice
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- Carousel Controls -->
+            <button onclick="prevSlide()" class="carousel-arrow absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-[#27272a] border border-[#3f3f46] text-gray-300 hover:bg-[#3f3f46] hover:text-white flex items-center justify-center transition duration-300">
+                <i class="fa-solid fa-chevron-left text-xs"></i>
+            </button>
+
+            <button onclick="nextSlide()" class="carousel-arrow absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-[#27272a] border border-[#3f3f46] text-gray-300 hover:bg-[#3f3f46] hover:text-white flex items-center justify-center transition duration-300">
+                <i class="fa-solid fa-chevron-right text-xs"></i>
+            </button>
+
+            <!-- Indicator Dots -->
+            <div class="carousel-indicators absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2">
+                <button onclick="goToSlide(0)" aria-label="Go to slide 1" class="carousel-dot active"></button>
+                <button onclick="goToSlide(1)" aria-label="Go to slide 2" class="carousel-dot"></button>
+                <button onclick="goToSlide(2)" aria-label="Go to slide 3" class="carousel-dot"></button>
+            </div>
+        </section>
+
+        <!-- FUNCTIONS -->
+        <section class="space-y-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="functions">What You Can Do</h3>
+                    <p class="functions-subtitle">Explore opportunities, improve your skills, and prepare for your next career move.</p>
+                </div>
+            </div>
+
+            <div class="functions-grid">
+
+                <!-- 1. Explore Jobs -->
+                <div class="function-item">
+                    <div onclick="switchTab('jobs')" class="function-card">
+                        <div class="function-icon">
+                            <i class="fa-solid fa-briefcase"></i>
+                        </div>
+                        <span class="inline-flex items-center text-xs font-semibold text-slate-300 mt-4 group-hover:translate-x-1 transition">
+                            Browse Jobs <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </span>
+                    </div>
+                    <h4>Available Jobs</h4>
+                </div>
+
+                <!-- 2. Analyse Yourself -->
+                <div class="function-item">
+                    <div onclick="openAiModalWithPrompt('Analyse my current skills, strengths, weaknesses, and skill gaps for my target career. Ask me for any information you need first.')" class="function-card">
+                        <div class="function-icon">
+                            <i class="fa-solid fa-user-check"></i>
+                        </div>
+                        <span class="inline-flex items-center text-xs font-semibold text-slate-300 mt-4 group-hover:translate-x-1 transition">
+                            Start Analysis <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </span>
+                    </div>   
+                    <h4>Analyse Yourself</h4>
+                </div>
+
+                <!-- 3. Build CV -->
+                <div class="function-item">
+                    <div onclick="openCvBuilderTab()" class="function-card">
+                        <div class="function-icon">
+                            <i class="fa-solid fa-file-lines"></i>
+                        </div>
+                        <span class="inline-flex items-center text-xs font-semibold text-slate-300 mt-4 group-hover:translate-x-1 transition">
+                            Build CV <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </span>
+                    </div>
+                    <h4>Build Your CV</h4>
+                </div> 
+
+                <!-- 4. Career Plan -->
+                <div class="function-item">
+                    <div onclick="openAiModalWithPrompt('Help me create a personalised 6-month career development and learning roadmap based on my current skills, career goals, and the impact of AI on my target industry.')" class="function-card">
+                        <div class="function-icon">
+                            <i class="fa-solid fa-route"></i>
+                        </div>
+                        <span class="inline-flex items-center text-xs font-semibold text-slate-300 mt-4 group-hover:translate-x-1 transition">
+                            Create My Plan <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </span>
+                    </div>
+                    <h4>Plan Your Career</h4>
+                </div>
+
+                <!-- 5. Interview Meeting Room -->
+                <div class="function-item">
+                    <div onclick="switchTab('meeting')" class="function-card">
+                        <div class="function-icon">
+                            <i class="fa-solid fa-video"></i>
+                        </div>
+                        <span class="inline-flex items-center text-xs font-semibold text-slate-300 mt-4 group-hover:translate-x-1 transition">
+                            Enter Meeting Room <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </span>
+                    </div>
+                    <h4>Interview Meeting Room</h4>
+                </div>
+            </div>
+        </section>
+    </div>
+
+<script>    
+    function openCalendarPopup() {
+        document.getElementById('calendarPopup').classList.add('active');
+    }
+
+    function closeCalendarPopup() {
+        document.getElementById('calendarPopup').classList.remove('active');
+    }
+
+    // Receive the close request from the calendar iframe
+    window.addEventListener('message', function (event) {
+        const frame = document.getElementById('calendarFrame');
+
+        if (
+            frame &&
+            event.source === frame.contentWindow &&
+            event.data === 'closeCalendarPopup'
+        ) {
+            closeCalendarPopup();
+        }
+    });
+
+    // Allow Escape to close the popup
+    document.addEventListener('keydown', function (event) {
+        if (
+            event.key === 'Escape' &&
+            document.getElementById('calendarPopup').classList.contains('active')
+        ) {
+            closeCalendarPopup();
+        }
+    });
+
+    /* ================= HERO CAROUSEL ================= */
+    let currentSlideIndex = 0;
+    let slideInterval = null;
+
+    function showSlide(index) {
+        const slides = document.querySelectorAll('#heroCarousel .carousel-slide');
+        const dots = document.querySelectorAll('.carousel-indicators .carousel-dot');
+
+        if (slides.length === 0) return;
+
+        currentSlideIndex = (index + slides.length) % slides.length;
+
+        slides.forEach((slide, i) => {
+            const isActive = i === currentSlideIndex;
+
+            slide.classList.toggle('active-slide', isActive);
+            slide.style.opacity = isActive ? '1' : '0';
+            slide.style.zIndex = isActive ? '10' : '0';
+            slide.style.pointerEvents = isActive ? 'auto' : 'none';
+        });
+
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === currentSlideIndex);
+        });
+    }
+
+    function nextSlide() {
+        showSlide(currentSlideIndex + 1);
+    }
+
+    function prevSlide() {
+        showSlide(currentSlideIndex - 1);
+    }
+
+    function goToSlide(index) {
+        showSlide(index);
+        initCarousel();
+    }
+
+    function initCarousel() {
+        if (slideInterval !== null) {
+            clearInterval(slideInterval);
+        }
+
+        slideInterval = setInterval(nextSlide, 5000);
+    }
+
+    function initializeHeroCarousel() {
+        showSlide(0);
+        initCarousel();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeHeroCarousel);
+    } 
+    else {
+        initializeHeroCarousel();
+    }
+</script>
+</body>
+</html>

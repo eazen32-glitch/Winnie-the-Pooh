@@ -1,0 +1,2062 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aiversecity - Future-Ready Workforce Domain</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js CDN for HR Analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#EEF2FF',
+                            100: '#E0E7FF',
+                            500: '#6366F1',
+                            600: '#4F46E5',
+                            700: '#4338CA',
+                            900: '#1E1B4B',
+                        },
+                        cyan: {
+                            400: '#22D3EE',
+                            500: '#06B6D4',
+                        },
+                        dark: {
+                            bg: '#020617',
+                            card: '#0F172A',
+                            border: '#1E293B',
+                            glass: 'rgba(15, 23, 42, 0.85)'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #020617;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6366f1;
+        }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(99, 102, 241, 0.18);
+        }
+
+        .gradient-text-indigo {
+            background: linear-gradient(135deg, #A5B4FC 0%, #6366F1 50%, #38BDF8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-btn {
+            background: linear-gradient(135deg, #4F46E5 0%, #6366F1 50%, #0284C7 100%);
+        }
+
+        .gradient-btn:hover {
+            background: linear-gradient(135deg, #4338CA 0%, #4F46E5 50%, #0369A1 100%);
+        }
+
+        .badge-cyan {
+            background: rgba(6, 182, 212, 0.12);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: #22D3EE;
+        }
+
+        .badge-indigo {
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.35);
+            color: #818CF8;
+        }
+
+        .badge-emerald {
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #34D399;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #cv-preview-area, #cv-preview-area * {
+                visibility: visible;
+            }
+            #cv-preview-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                background: white !important;
+                color: black !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
+
+    <!-- TOP GLOBAL NAVIGATION HEADER -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-slate-800 px-4 lg:px-8 py-3 transition-all duration-300">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+            
+            <!-- Logo & Title -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('home')">
+                <div class="w-10 h-10 rounded-xl gradient-btn flex items-center justify-center text-white font-black text-xl shadow-lg shadow-indigo-500/25">
+                    <i class="fa-solid fa-atom text-cyan-300"></i>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="font-black text-lg tracking-tight gradient-text-indigo">AIVERSECITY</h1>
+                        <span class="badge-indigo text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-widest hidden sm:inline-flex">
+                            Future-Ready Workforce
+                        </span>
+                    </div>
+                    <p class="text-[10px] text-cyan-400 font-semibold tracking-wider uppercase">Domain Portal</p>
+                </div>
+            </div>
+
+            <!-- Global Search Input -->
+            <div class="hidden md:flex flex-1 max-w-md relative">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                <input type="text" id="globalSearchInput" onkeyup="handleGlobalSearch()" placeholder="Search jobs, skills, or trends..." 
+                    class="w-full pl-10 pr-4 py-2 bg-slate-900 border border-slate-800 rounded-full text-xs sm:text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
+            </div>
+
+            <!-- Navigation Links & Profile Controls -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                
+                <!-- Dynamic Navigation Links -->
+                <nav id="dynamicNavLinks" class="hidden lg:flex items-center gap-1 text-xs font-semibold text-slate-300">
+                    <!-- Rendered via JavaScript -->
+                </nav>
+
+                <!-- Applications Cart Button -->
+                <button onclick="switchTab('tracker')" class="relative p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-cyan-400 hover:border-indigo-500/50 transition group" title="Applications / Candidate Cart">
+                    <i class="fa-solid fa-briefcase text-sm"></i>
+                    <span id="cartBadge" class="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-indigo-600 text-white font-bold text-[10px] flex items-center justify-center shadow-md">0</span>
+                </button>
+
+                <!-- Current Role Mode Badge & Switch Button -->
+                <button onclick="openRoleGateModal()" class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-indigo-500/50 transition">
+                    <span id="roleBadgeDot" class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse"></span>
+                    <span id="roleBadgeText" class="text-xs font-bold tracking-wide text-indigo-300">Guest Mode</span>
+                    <span class="text-[10px] text-slate-500 font-normal hidden sm:inline">(Switch)</span>
+                </button>
+
+                <!-- User Profile Modal Trigger -->
+                <button onclick="openProfileModal()" class="w-9 h-9 rounded-xl gradient-btn flex items-center justify-center text-white font-bold shadow-md hover:opacity-90 transition" title="User Profile">
+                    <i class="fa-solid fa-user text-xs"></i>
+                </button>
+
+            </div>
+        </div>
+
+        <!-- TRENDING TICKER STRIP -->
+        <div class="mt-2.5 pt-2 border-t border-slate-800/80 flex items-center gap-3 overflow-hidden text-[11px]">
+            <span class="text-cyan-400 font-bold uppercase tracking-wider flex items-center gap-1 flex-shrink-0">
+                <i class="fa-solid fa-bolt text-indigo-400"></i> Market Skills 2026/27:
+            </span>
+            <div class="flex-1 overflow-x-auto no-scrollbar flex items-center gap-2 text-slate-400 font-medium whitespace-nowrap">
+                <button onclick="executeSearch('Prompt Architecture')" class="px-2.5 py-0.5 rounded-full bg-slate-900 border border-slate-800 hover:border-cyan-500/50 hover:text-cyan-300 transition">Prompt Architecture</button>
+                <button onclick="executeSearch('ROS2')" class="px-2.5 py-0.5 rounded-full bg-slate-900 border border-slate-800 hover:border-cyan-500/50 hover:text-cyan-300 transition">ROS2 Mechatronics</button>
+                <button onclick="executeSearch('Post-Quantum')" class="px-2.5 py-0.5 rounded-full bg-slate-900 border border-slate-800 hover:border-cyan-500/50 hover:text-cyan-300 transition">Post-Quantum Crypto</button>
+                <button onclick="executeSearch('Edge AI')" class="px-2.5 py-0.5 rounded-full bg-slate-900 border border-slate-800 hover:border-cyan-500/50 hover:text-cyan-300 transition">Edge AI Hardware</button>
+                <button onclick="executeSearch('Autonomous')" class="px-2.5 py-0.5 rounded-full bg-slate-900 border border-slate-800 hover:border-cyan-500/50 hover:text-cyan-300 transition">Autonomous Systems</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-8">
+
+        <!-- GLOBAL TOAST NOTIFICATIONS -->
+        <div id="toastContainer" class="fixed top-20 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+        <!-- ================= PAGE 1: HOME OVERVIEW ================= -->
+        <div id="page-home" class="space-y-10">
+
+            <!-- HERO CAROUSEL -->
+            <section class="relative rounded-3xl overflow-hidden border border-indigo-500/20 shadow-2xl bg-slate-900 group">
+                <div id="heroCarousel" class="relative min-h-[380px] sm:min-h-[420px] flex items-center">
+                    
+                    <!-- Slide 1 -->
+                    <div class="carousel-slide absolute inset-0 transition-opacity duration-700 ease-in-out opacity-100 flex items-center p-6 sm:p-12 bg-cover bg-center" style="background-image: radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.25) 0%, transparent 60%), linear-gradient(to right, #020617 50%, rgba(15, 23, 42, 0.85));">
+                        <div class="max-w-2xl space-y-4">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full badge-indigo text-xs font-bold uppercase tracking-wider">
+                                <i class="fa-solid fa-shield-halved text-cyan-400"></i> Next-Gen Workforce Domain
+                            </span>
+                            <h2 class="text-2xl sm:text-4xl font-black text-white leading-tight">
+                                Navigating the <span class="gradient-text-indigo">AI-Powered Economy</span>
+                            </h2>
+                            <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
+                                Aiversecity connects job seekers and employers with real-time AI replacement metrics, skill gap analytics, and automated ATS application workflows.
+                            </p>
+                            <div class="flex flex-wrap gap-3 pt-2">
+                                <button onclick="switchTab('jobs')" class="px-5 py-2.5 rounded-xl gradient-btn text-white font-bold text-sm shadow-lg transition flex items-center gap-2">
+                                    Explore Job Catalog <i class="fa-solid fa-arrow-right text-xs"></i>
+                                </button>
+                                <button onclick="openAiModalWithPrompt('Calculate my AI job replacement risk percentage')" class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-cyan-300 border border-slate-700 font-semibold text-sm transition flex items-center gap-2">
+                                    <i class="fa-solid fa-calculator text-indigo-400"></i> Calculate AI Risk %
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2 -->
+                    <div class="carousel-slide absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0 flex items-center p-6 sm:p-12 bg-cover bg-center" style="background-image: radial-gradient(circle at 20% 80%, rgba(6, 182, 212, 0.2) 0%, transparent 60%), linear-gradient(to right, #020617 50%, rgba(15, 23, 42, 0.85));">
+                        <div class="max-w-2xl space-y-4">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full badge-cyan text-xs font-bold uppercase tracking-wider">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i> Dynamic Profile Engine
+                            </span>
+                            <h2 class="text-2xl sm:text-4xl font-black text-white leading-tight">
+                                Automated <span class="text-cyan-400">ATS Resume Builder</span>
+                            </h2>
+                            <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
+                                Generate clean, standard ATS resumes that automatically attach when applying to companies across Aiversecity.
+                            </p>
+                            <div class="flex flex-wrap gap-3 pt-2">
+                                <button onclick="openCvBuilderTab()" class="px-5 py-2.5 rounded-xl gradient-btn text-white font-bold text-sm shadow-lg transition flex items-center gap-2">
+                                    Open CV Generator <i class="fa-solid fa-file-pen text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3 -->
+                    <div class="carousel-slide absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0 flex items-center p-6 sm:p-12 bg-cover bg-center" style="background-image: radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.2) 0%, transparent 60%), linear-gradient(to right, #020617 50%, rgba(15, 23, 42, 0.85));">
+                        <div class="max-w-2xl space-y-4">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full badge-emerald text-xs font-bold uppercase tracking-wider">
+                                <i class="fa-solid fa-chart-line"></i> Employer Portal
+                            </span>
+                            <h2 class="text-2xl sm:text-4xl font-black text-white leading-tight">
+                                Live <span class="text-emerald-400">Workforce Market Trends</span>
+                            </h2>
+                            <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
+                                HR Directors access real-time skill demand analytics, target applicant pipelines, and manage virtual candidate interview scheduling.
+                            </p>
+                            <div class="flex flex-wrap gap-3 pt-2">
+                                <button onclick="openRoleGateModal('hr')" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm shadow-lg transition flex items-center gap-2">
+                                    Enter HR Portal <i class="fa-solid fa-users text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Carousel Controls -->
+                <button onclick="prevSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-950/80 border border-slate-700 text-slate-200 hover:bg-indigo-600 flex items-center justify-center transition">
+                    <i class="fa-solid fa-chevron-left text-xs"></i>
+                </button>
+                <button onclick="nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-950/80 border border-slate-700 text-slate-200 hover:bg-indigo-600 flex items-center justify-center transition">
+                    <i class="fa-solid fa-chevron-right text-xs"></i>
+                </button>
+
+                <!-- Indicator Dots -->
+                <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-slate-950/70 px-4 py-1.5 rounded-full border border-slate-800 backdrop-blur">
+                    <button onclick="goToSlide(0)" class="carousel-dot w-3 h-3 rounded-full bg-indigo-500 transition-all"></button>
+                    <button onclick="goToSlide(1)" class="carousel-dot w-3 h-3 rounded-full bg-slate-600 transition-all"></button>
+                    <button onclick="goToSlide(2)" class="carousel-dot w-3 h-3 rounded-full bg-slate-600 transition-all"></button>
+                </div>
+            </section>
+
+            <!-- CORE CAPABILITIES GRID -->
+            <section class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-layer-group text-indigo-400"></i> Platform Capabilities
+                        </h3>
+                        <p class="text-xs text-slate-400">Designed for Job Applicants, HR Recruiters, and Guest Explorers</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    
+                    <div onclick="switchTab('jobs')" class="glass-panel p-5 rounded-2xl border border-slate-800 hover:border-indigo-500/50 hover:scale-[1.02] transition duration-300 cursor-pointer group">
+                        <div class="w-11 h-11 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-xl mb-4 group-hover:bg-indigo-600 group-hover:text-white transition">
+                            <i class="fa-solid fa-briefcase"></i>
+                        </div>
+                        <h4 class="font-bold text-white group-hover:text-indigo-300 transition">Future-Ready Jobs</h4>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                            Filter positions by AI replacement risk percentage and candidate match score.
+                        </p>
+                        <span class="inline-flex items-center text-xs font-semibold text-cyan-400 mt-4 group-hover:translate-x-1 transition">
+                            Browse Openings <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </span>
+                    </div>
+
+                    <div onclick="openAiModalWithPrompt('What skills am I lacking for modern AI tech roles?')" class="glass-panel p-5 rounded-2xl border border-slate-800 hover:border-indigo-500/50 hover:scale-[1.02] transition duration-300 cursor-pointer group">
+                        <div class="w-11 h-11 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-xl mb-4 group-hover:bg-cyan-500 group-hover:text-slate-950 transition">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+                        <h4 class="font-bold text-white group-hover:text-cyan-300 transition">Skill Gap Diagnostics</h4>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                            Evaluate individual competency gaps against current industry skill trends.
+                        </p>
+                        <span class="inline-flex items-center text-xs font-semibold text-cyan-400 mt-4 group-hover:translate-x-1 transition">
+                            Run Analysis <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </span>
+                    </div>
+
+                    <div onclick="openCvBuilderTab()" class="glass-panel p-5 rounded-2xl border border-slate-800 hover:border-indigo-500/50 hover:scale-[1.02] transition duration-300 cursor-pointer group">
+                        <div class="w-11 h-11 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl mb-4 group-hover:bg-emerald-500 group-hover:text-slate-950 transition">
+                            <i class="fa-solid fa-file-invoice"></i>
+                        </div>
+                        <h4 class="font-bold text-white group-hover:text-emerald-300 transition">CV / Resume Builder</h4>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                            Form inputs generating a print-ready ATS resume auto-sent with job applications.
+                        </p>
+                        <span class="inline-flex items-center text-xs font-semibold text-emerald-400 mt-4 group-hover:translate-x-1 transition">
+                            Build Profile <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </span>
+                    </div>
+
+                    <div onclick="openAiModalWithPrompt('Help me plan a 6-month learning roadmap to thrive alongside AI')" class="glass-panel p-5 rounded-2xl border border-slate-800 hover:border-indigo-500/50 hover:scale-[1.02] transition duration-300 cursor-pointer group">
+                        <div class="w-11 h-11 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-xl mb-4 group-hover:bg-indigo-600 group-hover:text-white transition">
+                            <i class="fa-solid fa-route"></i>
+                        </div>
+                        <h4 class="font-bold text-white group-hover:text-indigo-300 transition">6-Month Career Plan</h4>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                            Personalized learning path targeting resilient tech roles.
+                        </p>
+                        <span class="inline-flex items-center text-xs font-semibold text-cyan-400 mt-4 group-hover:translate-x-1 transition">
+                            Generate Plan <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </span>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- FEATURED OPENINGS PREVIEW -->
+            <section class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-fire text-cyan-400"></i> Featured Opportunities
+                        </h3>
+                        <p class="text-xs text-slate-400">Top rated resilient positions with low AI automation risk</p>
+                    </div>
+                    <button onclick="switchTab('jobs')" class="text-xs font-semibold text-cyan-400 hover:text-cyan-300 flex items-center gap-1">
+                        View All Listings <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                    </button>
+                </div>
+
+                <div id="homeFeaturedJobsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Populated dynamically -->
+                </div>
+            </section>
+
+        </div>
+
+        <!-- ================= PAGE 2: HR LIVE WORKFORCE TRENDS (HR ONLY VIEW) ================= -->
+        <div id="page-trends" class="hidden space-y-6">
+            
+            <div class="glass-panel p-6 rounded-2xl border border-indigo-500/20 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div>
+                    <span class="badge-indigo text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-2 inline-block">
+                        HR Portal Exclusive
+                    </span>
+                    <h2 class="text-2xl font-bold text-white">Live Workforce Trends & Skills Intelligence</h2>
+                    <p class="text-xs text-slate-400 mt-1">Real-time market analytics, skill growth indices, and hiring velocity data for 2026/2027.</p>
+                </div>
+
+                <!-- Sector Filter Buttons -->
+                <div class="flex flex-wrap items-center gap-2">
+                    <span class="text-xs font-semibold text-slate-400 mr-1">Sector:</span>
+                    <button onclick="filterTrendsChart('all')" id="trendFilter-all" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 text-white shadow">All Domains</button>
+                    <button onclick="filterTrendsChart('engineering')" id="trendFilter-engineering" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 hover:bg-slate-800">Engineering</button>
+                    <button onclick="filterTrendsChart('datascience')" id="trendFilter-datascience" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 hover:bg-slate-800">Data & AI</button>
+                    <button onclick="filterTrendsChart('hardware')" id="trendFilter-hardware" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 hover:bg-slate-800">Robotics & IoT</button>
+                </div>
+            </div>
+
+            <!-- VISUAL CHARTS GRID -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- Chart 1: In-Demand Future Skills Index -->
+                <div class="lg:col-span-7 glass-panel p-5 rounded-2xl border border-slate-800 space-y-3">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                        <h3 class="font-bold text-base text-white flex items-center gap-2">
+                            <i class="fa-solid fa-chart-column text-indigo-400"></i> In-Demand Skills Market Index
+                        </h3>
+                        <span class="text-[10px] text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">Live Sync</span>
+                    </div>
+                    <div class="relative h-64 sm:h-72 w-full">
+                        <canvas id="skillsDemandChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Chart 2: AI Automation Risk vs Human Value Index -->
+                <div class="lg:col-span-5 glass-panel p-5 rounded-2xl border border-slate-800 space-y-3">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                        <h3 class="font-bold text-base text-white flex items-center gap-2">
+                            <i class="fa-solid fa-chart-pie text-cyan-400"></i> Automation Risk vs Human Value
+                        </h3>
+                        <span class="text-[10px] text-slate-400">2026 Workforce</span>
+                    </div>
+                    <div class="relative h-64 sm:h-72 w-full flex items-center justify-center">
+                        <canvas id="aiRiskDoughnutChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Chart 3: Live Hiring Velocity & Talent Supply -->
+                <div class="lg:col-span-12 glass-panel p-5 rounded-2xl border border-slate-800 space-y-3">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                        <h3 class="font-bold text-base text-white flex items-center gap-2">
+                            <i class="fa-solid fa-chart-line text-emerald-400"></i> Quarterly Talent Supply & Hiring Velocity
+                        </h3>
+                        <span class="text-[10px] text-slate-400">Q1 2026 - Q4 2026 Projection</span>
+                    </div>
+                    <div class="relative h-64 w-full">
+                        <canvas id="salaryVelocityChart"></canvas>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ================= PAGE 3: JOB CATALOG ================= -->
+        <div id="page-jobs" class="hidden space-y-6">
+            
+            <div class="glass-panel p-4 sm:p-6 rounded-2xl border border-slate-800 flex flex-col md:flex-row gap-4 items-center justify-between">
+                <div>
+                    <h2 class="text-xl font-bold text-white">Future-Ready Jobs Catalog</h2>
+                    <p class="text-xs text-slate-400">Browse resilient positions, evaluate AI replacement risk %, and apply with your profile CV</p>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-2.5 w-full md:w-auto">
+                    <select id="riskFilter" onchange="filterJobs()" class="bg-slate-900 border border-slate-800 text-xs text-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-indigo-500">
+                        <option value="all">All AI Risk Levels</option>
+                        <option value="low">Low Risk (&lt;20%)</option>
+                        <option value="medium">Moderate Risk (20%-50%)</option>
+                    </select>
+
+                    <select id="sortBy" onchange="filterJobs()" class="bg-slate-900 border border-slate-800 text-xs text-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-indigo-500">
+                        <option value="match">Sort by Skill Match %</option>
+                        <option value="recent">Sort by Newest</option>
+                        <option value="risk">Sort by Lowest AI Risk</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="jobsCatalogGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Rendered dynamically -->
+            </div>
+        </div>
+
+        <!-- ================= PAGE 4: APPLICATION CART / HR MANAGEMENT ================= -->
+        <div id="page-tracker" class="hidden space-y-6">
+
+            <div class="glass-panel p-6 rounded-2xl border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                    <span id="trackerRoleBadge" class="badge-indigo text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-2 inline-block">
+                        Job Seeker View
+                    </span>
+                    <h2 id="trackerTitle" class="text-2xl font-bold text-white">Applications Cart</h2>
+                    <p id="trackerSubtitle" class="text-xs sm:text-sm text-slate-400 mt-1">Track submitted application statuses, employer responses, and scheduled virtual interviews.</p>
+                </div>
+
+                <button id="hrAddJobBtn" onclick="openAddJobModal()" class="hidden px-4 py-2.5 rounded-xl gradient-btn text-white font-bold text-xs shadow-lg transition flex items-center gap-2">
+                    <i class="fa-solid fa-plus"></i> Post New Job Opening
+                </button>
+            </div>
+
+            <div id="trackerListContainer" class="space-y-4">
+                <!-- Dynamically populated based on active role privacy rules -->
+            </div>
+        </div>
+
+        <!-- ================= PAGE 5: RESUME / CV BUILDER (JOB SEEKERS ONLY) ================= -->
+        <div id="page-resume" class="hidden space-y-6">
+            
+            <div class="glass-panel p-6 rounded-2xl border border-slate-800 flex items-center justify-between">
+                <div>
+                    <h2 class="text-2xl font-bold text-white">ATS CV & Resume Builder</h2>
+                    <p class="text-xs sm:text-sm text-slate-400 mt-1">Configure your personal credentials to generate a standard ATS resume attached automatically to job applications.</p>
+                </div>
+                <button onclick="window.print()" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 text-xs font-semibold rounded-xl transition flex items-center gap-2">
+                    <i class="fa-solid fa-print text-indigo-400"></i> Print / Export PDF
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                
+                <!-- Input Form Area -->
+                <div class="lg:col-span-6 glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h3 class="text-base font-bold text-indigo-300 border-b border-slate-800 pb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-user-pen"></i> Personal & Professional Details
+                    </h3>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                        <div>
+                            <label class="block text-slate-400 mb-1 font-medium">Full Name</label>
+                            <input type="text" id="cvFullName" oninput="updateCvPreview()" placeholder="Alex Chen" 
+                                class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-slate-100 focus:outline-none focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-400 mb-1 font-medium">Email Address</label>
+                            <input type="email" id="cvEmail" oninput="updateCvPreview()" placeholder="alex.chen@example.com" 
+                                class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-slate-100 focus:outline-none focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-400 mb-1 font-medium">Target Specialty</label>
+                            <input type="text" id="cvTargetRole" oninput="updateCvPreview()" placeholder="Senior Mechatronics & AI Engineer" 
+                                class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-slate-100 focus:outline-none focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-400 mb-1 font-medium">Phone Number</label>
+                            <input type="text" id="cvPhone" oninput="updateCvPreview()" placeholder="+60 12-345 6789" 
+                                class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-slate-100 focus:outline-none focus:border-indigo-500">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1 font-medium">Executive Summary</label>
+                        <textarea id="cvSummary" oninput="updateCvPreview()" rows="3" placeholder="Brief summary of skills..." 
+                            class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-slate-100 focus:outline-none focus:border-indigo-500"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1 font-medium">Core Skills (Comma separated)</label>
+                        <input type="text" id="cvSkills" oninput="updateCvPreview()" placeholder="ROS2, C++, Python, Edge AI, Control Systems" 
+                            class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-indigo-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1 font-medium">Experience & Projects</label>
+                        <textarea id="cvExperience" oninput="updateCvPreview()" rows="3" placeholder="Lead Developer - Autonomous Robotics Club (2024-2026)..." 
+                            class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-slate-100 focus:outline-none focus:border-indigo-500"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1 font-medium">Education</label>
+                        <textarea id="cvEducation" oninput="updateCvPreview()" rows="2" placeholder="B.Eng Mechatronics & AI - Aiversecity University" 
+                            class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-slate-100 focus:outline-none focus:border-indigo-500"></textarea>
+                    </div>
+
+                    <button onclick="saveCvData()" class="w-full py-2.5 rounded-xl gradient-btn text-white font-bold text-xs shadow-lg transition">
+                        <i class="fa-solid fa-floppy-disk mr-1"></i> Save Profile CV
+                    </button>
+                </div>
+
+                <!-- Formatted Resume Live Preview -->
+                <div class="lg:col-span-6">
+                    <div id="cv-preview-area" class="bg-slate-900 text-slate-100 p-6 sm:p-8 rounded-2xl border border-slate-700 shadow-2xl min-h-[550px] space-y-6">
+                        
+                        <div class="border-b border-slate-800 pb-4">
+                            <h1 id="prevName" class="text-2xl font-bold text-white tracking-tight">Alex Chen</h1>
+                            <p id="prevRole" class="text-sm font-semibold text-cyan-400 mt-0.5">Senior Mechatronics & AI Student</p>
+                            <div class="flex flex-wrap gap-4 text-xs text-slate-400 mt-2">
+                                <span id="prevEmail"><i class="fa-solid fa-envelope text-slate-500 mr-1"></i> alex.chen@example.com</span>
+                                <span id="prevPhone"><i class="fa-solid fa-phone text-slate-500 mr-1"></i> +60 12-345 6789</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Executive Summary</h4>
+                            <p id="prevSummary" class="text-xs text-slate-300 leading-relaxed">
+                                Senior Mechatronics & AI Engineering student specializing in embedded system control, ROS2 autonomous navigation, and edge AI hardware acceleration.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Core Competencies</h4>
+                            <div id="prevSkills" class="flex flex-wrap gap-1.5">
+                                <span class="px-2.5 py-1 rounded-md bg-slate-800 text-indigo-300 border border-slate-700 text-[11px]">ROS2</span>
+                                <span class="px-2.5 py-1 rounded-md bg-slate-800 text-indigo-300 border border-slate-700 text-[11px]">C++</span>
+                                <span class="px-2.5 py-1 rounded-md bg-slate-800 text-indigo-300 border border-slate-700 text-[11px]">Edge AI</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Projects & Experience</h4>
+                            <div id="prevExperience" class="text-xs text-slate-300 space-y-2 leading-relaxed whitespace-pre-line">
+                                Lead Developer - Autonomous Mobile Robot (2025 - Present)
+                                Implemented SLAM navigation and sensor fusion using ROS2 and C++ on Jetson Orin edge board.
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Education</h4>
+                            <div id="prevEducation" class="text-xs text-slate-300 leading-relaxed whitespace-pre-line">
+                                B.Eng Mechatronics & AI Engineering (Expected 2027) - Aiversecity Tech
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ================= PAGE 6: COMPANY PROFILE (HR VIEW ONLY) ================= -->
+        <div id="page-company" class="hidden space-y-6">
+            <div class="glass-panel p-6 rounded-2xl border border-slate-800 flex items-center justify-between">
+                <div>
+                    <h2 class="text-2xl font-bold text-white">Company Profile</h2>
+                    <p class="text-xs sm:text-sm text-slate-400 mt-1">Manage corporate details and recruiting standards.</p>
+                </div>
+            </div>
+
+            <div class="glass-panel p-6 rounded-2xl border border-slate-800 max-w-xl space-y-4">
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1 font-medium">Company Name</label>
+                    <input type="text" id="companyNameInput" value="TechCorp AI" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-indigo-500">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1 font-medium">HR Director Name</label>
+                    <input type="text" id="hrNameInput" value="Sarah Jenkins" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-indigo-500">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1 font-medium">Industry Sector</label>
+                    <input type="text" id="hrIndustryInput" value="Autonomous Systems & Enterprise AI" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-indigo-500">
+                </div>
+                <button onclick="saveCompanyProfile()" class="w-full py-2.5 rounded-xl gradient-btn text-white font-bold text-xs shadow-lg transition">
+                    Update Corporate Profile
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FLOATING AI CAREER ASSISTANT WIDGET -->
+    <div class="fixed bottom-5 right-5 z-40">
+        <button onclick="toggleAiDrawer()" class="relative group w-14 h-14 rounded-full gradient-btn text-white shadow-2xl shadow-indigo-500/40 flex items-center justify-center hover:scale-105 active:scale-95 transition-all">
+            <i class="fa-solid fa-sparkles text-2xl text-cyan-300 animate-pulse"></i>
+        </button>
+
+        <div id="aiChatDrawer" class="hidden absolute bottom-16 right-0 w-[90vw] sm:w-[400px] h-[520px] glass-panel rounded-3xl border border-indigo-500/30 shadow-2xl flex flex-col overflow-hidden transition-all duration-300">
+            <div class="p-4 bg-slate-900/95 border-b border-slate-800 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg gradient-btn flex items-center justify-center text-white font-bold text-xs">
+                        <i class="fa-solid fa-brain text-cyan-300"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-sm text-white">Aiversecity Career AI</h4>
+                        <p class="text-[10px] text-cyan-400 flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Gemini 3 Flash Powered
+                        </p>
+                    </div>
+                </div>
+                <button onclick="toggleAiDrawer()" class="text-slate-400 hover:text-white text-sm p-1">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Quick Action Pills -->
+            <div class="p-3 bg-slate-950/80 border-b border-slate-800 flex gap-2 overflow-x-auto no-scrollbar text-[11px]">
+                <button onclick="sendQuickPrompt('What skills am I lacking for modern tech roles?')" class="whitespace-nowrap px-2.5 py-1 rounded-full bg-slate-900 border border-slate-800 text-slate-300 hover:border-indigo-500 transition">
+                    <i class="fa-solid fa-triangle-exclamation text-indigo-400 mr-1"></i> Skill Gaps
+                </button>
+                <button onclick="sendQuickPrompt('Calculate my AI job replacement risk percentage')" class="whitespace-nowrap px-2.5 py-1 rounded-full bg-slate-900 border border-slate-800 text-slate-300 hover:border-indigo-500 transition">
+                    <i class="fa-solid fa-percent text-cyan-400 mr-1"></i> AI Risk %
+                </button>
+                <button onclick="sendQuickPrompt('Help me plan a 6-month learning roadmap to survive & thrive alongside AI')" class="whitespace-nowrap px-2.5 py-1 rounded-full bg-slate-900 border border-slate-800 text-slate-300 hover:border-indigo-500 transition">
+                    <i class="fa-solid fa-route text-emerald-400 mr-1"></i> 6-Mo Roadmap
+                </button>
+            </div>
+
+            <div id="aiChatLog" class="flex-1 p-4 overflow-y-auto space-y-3 text-xs">
+                <div class="flex gap-2.5 items-start">
+                    <div class="w-7 h-7 rounded-full bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 flex-shrink-0 flex items-center justify-center text-xs">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl text-slate-200 leading-relaxed max-w-[85%]">
+                        Hello! I am your AI Career Advisor. Ask me about skill gaps, job alignment, AI replacement risk, or 6-month future roadmaps!
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-3 bg-slate-900 border-t border-slate-800 flex items-center gap-2">
+                <input type="text" id="aiChatInput" onkeydown="if(event.key === 'Enter') sendAiMessage()" placeholder="Ask AI Assistant..." 
+                    class="flex-1 bg-slate-950 border border-slate-800 rounded-full px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-indigo-500">
+                <button onclick="sendAiMessage()" class="w-9 h-9 rounded-full gradient-btn text-white font-bold flex items-center justify-center hover:opacity-90 transition">
+                    <i class="fa-solid fa-paper-plane text-xs"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= MODAL 1: ROLE SELECTION & AUTHENTICATION ================= -->
+    <div id="roleGateModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md">
+        <div class="glass-panel w-full max-w-xl rounded-3xl border border-indigo-500/30 p-6 sm:p-8 space-y-6 shadow-2xl relative">
+            
+            <div class="text-center space-y-2">
+                <div class="w-14 h-14 rounded-2xl gradient-btn mx-auto flex items-center justify-center text-white text-2xl font-black shadow-xl">
+                    <i class="fa-solid fa-user-shield text-cyan-300"></i>
+                </div>
+                <h3 class="text-2xl font-black text-white">Select Portal Access Mode</h3>
+                <p class="text-xs text-slate-400">Choose your profile mode to access the Aiversecity Domain.</p>
+            </div>
+
+            <!-- Role Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                
+                <!-- Student / Job Seeker Option -->
+                <div onclick="selectGateOption('student')" id="gateCard-student" class="p-4 rounded-2xl border border-slate-800 bg-slate-900/90 hover:border-indigo-500 cursor-pointer transition text-center space-y-2 group">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white mx-auto flex items-center justify-center text-lg transition">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <h4 class="font-bold text-xs text-white">Student / Seeker</h4>
+                    <p class="text-[10px] text-slate-400">Default profile: Alex Chen (Mechatronics & AI)</p>
+                </div>
+
+                <!-- HR Manager Option -->
+                <div onclick="selectGateOption('hr')" id="gateCard-hr" class="p-4 rounded-2xl border border-slate-800 bg-slate-900/90 hover:border-cyan-500 cursor-pointer transition text-center space-y-2 group">
+                    <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-400 group-hover:bg-cyan-500 group-hover:text-slate-950 mx-auto flex items-center justify-center text-lg transition">
+                        <i class="fa-solid fa-building-user"></i>
+                    </div>
+                    <h4 class="font-bold text-xs text-white">HR Manager</h4>
+                    <p class="text-[10px] text-slate-400">Default profile: Sarah Jenkins (TechCorp AI)</p>
+                </div>
+
+                <!-- Guest Mode Option -->
+                <div onclick="selectGateOption('guest')" id="gateCard-guest" class="p-4 rounded-2xl border border-slate-800 bg-slate-900/90 hover:border-slate-500 cursor-pointer transition text-center space-y-2 group">
+                    <div class="w-10 h-10 rounded-xl bg-slate-800 text-slate-300 group-hover:bg-slate-700 mx-auto flex items-center justify-center text-lg transition">
+                        <i class="fa-solid fa-user-clock"></i>
+                    </div>
+                    <h4 class="font-bold text-xs text-white">Guest Mode</h4>
+                    <p class="text-[10px] text-slate-400">Explore listings & trends without account</p>
+                </div>
+
+            </div>
+
+            <!-- Dynamic Form Area -->
+            <div id="gateFormContainer" class="bg-slate-900/90 p-5 rounded-2xl border border-slate-800">
+                
+                <!-- Student Login Form -->
+                <form id="studentAuthForm" onsubmit="confirmStudentGate(event)" class="space-y-3 text-xs">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                        <h4 class="font-bold text-indigo-300">Student Profile Sign-In</h4>
+                        <span class="text-[10px] text-emerald-400 font-mono">Alex Chen Profile Active</span>
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 mb-1">Full Name</label>
+                        <input type="text" id="gateStudentName" value="Alex Chen" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-slate-100 focus:outline-none focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 mb-1">Skills Matrix</label>
+                        <input type="text" id="gateStudentSkills" value="ROS2, C++, Python, Edge AI" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-slate-100 focus:outline-none focus:border-indigo-500">
+                    </div>
+                    <button type="submit" class="w-full py-2.5 rounded-xl gradient-btn text-white font-bold text-xs shadow-lg transition">
+                        Enter Student Portal
+                    </button>
+                </form>
+
+                <!-- HR Login Form -->
+                <form id="hrAuthForm" onsubmit="confirmHrGate(event)" class="hidden space-y-3 text-xs">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                        <h4 class="font-bold text-cyan-300">HR Manager Sign-In</h4>
+                        <span class="text-[10px] text-cyan-400 font-mono">TechCorp AI Account</span>
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 mb-1">Target Employer Company</label>
+                        <input type="text" id="gateHrCompany" value="TechCorp AI" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-slate-100 focus:outline-none focus:border-cyan-500">
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 mb-1">HR Representative Name</label>
+                        <input type="text" id="gateHrName" value="Sarah Jenkins" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-slate-100 focus:outline-none focus:border-cyan-500">
+                    </div>
+                    <button type="submit" class="w-full py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold text-xs shadow-lg transition">
+                        Enter HR Portal & Analytics
+                    </button>
+                </form>
+
+                <!-- Guest Form -->
+                <div id="guestAuthForm" class="hidden text-center space-y-3 text-xs py-2">
+                    <p class="text-slate-300 leading-relaxed">
+                        In <strong>Guest Mode</strong>, you can explore the platform and view live trends. Applying for positions will prompt you to log in as a Job Seeker.
+                    </p>
+                    <button onclick="confirmGuestGate()" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs transition">
+                        Continue as Guest
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- MODAL 2: GUEST MODE APPLY SIGN-IN PROMPT -->
+    <div id="guestApplyModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md">
+        <div class="glass-panel w-full max-w-md rounded-3xl border border-indigo-500/30 p-6 space-y-5 shadow-2xl relative">
+            <button onclick="closeGuestApplyModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center space-y-2">
+                <div class="w-12 h-12 rounded-2xl bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 mx-auto flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white">Sign In Required to Apply</h3>
+                <p id="guestPromptJobTitle" class="text-xs text-cyan-300 font-semibold">Target Job Position</p>
+            </div>
+
+            <p class="text-xs text-slate-300 text-center leading-relaxed">
+                Please sign in as a Job Seeker to send your resume automatically to this employer.
+            </p>
+
+            <div class="flex flex-col gap-2.5 pt-2">
+                <button onclick="closeGuestApplyModal(); openRoleGateModal('student');" class="w-full py-2.5 rounded-xl gradient-btn text-white font-bold text-xs shadow-md transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-right-to-bracket"></i> Sign In / Choose Seeker Profile
+                </button>
+                <button onclick="closeGuestApplyModal()" class="w-full py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white text-xs font-medium transition">
+                    Continue Browsing as Guest
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: HR INTERVIEW SCHEDULER -->
+    <div id="interviewModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md">
+        <div class="glass-panel w-full max-w-md rounded-3xl border border-indigo-500/30 p-6 space-y-5 shadow-2xl relative">
+            <button onclick="closeInterviewModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="space-y-1">
+                <h3 class="text-xl font-bold text-white">Schedule Virtual Interview</h3>
+                <p id="interviewCandidateName" class="text-xs text-indigo-300 font-semibold">Candidate: Alex Chen</p>
+            </div>
+
+            <form onsubmit="confirmInterviewSchedule(event)" class="space-y-4 text-xs">
+                <input type="hidden" id="interviewAppId">
+                <div>
+                    <label class="block text-slate-400 mb-1 font-medium">Date & Time</label>
+                    <input type="datetime-local" id="interviewDateTime" required class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-slate-100 focus:outline-none focus:border-indigo-500">
+                </div>
+                <div>
+                    <label class="block text-slate-400 mb-1 font-medium">Virtual Meeting Room Link</label>
+                    <input type="url" id="interviewLink" value="https://meet.aiversecity.io/room-techcorp-892" required class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-slate-100 focus:outline-none focus:border-indigo-500">
+                </div>
+                <div>
+                    <label class="block text-slate-400 mb-1 font-medium">Message for Candidate</label>
+                    <textarea id="interviewNotes" rows="2" placeholder="Please prepare code sample..." class="w-full bg-slate-900 border border-slate-800 rounded-xl p-2.5 text-slate-100 focus:outline-none focus:border-indigo-500"></textarea>
+                </div>
+
+                <button type="submit" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition">
+                    Send Meeting Invite & Confirm
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 4: VIRTUAL INTERVIEW ROOM SIMULATION -->
+    <div id="videoCallModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-lg">
+        <div class="glass-panel w-full max-w-3xl rounded-3xl border border-indigo-500/30 p-6 space-y-4 shadow-2xl relative">
+            <button onclick="closeVideoCallModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div class="flex items-center gap-3">
+                    <span class="w-3 h-3 rounded-full bg-red-500 animate-ping"></span>
+                    <h3 class="text-base font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-video text-cyan-400"></i> Virtual Interview Room #892
+                    </h3>
+                </div>
+                <span class="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
+                    Live Video Call Active
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="relative bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden h-56 flex flex-col items-center justify-center text-center p-4">
+                    <div class="w-16 h-16 rounded-full bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-indigo-300 text-2xl mb-2">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <h4 id="videoCallHrHost" class="font-bold text-sm text-white">Sarah Jenkins (HR Host)</h4>
+                    <p class="text-[10px] text-cyan-300">TechCorp AI Recruitment</p>
+                </div>
+
+                <div class="relative bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden h-56 flex flex-col items-center justify-center text-center p-4">
+                    <div class="w-16 h-16 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 text-2xl mb-2">
+                        <i class="fa-solid fa-user text-cyan-400"></i>
+                    </div>
+                    <h4 id="videoSeekerName" class="font-bold text-sm text-white">Alex Chen (Candidate)</h4>
+                    <p class="text-[10px] text-slate-400">Webcam Feed</p>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-center gap-3 pt-2">
+                <button onclick="showToast('Microphone toggled', 'info')" class="w-10 h-10 rounded-full bg-slate-800 text-slate-200 hover:bg-slate-700 flex items-center justify-center transition">
+                    <i class="fa-solid fa-microphone"></i>
+                </button>
+                <button onclick="showToast('Camera toggled', 'info')" class="w-10 h-10 rounded-full bg-slate-800 text-slate-200 hover:bg-slate-700 flex items-center justify-center transition">
+                    <i class="fa-solid fa-video"></i>
+                </button>
+                <button onclick="closeVideoCallModal()" class="px-5 py-2 rounded-full bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs transition">
+                    Leave Call
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 5: HR POST NEW JOB OPENING -->
+    <div id="addJobModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md">
+        <div class="glass-panel w-full max-w-lg rounded-3xl border border-indigo-500/30 p-6 space-y-5 shadow-2xl relative">
+            <button onclick="closeAddJobModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h3 class="text-xl font-bold text-white">Post New Job Opening</h3>
+
+            <form onsubmit="handleAddNewJob(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-slate-400 mb-1 font-medium">Job Title</label>
+                    <input type="text" id="newJobTitle" required placeholder="e.g. ROS2 Mechatronics Lead" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-slate-100 focus:outline-none focus:border-indigo-500">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-slate-400 mb-1 font-medium">Company</label>
+                        <input type="text" id="newJobCompany" required value="TechCorp AI" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-slate-100 focus:outline-none focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 mb-1 font-medium">Sector Category</label>
+                        <select id="newJobCategory" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-slate-100 focus:outline-none focus:border-indigo-500">
+                            <option value="engineering">Engineering</option>
+                            <option value="datascience">Data & AI</option>
+                            <option value="hardware">Robotics & IoT</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-slate-400 mb-1 font-medium">Required Skills (Comma separated)</label>
+                        <input type="text" id="newJobSkills" required placeholder="ROS2, C++, SLAM" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-slate-100 focus:outline-none focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 mb-1 font-medium">Est. AI Risk %</label>
+                        <input type="number" id="newJobRisk" min="1" max="99" value="12" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-slate-100 focus:outline-none focus:border-indigo-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-slate-400 mb-1 font-medium">Role Description</label>
+                    <textarea id="newJobDesc" rows="3" required placeholder="Role details..." class="w-full bg-slate-900 border border-slate-800 rounded-xl p-2.5 text-slate-100 focus:outline-none focus:border-indigo-500"></textarea>
+                </div>
+
+                <button type="submit" class="w-full py-2.5 rounded-xl gradient-btn text-white font-bold transition">
+                    Publish Position
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 6: PROFILE MODAL -->
+    <div id="profileModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md">
+        <div class="glass-panel w-full max-w-md rounded-3xl border border-indigo-500/30 p-6 space-y-5 shadow-2xl relative">
+            <button onclick="closeProfileModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center space-y-2">
+                <div class="w-16 h-16 rounded-2xl gradient-btn mx-auto flex items-center justify-center text-white text-2xl font-black shadow-lg">
+                    <i class="fa-solid fa-id-card"></i>
+                </div>
+                <h3 id="profileModalTitle" class="text-xl font-bold text-white">Active Profile</h3>
+                <p id="profileModalRoleBadge" class="text-xs text-indigo-400 font-semibold uppercase">Mode</p>
+            </div>
+
+            <div id="profileModalDetails" class="bg-slate-900 p-4 rounded-2xl border border-slate-800 space-y-2 text-xs">
+                <!-- Populated dynamically -->
+            </div>
+
+            <button onclick="closeProfileModal(); openRoleGateModal();" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium text-xs transition">
+                Switch Portal Role / Sign In
+            </button>
+        </div>
+    </div>
+
+
+    <!-- JAVASCRIPT APPLICATION SCRIPT -->
+    <script>
+        /* ================= STATE MANAGEMENT ================= */
+        const state = {
+            currentUser: {
+                id: 'usr-alex',
+                role: 'student', // 'student', 'hr', 'guest'
+                name: 'Alex Chen',
+                email: 'alex.chen@example.com',
+                skills: 'ROS2, C++, Python, Edge AI, Control Systems',
+                targetRole: 'Senior Mechatronics & AI Engineer',
+                company: 'TechCorp AI',
+                hrName: 'Sarah Jenkins',
+                industry: 'Autonomous Systems & Enterprise AI'
+            },
+            currentTab: 'home',
+            jobs: [
+                {
+                    id: 'job-1',
+                    title: 'ROS2 Autonomous Robotics Lead',
+                    company: 'TechCorp AI',
+                    location: 'Penang / Hybrid',
+                    salary: '$8,500 - $12,000 / mo',
+                    category: 'hardware',
+                    skills: ['ROS2', 'C++', 'SLAM', 'Edge AI'],
+                    matchScore: 96,
+                    aiRisk: 12,
+                    description: 'Lead mobile robotics development requiring real-time motion planning and sensor fusion.',
+                    postedAt: '2 hours ago'
+                },
+                {
+                    id: 'job-2',
+                    title: 'AI Prompt & Agent Architect',
+                    company: 'TechCorp AI',
+                    location: 'Kuala Lumpur / Remote',
+                    salary: '$9,000 - $13,500 / mo',
+                    category: 'engineering',
+                    skills: ['Python', 'LLM Agents', 'LangChain', 'Prompt Eng'],
+                    matchScore: 91,
+                    aiRisk: 14,
+                    description: 'Design multi-agent LLM systems to automate enterprise workflow decisions.',
+                    postedAt: '1 day ago'
+                },
+                {
+                    id: 'job-3',
+                    title: 'Edge AI Silicon Specialist',
+                    company: 'QuantumSilicon',
+                    location: 'Cyberjaya, Malaysia',
+                    salary: '$8,000 - $11,500 / mo',
+                    category: 'hardware',
+                    skills: ['FPGA', 'TinyML', 'C++', 'Edge Hardware'],
+                    matchScore: 84,
+                    aiRisk: 10,
+                    description: 'Optimize compressed deep learning models for low-power silicon edge devices.',
+                    postedAt: '2 days ago'
+                },
+                {
+                    id: 'job-4',
+                    title: 'LLM Fine-Tuning Engineer',
+                    company: 'OmniData Global',
+                    location: 'Singapore / Remote',
+                    salary: '$9,500 - $14,000 / mo',
+                    category: 'datascience',
+                    skills: ['PyTorch', 'LoRA', 'RLHF', 'Vector DB'],
+                    matchScore: 88,
+                    aiRisk: 15,
+                    description: 'Fine-tune open weights models for domain-specific medical and financial reasoning.',
+                    postedAt: '3 days ago'
+                }
+            ],
+            // Private Applications Store
+            applications: [
+                {
+                    id: 'app-101',
+                    jobId: 'job-1',
+                    jobTitle: 'ROS2 Autonomous Robotics Lead',
+                    company: 'TechCorp AI',
+                    applicantId: 'usr-alex',
+                    applicantName: 'Alex Chen',
+                    applicantEmail: 'alex.chen@example.com',
+                    applicantSkills: 'ROS2, C++, Python, Edge AI',
+                    matchScore: 96,
+                    status: 'Pending',
+                    appliedDate: 'Oct 21, 2026',
+                    interviewDetails: null
+                }
+            ],
+            currentSlideIndex: 0,
+            slideInterval: null,
+            charts: {
+                skillsChart: null,
+                aiRiskChart: null,
+                salaryChart: null
+            }
+        };
+
+        /* ================= INITIALIZATION ================= */
+        window.addEventListener('DOMContentLoaded', () => {
+            initCarousel();
+            renderNavigationMenu();
+            renderAllViews();
+            
+            // Open mandatory pre-login choice modal on initial visit
+            openRoleGateModal('student');
+        });
+
+        /* ================= TAB ROUTING & SWITCHING ================= */
+        function switchTab(tabName) {
+            state.currentTab = tabName;
+            
+            // Hide all pages
+            document.querySelectorAll('main > div[id^="page-"]').forEach(el => el.classList.add('hidden'));
+            
+            // Show target page
+            const selectedPage = document.getElementById(`page-${tabName}`);
+            if (selectedPage) selectedPage.classList.remove('hidden');
+
+            // View-specific renders
+            if (tabName === 'home') renderFeaturedJobsHome();
+            if (tabName === 'jobs') filterJobs();
+            if (tabName === 'tracker') renderTrackerView();
+            if (tabName === 'trends') renderHrAnalyticsCharts();
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderNavigationMenu() {
+            const container = document.getElementById('dynamicNavLinks');
+            if (!container) return;
+
+            if (state.currentUser.role === 'hr') {
+                // HR Portal Menu (NO CV Builder!)
+                container.innerHTML = `
+                    <button onclick="switchTab('home')" class="px-3 py-1.5 rounded-lg hover:text-indigo-400 hover:bg-slate-900 transition">Overview</button>
+                    <button onclick="switchTab('trends')" class="px-3 py-1.5 rounded-lg text-cyan-300 hover:bg-indigo-500/10 transition flex items-center gap-1">
+                        <i class="fa-solid fa-chart-pie text-xs"></i> HR Trends & Analytics
+                    </button>
+                    <button onclick="switchTab('tracker')" class="px-3 py-1.5 rounded-lg hover:text-indigo-400 hover:bg-slate-900 transition">Applicant Cart</button>
+                    <button onclick="switchTab('company')" class="px-3 py-1.5 rounded-lg hover:text-indigo-400 hover:bg-slate-900 transition">Company Profile</button>
+                `;
+            } else if (state.currentUser.role === 'student') {
+                // Student / Seeker Menu
+                container.innerHTML = `
+                    <button onclick="switchTab('home')" class="px-3 py-1.5 rounded-lg hover:text-indigo-400 hover:bg-slate-900 transition">Home</button>
+                    <button onclick="switchTab('jobs')" class="px-3 py-1.5 rounded-lg hover:text-indigo-400 hover:bg-slate-900 transition">Explore Jobs</button>
+                    <button onclick="openCvBuilderTab()" class="px-3 py-1.5 rounded-lg hover:text-indigo-400 hover:bg-slate-900 transition">CV / Resume Builder</button>
+                    <button onclick="switchTab('tracker')" class="px-3 py-1.5 rounded-lg hover:text-indigo-400 hover:bg-slate-900 transition">My Applications</button>
+                `;
+            } else {
+                // Guest Menu
+                container.innerHTML = `
+                    <button onclick="switchTab('home')" class="px-3 py-1.5 rounded-lg hover:text-indigo-400 hover:bg-slate-900 transition">Home</button>
+                    <button onclick="switchTab('jobs')" class="px-3 py-1.5 rounded-lg hover:text-indigo-400 hover:bg-slate-900 transition">Explore Jobs</button>
+                `;
+            }
+        }
+
+        function openCvBuilderTab() {
+            if (state.currentUser.role === 'guest') {
+                document.getElementById('guestPromptJobTitle').innerText = 'Building your ATS Resume Profile';
+                document.getElementById('guestApplyModal').classList.remove('hidden');
+                return;
+            }
+            if (state.currentUser.role === 'hr') {
+                showToast('CV Builder is for Job Seekers. HR users access candidate resumes in Applicant Cart.', 'warning');
+                return;
+            }
+            switchTab('resume');
+        }
+
+        /* ================= ROLE GATE MODAL ================= */
+        function openRoleGateModal(preselect = 'student') {
+            document.getElementById('roleGateModal').classList.remove('hidden');
+            selectGateOption(preselect);
+        }
+
+        function selectGateOption(option) {
+            ['student', 'hr', 'guest'].forEach(o => {
+                const card = document.getElementById(`gateCard-${o}`);
+                if (card) {
+                    if (o === option) {
+                        card.classList.add('border-indigo-500', 'bg-indigo-500/10');
+                    } else {
+                        card.classList.remove('border-indigo-500', 'bg-indigo-500/10');
+                    }
+                }
+            });
+
+            document.getElementById('studentAuthForm').classList.toggle('hidden', option !== 'student');
+            document.getElementById('hrAuthForm').classList.toggle('hidden', option !== 'hr');
+            document.getElementById('guestAuthForm').classList.toggle('hidden', option !== 'guest');
+        }
+
+        function confirmStudentGate(e) {
+            e.preventDefault();
+            state.currentUser.role = 'student';
+            state.currentUser.id = 'usr-alex';
+            state.currentUser.name = document.getElementById('gateStudentName').value || 'Alex Chen';
+            state.currentUser.skills = document.getElementById('gateStudentSkills').value || 'ROS2, C++, Python, Edge AI';
+            
+            syncStudentCvForm();
+            document.getElementById('roleGateModal').classList.add('hidden');
+            updateRoleBadge();
+            renderNavigationMenu();
+            renderAllViews();
+            showToast(`Signed in as Job Seeker: ${state.currentUser.name}`, 'success');
+        }
+
+        function confirmHrGate(e) {
+            e.preventDefault();
+            state.currentUser.role = 'hr';
+            state.currentUser.company = document.getElementById('gateHrCompany').value || 'TechCorp AI';
+            state.currentUser.hrName = document.getElementById('gateHrName').value || 'Sarah Jenkins';
+
+            document.getElementById('roleGateModal').classList.add('hidden');
+            updateRoleBadge();
+            renderNavigationMenu();
+            renderAllViews();
+            switchTab('trends'); // Default to HR Trends Dashboard
+            showToast(`Signed in to HR Portal: ${state.currentUser.company}`, 'info');
+        }
+
+        function confirmGuestGate() {
+            state.currentUser.role = 'guest';
+            state.currentUser.name = 'Guest User';
+            
+            document.getElementById('roleGateModal').classList.add('hidden');
+            updateRoleBadge();
+            renderNavigationMenu();
+            renderAllViews();
+            showToast('Browsing in Guest Mode', 'warning'); //'warning' = "i" icon on the showtoast
+        }
+
+        function updateRoleBadge() {
+            const dot = document.getElementById('roleBadgeDot');
+            const text = document.getElementById('roleBadgeText');
+            
+            if (state.currentUser.role === 'student') {
+                dot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse';
+                text.innerText = 'Student View - Alex Chen';
+            } else if (state.currentUser.role === 'hr') {
+                dot.className = 'w-2.5 h-2.5 rounded-full bg-indigo-400 animate-pulse';
+                text.innerText = `HR Portal - ${state.currentUser.company}`;
+            } else {
+                dot.className = 'w-2.5 h-2.5 rounded-full bg-slate-500';
+                text.innerText = 'Guest Mode';
+            }
+        }
+
+        function syncStudentCvForm() {
+            document.getElementById('cvFullName').value = state.currentUser.name;
+            document.getElementById('cvSkills').value = state.currentUser.skills;
+            updateCvPreview();
+        }
+
+        /* ================= HERO CAROUSEL ================= */
+        function initCarousel() {
+            if (state.slideInterval) clearInterval(state.slideInterval);
+            state.slideInterval = setInterval(() => { nextSlide(); }, 5000);
+        }
+
+        function showSlide(index) {
+            const slides = document.querySelectorAll('.carousel-slide');
+            const dots = document.querySelectorAll('.carousel-dot');
+            if (!slides.length) return;
+
+            state.currentSlideIndex = (index + slides.length) % slides.length;
+
+            slides.forEach((slide, i) => {
+                slide.style.opacity = i === state.currentSlideIndex ? '1' : '0';
+                slide.style.zIndex = i === state.currentSlideIndex ? '10' : '0';
+            });
+
+            dots.forEach((dot, i) => {
+                dot.className = i === state.currentSlideIndex ? 
+                    'carousel-dot w-6 h-3 rounded-full bg-indigo-500 transition-all' : 
+                    'carousel-dot w-3 h-3 rounded-full bg-slate-600 transition-all';
+            });
+        }
+
+        function nextSlide() { showSlide(state.currentSlideIndex + 1); }
+        function prevSlide() { showSlide(state.currentSlideIndex - 1); }
+        function goToSlide(i) { showSlide(i); initCarousel(); }
+
+        /* ================= RENDERING & JOB CATALOG ================= */
+        function renderAllViews() {
+            updateCartBadge();
+            renderFeaturedJobsHome();
+            filterJobs();
+            renderTrackerView();
+        }
+
+        function updateCartBadge() {
+            const badge = document.getElementById('cartBadge');
+            if (!badge) return;
+
+            let visibleApps = [];
+            if (state.currentUser.role === 'student') {
+                visibleApps = state.applications.filter(a => a.applicantId === state.currentUser.id);
+            } else if (state.currentUser.role === 'hr') {
+                visibleApps = state.applications.filter(a => a.company === state.currentUser.company);
+            }
+            badge.innerText = visibleApps.length;
+        }
+
+        function renderJobsCatalog(jobsList) {
+            const container = document.getElementById('jobsCatalogGrid');
+            if (!container) return;
+
+            if (jobsList.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12 glass-panel rounded-2xl">
+                        <i class="fa-solid fa-folder-open text-4xl text-slate-600 mb-3"></i>
+                        <p class="text-sm text-slate-400">No openings match your search query.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = jobsList.map(job => {
+                const hasApplied = state.currentUser.role === 'student' && 
+                    state.applications.some(a => a.jobId === job.id && a.applicantId === state.currentUser.id);
+
+                return `
+                    <div class="glass-panel p-5 rounded-2xl border border-slate-800 flex flex-col justify-between hover:border-indigo-500/40 transition duration-300">
+                        <div class="space-y-3">
+                            <div class="flex items-start justify-between gap-2">
+                                <div>
+                                    <h4 class="font-bold text-base text-white hover:text-indigo-300 transition">${job.title}</h4>
+                                    <p class="text-xs text-slate-400 font-medium">${job.company} • ${job.location}</p>
+                                    <p class="text-[11px] text-cyan-400 font-semibold mt-0.5">${job.salary}</p>
+                                </div>
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${getRiskBadgeColor(job.aiRisk)}">
+                                    ${job.aiRisk}% AI Risk
+                                </span>
+                            </div>
+
+                            <p class="text-xs text-slate-300 line-clamp-2 leading-relaxed">${job.description}</p>
+
+                            <div class="flex flex-wrap gap-1.5 pt-1">
+                                ${job.skills.map(s => `<span class="px-2 py-0.5 rounded-md bg-slate-900 border border-slate-800 text-[10px] text-indigo-300">${s}</span>`).join('')}
+                            </div>
+                        </div>
+
+                        <div class="pt-4 mt-4 border-t border-slate-800 flex items-center justify-between">
+                            <div class="flex items-center gap-1.5">
+                                <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 font-bold text-xs flex items-center justify-center border border-emerald-500/20">
+                                    ${job.matchScore}%
+                                </div>
+                                <span class="text-[10px] text-slate-400 font-medium">Match</span>
+                            </div>
+
+                            ${hasApplied ? `
+                                <button disabled class="px-3.5 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold flex items-center gap-1">
+                                    <i class="fa-solid fa-check text-[10px]"></i> Applied
+                                </button>
+                            ` : `
+                                <button onclick="handleApplyClick('${job.id}')" class="px-3.5 py-1.5 rounded-xl gradient-btn text-white font-bold text-xs shadow-md hover:opacity-90 transition">
+                                    Apply
+                                </button>
+                            `}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function getRiskBadgeColor(risk) {
+            if (risk < 15) return 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30';
+            if (risk < 30) return 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30';
+            return 'bg-rose-500/10 text-rose-400 border border-rose-500/30';
+        }
+
+        function renderFeaturedJobsHome() {
+            renderJobsCatalog(state.jobs.slice(0, 3));
+            const homeContainer = document.getElementById('homeFeaturedJobsGrid');
+            if (homeContainer) {
+                homeContainer.innerHTML = document.getElementById('jobsCatalogGrid').innerHTML;
+            }
+        }
+
+        function filterJobs() {
+            let list = [...state.jobs];
+            const riskVal = document.getElementById('riskFilter')?.value || 'all';
+            const sortVal = document.getElementById('sortBy')?.value || 'match';
+
+            if (riskVal === 'low') list = list.filter(j => j.aiRisk < 20);
+            if (riskVal === 'medium') list = list.filter(j => j.aiRisk >= 20 && j.aiRisk <= 50);
+
+            if (sortVal === 'match') list.sort((a, b) => b.matchScore - a.matchScore);
+            if (sortVal === 'risk') list.sort((a, b) => a.aiRisk - b.aiRisk);
+
+            renderJobsCatalog(list);
+        }
+
+        /* ================= APPLY LOGIC ================= */
+        function handleApplyClick(jobId) {
+            const job = state.jobs.find(j => j.id === jobId);
+            if (!job) return;
+
+            // GUEST MODE: Prompt Sign In Modal
+            if (state.currentUser.role === 'guest') {
+                document.getElementById('guestPromptJobTitle').innerText = `${job.title} @ ${job.company}`;
+                document.getElementById('guestApplyModal').classList.remove('hidden');
+                return;
+            }
+
+            // HR MODE: Inform HR cannot apply
+            if (state.currentUser.role === 'hr') {
+                showToast('HR Portal accounts cannot apply for jobs. Please switch to Seeker view.', 'warning');
+                return;
+            }
+
+            // Student/Applicant Apply
+            const existing = state.applications.find(a => a.jobId === jobId && a.applicantId === state.currentUser.id);
+            if (existing) {
+                showToast('Application already submitted for this position.', 'warning');
+                return;
+            }
+
+            const newApp = {
+                id: 'app-' + Date.now(),
+                jobId: job.id,
+                jobTitle: job.title,
+                company: job.company,
+                applicantId: state.currentUser.id,
+                applicantName: state.currentUser.name,
+                applicantEmail: state.currentUser.email,
+                applicantSkills: state.currentUser.skills,
+                matchScore: job.matchScore,
+                status: 'Pending',
+                appliedDate: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+                interviewDetails: null
+            };
+
+            state.applications.push(newApp);
+            updateCartBadge();
+            renderAllViews();
+            showToast(`Application submitted to ${job.company}! Profile CV attached.`, 'success');
+        }
+
+        function closeGuestApplyModal() {
+            document.getElementById('guestApplyModal').classList.add('hidden');
+        }
+
+        /* ================= APPLICATION CART & PRIVACY FILTERING ================= */
+        function renderTrackerView() {
+            const container = document.getElementById('trackerListContainer');
+            const roleBadge = document.getElementById('trackerRoleBadge');
+            const title = document.getElementById('trackerTitle');
+            const subtitle = document.getElementById('trackerSubtitle');
+            const hrAddBtn = document.getElementById('hrAddJobBtn');
+
+            if (!container) return;
+
+            if (state.currentUser.role === 'guest') {
+                // GUEST PRIVACY VIEW: Zero private records visible
+                roleBadge.innerText = 'Guest Mode';
+                roleBadge.className = 'px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-slate-800 text-slate-300 border border-slate-700 mb-2 inline-block';
+                title.innerText = 'Application Tracker Cart';
+                subtitle.innerText = 'Sign in as a Job Seeker or HR Manager to view application records.';
+                hrAddBtn.classList.add('hidden');
+
+                container.innerHTML = `
+                    <div class="text-center py-12 glass-panel rounded-2xl space-y-3">
+                        <i class="fa-solid fa-user-lock text-4xl text-slate-600"></i>
+                        <p class="text-sm text-slate-400">No application records available in Guest Mode.</p>
+                        <button onclick="openRoleGateModal('student')" class="px-4 py-2 rounded-xl gradient-btn text-white text-xs font-bold">
+                            Sign In / Select Profile Mode
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            if (state.currentUser.role === 'hr') {
+                // HR VIEW: Filter strictly to applications for HR's company (TechCorp AI)
+                roleBadge.innerText = `HR Portal: ${state.currentUser.company}`;
+                roleBadge.className = 'px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 mb-2 inline-block';
+                title.innerText = 'Employer Applicant Management';
+                subtitle.innerText = `Applicants targeting open positions at ${state.currentUser.company}.`;
+                hrAddBtn.classList.remove('hidden');
+
+                const hrApps = state.applications.filter(a => a.company === state.currentUser.company);
+
+                if (hrApps.length === 0) {
+                    container.innerHTML = `
+                        <div class="text-center py-12 glass-panel rounded-2xl">
+                            <i class="fa-solid fa-users-slash text-4xl text-slate-600 mb-3"></i>
+                            <p class="text-sm text-slate-400">No applicants for ${state.currentUser.company} yet.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = hrApps.map(app => `
+                    <div class="glass-panel p-5 rounded-2xl border border-slate-800 space-y-4">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
+                            <div>
+                                <span class="text-xs text-slate-400 font-medium">Position: <strong class="text-indigo-300">${app.jobTitle}</strong></span>
+                                <h4 class="font-bold text-lg text-white mt-0.5">${app.applicantName}</h4>
+                                <p class="text-xs text-slate-400">${app.applicantEmail} • Applied on ${app.appliedDate}</p>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                ${getStatusBadgeHtml(app.status)}
+                                <div class="px-2.5 py-1 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-cyan-300">
+                                    Match Score: ${app.matchScore}%
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-xs text-slate-300 space-y-1 bg-slate-950 p-3 rounded-xl border border-slate-800">
+                            <p class="font-semibold text-slate-400">Attached Profile Skills:</p>
+                            <p class="text-indigo-300 font-mono">${app.applicantSkills}</p>
+                        </div>
+
+                        ${app.interviewDetails ? `
+                            <div class="p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-xs text-emerald-300 space-y-1">
+                                <p class="font-bold"><i class="fa-solid fa-calendar-check mr-1"></i> Virtual Interview Scheduled:</p>
+                                <p>Date: ${new Date(app.interviewDetails.datetime).toLocaleString()}</p>
+                                <p>Room Link: <a href="${app.interviewDetails.link}" target="_blank" class="underline text-cyan-300">${app.interviewDetails.link}</a></p>
+                            </div>
+                        ` : ''}
+
+                        <div class="flex flex-wrap items-center justify-end gap-2 pt-1">
+                            <button onclick="updateAppStatus('${app.id}', 'Rejected')" class="px-3 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 text-xs font-semibold transition">
+                                Reject
+                            </button>
+                            <button onclick="openInterviewModal('${app.id}', '${app.applicantName}')" class="px-3.5 py-1.5 rounded-xl gradient-btn text-white font-bold text-xs transition flex items-center gap-1.5">
+                                <i class="fa-solid fa-video text-xs"></i> Schedule Interview
+                            </button>
+                            <button onclick="updateAppStatus('${app.id}', 'Accepted')" class="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold transition">
+                                Accept Candidate
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+
+            } else {
+                // STUDENT VIEW: Filter strictly to applications submitted by Alex Chen
+                roleBadge.innerText = 'Student Seeker View';
+                roleBadge.className = 'px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 mb-2 inline-block';
+                title.innerText = 'My Applied Positions';
+                subtitle.innerText = 'Personal application tracking for Alex Chen.';
+                hrAddBtn.classList.add('hidden');
+
+                const myApps = state.applications.filter(a => a.applicantId === state.currentUser.id);
+
+                if (myApps.length === 0) {
+                    container.innerHTML = `
+                        <div class="text-center py-12 glass-panel rounded-2xl space-y-3">
+                            <i class="fa-solid fa-box-open text-4xl text-slate-600"></i>
+                            <p class="text-sm text-slate-400">You haven't applied to any positions yet.</p>
+                            <button onclick="switchTab('jobs')" class="px-4 py-2 rounded-xl gradient-btn text-white text-xs font-bold">
+                                Explore Jobs Catalog
+                            </button>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = myApps.map(app => `
+                    <div class="glass-panel p-5 rounded-2xl border border-slate-800 space-y-3">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                            <div>
+                                <h4 class="font-bold text-base text-white">${app.jobTitle}</h4>
+                                <p class="text-xs text-slate-400">${app.company} • Applied on ${app.appliedDate}</p>
+                            </div>
+                            <div>${getStatusBadgeHtml(app.status)}</div>
+                        </div>
+
+                        ${app.status === 'Interview Scheduled' && app.interviewDetails ? `
+                            <div class="p-4 bg-slate-950 border border-indigo-500/40 rounded-xl text-xs space-y-3">
+                                <div class="flex items-center justify-between text-cyan-300 font-bold">
+                                    <span><i class="fa-solid fa-video text-indigo-400 mr-1"></i> Virtual Interview Invitation</span>
+                                    <span>${new Date(app.interviewDetails.datetime).toLocaleString()}</span>
+                                </div>
+                                <p class="text-slate-300">${app.interviewDetails.notes || 'Interview scheduled with HR Director.'}</p>
+                                <button onclick="openVideoCallModal('${app.applicantName}')" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl gradient-btn text-white font-bold text-xs shadow-md transition">
+                                    Join Virtual Interview Room <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                                </button>
+                            </div>
+                        ` : ''}
+
+                        <div class="flex items-center justify-between pt-2 text-xs">
+                            <span class="text-slate-500">Applicant: ${app.applicantName}</span>
+                            <button onclick="withdrawApp('${app.id}')" class="text-slate-500 hover:text-rose-400 transition">
+                                Withdraw Application
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function getStatusBadgeHtml(status) {
+            if (status === 'Pending') return `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-indigo-500/10 text-indigo-400 border border-indigo-500/30"><i class="fa-solid fa-clock mr-1"></i> Pending Review</span>`;
+            if (status === 'Interview Scheduled') return `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30"><i class="fa-solid fa-calendar-check mr-1"></i> Interview Scheduled</span>`;
+            if (status === 'Accepted') return `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30"><i class="fa-solid fa-circle-check mr-1"></i> Accepted</span>`;
+            if (status === 'Rejected') return `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-rose-500/10 text-rose-400 border border-rose-500/30"><i class="fa-solid fa-circle-xmark mr-1"></i> Rejected</span>`;
+            return '';
+        }
+
+        function updateAppStatus(appId, newStatus) {
+            const app = state.applications.find(a => a.id === appId);
+            if (app) {
+                app.status = newStatus;
+                renderTrackerView();
+                showToast(`Status updated to ${newStatus}`, 'info');
+            }
+        }
+
+        function withdrawApp(appId) {
+            state.applications = state.applications.filter(a => a.id !== appId);
+            updateCartBadge();
+            renderTrackerView();
+            showToast('Application withdrawn.', 'info');
+        }
+
+        /* ================= HR LIVE WORKFORCE ANALYTICS ================= */
+        function renderHrAnalyticsCharts(sector = 'all') {
+            // Chart 1: Skills Demand Bar Chart
+            const ctx1 = document.getElementById('skillsDemandChart')?.getContext('2d');
+            if (ctx1) {
+                if (state.charts.skillsChart) state.charts.skillsChart.destroy();
+
+                let labels = ['ROS2 Mechatronics', 'Prompt Architecture', 'Edge AI Silicon', 'LLM Fine-tuning', 'Cyber-Resilience'];
+                let dataValues = [96, 92, 88, 85, 78];
+
+                if (sector === 'engineering') {
+                    labels = ['System Architecture', 'CI/CD Pipelines', 'ROS2 Control', 'Distributed Microservices', 'Kubernetes'];
+                    dataValues = [94, 90, 88, 82, 79];
+                } else if (sector === 'datascience') {
+                    labels = ['LLM Fine-tuning', 'Vector DB & RAG', 'RLHF Alignment', 'Data Governance', 'Feature Engineering'];
+                    dataValues = [98, 94, 91, 86, 80];
+                } else if (sector === 'hardware') {
+                    labels = ['ROS2 Mechatronics', 'Edge AI Silicon', 'FPGA Programming', 'IoT Sensing', 'Control Systems'];
+                    dataValues = [96, 92, 89, 85, 82];
+                }
+
+                state.charts.skillsChart = new Chart(ctx1, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Market Demand Index (2026)',
+                            data: dataValues,
+                            backgroundColor: 'rgba(99, 102, 241, 0.7)',
+                            borderColor: '#6366F1',
+                            borderWidth: 1.5,
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { labels: { color: '#94A3B8', font: { size: 11 } } }
+                        },
+                        scales: {
+                            x: { ticks: { color: '#94A3B8', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                            y: { ticks: { color: '#94A3B8' }, grid: { color: 'rgba(255,255,255,0.05)' }, min: 50, max: 100 }
+                        }
+                    }
+                });
+            }
+
+            // Chart 2: AI Automation Risk vs Human Value Index
+            const ctx2 = document.getElementById('aiRiskDoughnutChart')?.getContext('2d');
+            if (ctx2) {
+                if (state.charts.aiRiskChart) state.charts.aiRiskChart.destroy();
+
+                state.charts.aiRiskChart = new Chart(ctx2, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Human Strategic Value (High)', 'Human-AI Hybrid (Mid)', 'Autonomous Replaceable (Low)'],
+                        datasets: [{
+                            data: [58, 30, 12],
+                            backgroundColor: ['#10B981', '#6366F1', '#F43F5E'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'bottom', labels: { color: '#94A3B8', font: { size: 10 } } }
+                        }
+                    }
+                });
+            }
+
+            // Chart 3: Live Hiring Velocity & Talent Supply
+            const ctx3 = document.getElementById('salaryVelocityChart')?.getContext('2d');
+            if (ctx3) {
+                if (state.charts.salaryChart) state.charts.salaryChart.destroy();
+
+                state.charts.salaryChart = new Chart(ctx3, {
+                    type: 'line',
+                    data: {
+                        labels: ['Q1 2026', 'Q2 2026', 'Q3 2026', 'Q4 2026 (Est)'],
+                        datasets: [
+                            {
+                                label: 'Average Tech Salary ($ USD/mo)',
+                                data: [7800, 8500, 9200, 9900],
+                                borderColor: '#22D3EE',
+                                backgroundColor: 'rgba(34, 211, 238, 0.1)',
+                                fill: true,
+                                tension: 0.3
+                            },
+                            {
+                                label: 'Hiring Velocity Index',
+                                data: [68, 75, 87, 95],
+                                borderColor: '#6366F1',
+                                backgroundColor: 'transparent',
+                                borderDash: [5, 5],
+                                tension: 0.3
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { labels: { color: '#94A3B8', font: { size: 11 } } }
+                        },
+                        scales: {
+                            x: { ticks: { color: '#94A3B8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                            y: { ticks: { color: '#94A3B8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+                        }
+                    }
+                });
+            }
+        }
+
+        function filterTrendsChart(sector) {
+            ['all', 'engineering', 'datascience', 'hardware'].forEach(b => {
+                const btn = document.getElementById(`trendFilter-${b}`);
+                if (btn) {
+                    if (b === sector) {
+                        btn.className = 'px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 text-white shadow';
+                    } else {
+                        btn.className = 'px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 hover:bg-slate-800';
+                    }
+                }
+            });
+            renderHrAnalyticsCharts(sector);
+        }
+
+        /* ================= MODAL SCHEDULING ================= */
+        function openInterviewModal(appId, candidateName) {
+            document.getElementById('interviewAppId').value = appId;
+            document.getElementById('interviewCandidateName').innerText = `Candidate: ${candidateName}`;
+            document.getElementById('interviewModal').classList.remove('hidden');
+        }
+
+        function closeInterviewModal() {
+            document.getElementById('interviewModal').classList.add('hidden');
+        }
+
+        function confirmInterviewSchedule(e) {
+            e.preventDefault();
+            const appId = document.getElementById('interviewAppId').value;
+            const datetime = document.getElementById('interviewDateTime').value;
+            const link = document.getElementById('interviewLink').value;
+            const notes = document.getElementById('interviewNotes').value;
+
+            const app = state.applications.find(a => a.id === appId);
+            if (app) {
+                app.status = 'Interview Scheduled';
+                app.interviewDetails = { datetime, link, notes };
+                renderTrackerView();
+                closeInterviewModal();
+                showToast('Virtual interview invite sent to candidate!', 'success');
+            }
+        }
+
+        function openVideoCallModal(seekerName) {
+            document.getElementById('videoSeekerName').innerText = `${seekerName || 'Candidate'} (You)`;
+            document.getElementById('videoCallHrHost').innerText = `${state.currentUser.hrName || 'Sarah Jenkins'} (HR Host)`;
+            document.getElementById('videoCallModal').classList.remove('hidden');
+        }
+
+        function closeVideoCallModal() {
+            document.getElementById('videoCallModal').classList.add('hidden');
+        }
+
+        function openAddJobModal() {
+            document.getElementById('addJobModal').classList.remove('hidden');
+        }
+
+        function closeAddJobModal() {
+            document.getElementById('addJobModal').classList.add('hidden');
+        }
+
+        function handleAddNewJob(e) {
+            e.preventDefault();
+            const title = document.getElementById('newJobTitle').value;
+            const company = document.getElementById('newJobCompany').value;
+            const cat = document.getElementById('newJobCategory').value;
+            const skillsRaw = document.getElementById('newJobSkills').value;
+            const risk = parseInt(document.getElementById('newJobRisk').value) || 12;
+            const desc = document.getElementById('newJobDesc').value;
+
+            const newJob = {
+                id: 'job-' + Date.now(),
+                title,
+                company,
+                location: 'Hybrid / Remote',
+                salary: '$8,500 - $12,500 / mo',
+                category: cat,
+                skills: skillsRaw.split(',').map(s => s.trim()),
+                matchScore: 90,
+                aiRisk: risk,
+                description: desc,
+                postedAt: 'Just now'
+            };
+
+            state.jobs.unshift(newJob); //unshift -- adds new element to the start of array
+            closeAddJobModal();
+            renderAllViews();
+            showToast('New position published to catalog!', 'success');
+        }
+
+        /* ================= CV BUILDER LOGIC ================= */
+        function updateCvPreview() {
+            const name = document.getElementById('cvFullName').value || 'Alex Chen';
+            const email = document.getElementById('cvEmail').value || 'alex.chen@example.com';
+            const role = document.getElementById('cvTargetRole').value || 'Senior Mechatronics & AI Engineer';
+            const phone = document.getElementById('cvPhone').value || '+60 12-345 6789';
+            const summary = document.getElementById('cvSummary').value || 'Mechatronics student specializing in embedded system control, ROS2, and edge AI.';
+            const skillsRaw = document.getElementById('cvSkills').value || 'ROS2, C++, Python, Edge AI';
+            const exp = document.getElementById('cvExperience').value || 'Lead Developer - Autonomous Mobile Robot (2025-Present)';
+            const edu = document.getElementById('cvEducation').value || 'B.Eng Mechatronics & AI Engineering - Aiversecity Tech';
+
+            document.getElementById('prevName').innerText = name;
+            document.getElementById('prevEmail').innerHTML = `<i class="fa-solid fa-envelope text-slate-500 mr-1"></i> ${email}`;
+            document.getElementById('prevRole').innerText = role;
+            document.getElementById('prevPhone').innerHTML = `<i class="fa-solid fa-phone text-slate-500 mr-1"></i> ${phone}`;
+            document.getElementById('prevSummary').innerText = summary;
+            document.getElementById('prevExperience').innerText = exp;
+            document.getElementById('prevEducation').innerText = edu;
+
+            const skillsArr = skillsRaw.split(',').map(s => s.trim()).filter(Boolean);
+            document.getElementById('prevSkills').innerHTML = skillsArr.map(s => 
+                `<span class="px-2.5 py-1 rounded-md bg-slate-800 text-indigo-300 border border-slate-700 text-[11px]">${s}</span>`
+            ).join('');
+        }
+
+        function saveCvData() {
+            state.currentUser.name = document.getElementById('cvFullName').value;
+            state.currentUser.email = document.getElementById('cvEmail').value;
+            state.currentUser.skills = document.getElementById('cvSkills').value;
+            showToast('Profile CV saved!', 'success');
+        }
+
+        function saveCompanyProfile() {
+            state.currentUser.company = document.getElementById('companyNameInput').value;
+            state.currentUser.hrName = document.getElementById('hrNameInput').value;
+            state.currentUser.industry = document.getElementById('hrIndustryInput').value;
+            showToast('Corporate profile updated!', 'success');
+        }
+
+        /* ================= PROFILE MODAL ================= */
+        function openProfileModal() {
+            const title = document.getElementById('profileModalTitle');
+            const roleBadge = document.getElementById('profileModalRoleBadge');
+            const details = document.getElementById('profileModalDetails');
+
+            title.innerText = state.currentUser.role === 'hr' ? state.currentUser.company : state.currentUser.name;
+            roleBadge.innerText = `Mode: ${state.currentUser.role.toUpperCase()}`;
+
+            if (state.currentUser.role === 'hr') {
+                details.innerHTML = `
+                    <p><strong class="text-slate-400">HR Name:</strong> ${state.currentUser.hrName}</p>
+                    <p><strong class="text-slate-400">Company:</strong> ${state.currentUser.company}</p>
+                    <p><strong class="text-slate-400">Domain:</strong> ${state.currentUser.industry}</p>
+                `;
+            } else if (state.currentUser.role === 'student') {
+                details.innerHTML = `
+                    <p><strong class="text-slate-400">Email:</strong> ${state.currentUser.email}</p>
+                    <p><strong class="text-slate-400">Skills:</strong> ${state.currentUser.skills}</p>
+                `;
+            } else {
+                details.innerHTML = `<p class="text-slate-400">Guest mode enabled. Sign in as Job Seeker or HR Manager to access saved details.</p>`;
+            }
+
+            document.getElementById('profileModal').classList.remove('hidden');
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profileModal').classList.add('hidden');
+        }
+
+        /* ================= SEARCH ================= */
+        function handleGlobalSearch() {
+            const query = document.getElementById('globalSearchInput').value.toLowerCase();
+            executeSearch(query);
+        }
+
+        function executeSearch(query) {
+            if (!query) {
+                filterJobs();
+                return;
+            }
+
+            if (state.currentTab !== 'jobs') switchTab('jobs');
+
+            const matched = state.jobs.filter(j => 
+                j.title.toLowerCase().includes(query) ||
+                j.company.toLowerCase().includes(query) ||
+                j.description.toLowerCase().includes(query) ||
+                j.skills.some(s => s.toLowerCase().includes(query))
+            );
+
+            renderJobsCatalog(matched);
+        }
+
+        /* ================= AI CAREER ASSISTANT ================= */
+        function toggleAiDrawer() {
+            document.getElementById('aiChatDrawer').classList.toggle('hidden');
+        }
+
+        function openAiModalWithPrompt(promptText) {
+            document.getElementById('aiChatDrawer').classList.remove('hidden');
+            sendQuickPrompt(promptText);
+        }
+
+        function sendQuickPrompt(text) {
+            document.getElementById('aiChatInput').value = text;
+            sendAiMessage();
+        }
+
+        async function sendAiMessage() {
+            const input = document.getElementById('aiChatInput');
+            const query = input.value.trim();
+            if (!query) return;
+
+            const chatLog = document.getElementById('aiChatLog');
+
+            chatLog.innerHTML += `
+                <div class="flex gap-2.5 items-start justify-end">
+                    <div class="bg-indigo-600 text-white font-medium p-3 rounded-2xl leading-relaxed max-w-[85%]">
+                        ${query}
+                    </div>
+                </div>
+            `;
+            input.value = '';
+            chatLog.scrollTop = chatLog.scrollHeight;
+
+            const loadingId = 'loading-' + Date.now();
+            chatLog.innerHTML += `
+                <div id="${loadingId}" class="flex gap-2.5 items-start">
+                    <div class="w-7 h-7 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-xs">
+                        <i class="fa-solid fa-spinner animate-spin"></i>
+                    </div>
+                    <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl text-slate-400 italic">
+                        Analyzing career parameters...
+                    </div>
+                </div>
+            `;
+            chatLog.scrollTop = chatLog.scrollHeight;
+
+            try {
+                const responseText = await callGeminiApi(query);
+                document.getElementById(loadingId)?.remove();
+
+                chatLog.innerHTML += `
+                    <div class="flex gap-2.5 items-start">
+                        <div class="w-7 h-7 rounded-full bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 flex-shrink-0 flex items-center justify-center text-xs">
+                            <i class="fa-solid fa-robot"></i>
+                        </div>
+                        <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl text-slate-200 leading-relaxed max-w-[85%] whitespace-pre-line">
+                            ${responseText}
+                        </div>
+                    </div>
+                `;
+            } catch (err) {
+                document.getElementById(loadingId)?.remove();
+                chatLog.innerHTML += `
+                    <div class="flex gap-2.5 items-start">
+                        <div class="w-7 h-7 rounded-full bg-indigo-500/20 text-indigo-400 flex-shrink-0 flex items-center justify-center text-xs">
+                            <i class="fa-solid fa-robot"></i>
+                        </div>
+                        <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl text-slate-200 leading-relaxed max-w-[85%]">
+                            ${generateMockAiResponse(query)}
+                        </div>
+                    </div>
+                `;
+            }
+
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
+
+        async function callGeminiApi(userPrompt) {
+            const systemPrompt = `You are the Aiversecity Career AI. Assist job seekers and HR managers with skill gap analysis, AI replacement risk assessment, and 6-month career roadmaps. Current user role: ${state.currentUser.role}. Skills: ${state.currentUser.skills}. Keep responses clear, professional, and well-structured.`;
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userPrompt }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] }
+            };
+
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) throw new Error("API error");
+
+            const data = await response.json();
+            return data.candidates?.[0]?.content?.parts?.[0]?.text || generateMockAiResponse(userPrompt);
+        }
+
+        function generateMockAiResponse(prompt) {
+            const lower = prompt.toLowerCase();
+            if (lower.includes('skill') || lower.includes('lacking')) {
+                return "💡 **Skill Gap Analysis:**\n1. **ROS2 Navigation & Control**\n2. **Prompt Architecture & Agent Orchestration**\n3. **Post-Quantum Cryptography**";
+            }
+            if (lower.includes('risk') || lower.includes('percentage')) {
+                return "📊 **AI Automation Risk Assessment:**\n- Your risk index is **12% (Very Low)**. Hands-on hardware mechatronics, embedded debugging, and real-world system architecture remain highly resilient.";
+            }
+            if (lower.includes('plan') || lower.includes('roadmap')) {
+                return "🚀 **6-Month Future-Ready Career Roadmap:**\n- **Month 1-2:** Master ROS2 SLAM and Jetson Edge AI deployment.\n- **Month 3-4:** Build real-time micro-agent workflows.\n- **Month 5-6:** Complete industry-recognized certifications and publish hardware projects.";
+            }
+            return "Focusing on physical edge AI and system control capabilities offers long-term career security in " + state.currentUser.skills + ".";
+        }
+
+        /* ================= TOAST NOTIFICATIONS ================= */
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            if (!container) return;
+
+            const toast = document.createElement('div');
+            const colors = {
+                success: 'bg-emerald-950 border-emerald-500/50 text-emerald-200',
+                warning: 'bg-indigo-950 border-indigo-500/50 text-indigo-200',
+                info: 'bg-slate-900 border-indigo-500/40 text-cyan-200'
+            };
+
+            toast.className = `pointer-events-auto flex items-center gap-2.5 px-4 py-3 rounded-2xl border ${colors[type] || colors.info} shadow-xl text-xs font-semibold transform transition-all duration-300 translate-y-2 opacity-0`;
+            toast.innerHTML = `<i class="fa-solid fa-circle-info text-cyan-400"></i> <span>${message}</span>`;
+
+            container.appendChild(toast);
+
+            setTimeout(() => { toast.classList.remove('translate-y-2', 'opacity-0'); }, 10);
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+    </script>
+</body>
+</html>

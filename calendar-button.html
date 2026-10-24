@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="View job acceptance deadlines and your confirmed meetings in one calendar.">
+    <title>Calendar</title>
+
+    <style>
+        /* BASE THEME */
+        :root {
+            font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont,
+                "Segoe UI", sans-serif;
+            color: #e2e8f0;
+            background: transparent;
+            font-synthesis: none;
+            color-scheme: dark;
+        }
+        * {
+            box-sizing: border-box;
+        }
+        html, body {
+            margin: 0;
+            min-height: 100%;
+            color: #e2e8f0;            
+            background: transparent;
+        }
+        body.popup-mode {
+            background: transparent;
+            min-height: 100%;
+        }
+
+        button {
+            font: inherit;
+            cursor: pointer;
+        }
+        button:focus-visible {
+            outline: 3px solid #818cf8;
+            outline-offset: 3px;
+        }
+        svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.7;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        [hidden] {
+            display: none !important;
+        }
+
+        /* EMBEDDED POPUP MODE
+        Hide the extra Calendar trigger when loaded
+        inside the main page's iframe. */
+        body.popup-mode .top {
+            display: none;
+        }
+
+        body.popup-mode {
+            min-height: 100%;
+        }
+
+        /* CALENDAR TRIGGER
+        Used when calendar.html is opened directly. */
+        .top {
+            height: 104px;
+            padding: 30px 48px;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .calendar-trigger {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            border: 1px solid #303b58;
+            border-radius: 12px;
+            background: #171f33;
+            padding: 12px 17px;
+            color: #e0e7ff;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+            transition: background .18s, box-shadow .18s, border-color .18s;
+        }
+        .calendar-trigger > svg {
+            color: #a5b4fc;
+        }
+        .calendar-trigger:hover,
+        .calendar-trigger[aria-expanded="true"] {
+            background: #202b46;
+            border-color: #6366f1;
+            box-shadow: 0 4px 18px rgba(99, 102, 241, 0.12);
+        }
+        .calendar-trigger .chevron {
+            width: 14px;
+            height: 14px;
+            margin-left: 6px;
+            color: #94a3b8;
+            transition: transform .2s;
+        }
+        .calendar-trigger[aria-expanded="true"] .chevron {
+            transform: rotate(180deg);
+        }
+
+        /* CALENDAR DIALOG */
+        .popover {
+            position: fixed;
+            inset: 0;
+            margin: auto;
+            padding: 0;
+            width: min(850px, calc(100vw - 48px));
+            max-width: none;
+            max-height: calc(100dvh - 48px);
+            overflow: auto;
+            color: #e2e8f0;
+            background: #0b1120;
+            border: 1px solid #30394f;
+            border-radius: 20px;
+            box-shadow: none;
+            overscroll-behavior: contain;
+            animation: appear .18s ease-out;
+            z-index: 2;
+        }
+        .popover::backdrop {
+            background: rgba(3, 7, 18, 0.76);
+            backdrop-filter: blur(5px);
+        }
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        body.calendar-open {
+            overflow: hidden;
+        }
+        .calendar-open .top {
+            pointer-events: none;
+        }
+
+        /* HEADER */
+        .head {
+            padding: 26px 28px 22px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            background: #111827;
+            border-bottom: 1px solid #273248;
+        }
+        .title-line {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h1 {
+            font-size: 20px;
+            letter-spacing: -.5px;
+            margin: 0;
+            font-weight: 650;
+            color: #f1f5f9;
+        }
+        .head p {
+            margin: 8px 0 0;
+            color: #94a3b8;
+            font-size: 12px;
+        }
+        .demo {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .3px;
+            padding: 4px 6px;
+            border-radius: 5px;
+            background: #252b42;
+            color: #a5b4fc;
+        }
+
+        /* ICON BUTTONS */
+        .icon-btn {
+            border: 0;
+            background: transparent;
+            border-radius: 8px;
+            padding: 6px;
+            color: #94a3b8;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: background .18s, color .18s;
+        }
+        .icon-btn:hover {
+            background: #252e44;
+            color: #c7d2fe;
+        }
+        .icon-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* MAIN CALENDAR LAYOUT */
+        .body {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 270px;
+        }
+        .month-panel {
+            padding: 25px 26px 20px;
+            min-width: 0;
+        }
+        .month-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 23px;
+        }
+        .month-title {
+            font-size: 16px;
+            letter-spacing: -.3px;
+            font-weight: 650;
+            color: #e2e8f0;
+        }
+        .month-actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .today-btn {
+            background: #1b2438;
+            border: 1px solid #36415b;
+            border-radius: 7px;
+            padding: 6px 10px;
+            font-size: 11px;
+            font-weight: 500;
+            color: #c7d2fe;
+            margin-right: 5px;
+            transition: background .18s, border-color .18s;
+        }
+        .today-btn:hover {
+            background: #293451;
+            border-color: #6366f1;
+        }
+
+        /* WEEKDAYS AND DATE GRID */
+        .weekdays,
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+        }
+        .weekdays span {
+            text-align: center;
+            color: #8491aa;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 0 0 14px;
+        }
+        .day {
+            height: 57px;
+            border: 0;
+            border-radius: 10px;
+            background: transparent;
+            position: relative;
+            color: #cbd5e1;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            gap: 7px;
+            transition: background .18s, color .18s;
+        }
+        .day:hover {
+            background: #222d44;
+            color: #fff;
+        }
+        .day.other {
+            color: #536078;
+        }
+        .day.today:not(.selected) .num {
+            border-bottom: 2px solid #818cf8;
+            padding-bottom: 2px;
+        }
+        .day.selected {
+            background: #4f46e5;
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
+        }
+        .day.selected:hover {
+            background: #6366f1;
+        }
+        .day .dots {
+            height: 4px;
+            display: flex;
+            gap: 3px;
+        }
+        .dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            display: inline-block;
+            background: #fbbf24;
+        }
+        .dot.deadline {
+            background: #fbbf24;
+        }
+        .dot.meeting {
+            background: #a78bfa;
+        }
+        .day.selected .dot {
+            background: #fff;
+        }
+        .day.selected .dot.deadline {
+            background: #fde68a;
+        }
+
+        /* EVENT FILTERS */
+        .filters {
+            display: flex;
+            gap: 17px;
+            flex-wrap: wrap;
+            border-top: 1px solid #273248;
+            margin-top: 18px;
+            padding-top: 18px;
+        }
+        .filter {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            color: #a1acc0;
+            font-size: 10px;
+            background: transparent;
+            border: 0;
+            padding: 3px 0;
+        }
+        .filter .dot {
+            width: 6px;
+            height: 6px;
+        }
+        .filter .dot.deadline {
+            background: #fbbf24;
+        }
+        .filter .dot.meeting {
+            background: #a78bfa;
+        }
+        .filter[aria-pressed="false"] {
+            opacity: .35;
+        }
+        .filter[aria-pressed="false"] span:last-child {
+            text-decoration: line-through;
+        }
+
+        /* AGENDA PANEL */
+        .agenda {
+            border-left: 1px solid #273248;
+            background: #0e1627;
+            padding: 27px 22px;
+            min-height: 450px;
+        }
+        .agenda-date {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            margin: 0 0 6px;
+        }
+        .agenda h2 {
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: -.3px;
+            margin: 0 0 23px;
+            color: #f1f5f9;
+        }
+
+        /* EVENT DETAILS */
+        .event {
+            padding: 0 0 0 12px;
+            border-left: 2px solid #fbbf24;
+            margin-bottom: 25px;
+        }
+        .event.meeting {
+            border-color: #a78bfa;
+        }
+        .event-type {
+            font-size: 9px;
+            color: #fbbf24;
+            letter-spacing: .2px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .meeting .event-type {
+            color: #c4b5fd;
+        }
+        .event h3 {
+            font-size: 12px;
+            line-height: 1.5;
+            font-weight: 600;
+            margin: 7px 0 4px;
+            color: #e2e8f0;
+        }
+        .event p {
+            font-size: 10px;
+            line-height: 1.6;
+            color: #94a3b8;
+            margin: 0;
+        }
+        .event-time {
+            margin-top: 10px !important;
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            color: #a5b4fc !important;
+        }
+        .event-time svg {
+            height: 12px;
+            width: 12px;
+            color: #818cf8;
+        }
+        .status {
+            display: inline-block;
+            font-size: 9px;
+            border-radius: 4px;
+            padding: 3px 6px;
+            background: rgba(139, 92, 246, .15);
+            color: #c4b5fd;
+            margin-top: 10px;
+        }
+
+        /* EMPTY AGENDA STATE */
+        .empty {
+            color: #94a3b8;
+            font-size: 12px;
+            line-height: 1.8;
+            margin-top: 28px;
+        }
+        .empty svg {
+            width: 27px;
+            height: 27px;
+            margin-bottom: 9px;
+            color: #6366f1;
+        }
+        .empty p {
+            margin: 0;
+        }
+
+        /* FOOTER */
+        .foot {
+            padding: 14px 28px;
+            border-top: 1px solid #273248;
+            background: #111827;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            font-size: 10px;
+            color: #64748b;
+        }
+        .zone {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #94a3b8;
+            font-size: 10px;
+        }
+        .timezone-icon {
+            width: 13px;
+            height: 13px;
+            stroke: #818cf8;
+            fill: none;
+            stroke-width: 1.8;
+            flex-shrink: 0;
+            display: block;
+        }
+        .foot span {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+        .foot svg {
+            height: 12px;
+            width: 12px;
+        }
+        .foot .zone {
+            color: #94a3b8;
+        }
+
+        @media (max-width: 650px) {
+            .top {
+                padding: 22px;
+                height: 90px;
+            }
+
+            .popover {
+                width: calc(100vw - 24px);
+                max-height: calc(100dvh - 24px);
+                border-radius: 16px;
+            }
+
+            .head {
+                padding: 21px;
+            }
+
+            .head p {
+                font-size: 11px;
+            }
+
+            .body {
+                grid-template-columns: 1fr;
+            }
+
+            .month-panel {
+                padding: 21px;
+            }
+
+            .day {
+                height: 48px;
+            }
+
+            .agenda {
+                min-height: auto;
+                border-left: 0;
+                border-top: 1px solid #273248;
+                padding: 23px;
+            }
+
+            .agenda h2 {
+                margin-bottom: 20px;
+            }
+
+            .event {
+                display: inline-block;
+                width: calc(50% - 10px);
+                vertical-align: top;
+                margin-right: 7px;
+                margin-bottom: 10px;
+            }
+
+            .foot {
+                padding: 14px 21px;
+                gap: 12px;
+                align-items: flex-start;
+            }
+
+            .filters {
+                gap: 20px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="top">
+        <button
+            class="calendar-trigger"
+            id="calendarButton"
+            aria-expanded="false"
+            aria-controls="calendarPopover"
+            aria-haspopup="dialog"
+            type="button"
+        >
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+                <rect x="3" y="5" width="18" height="16" rx="3"/>
+                <path d="M16 3v4M8 3v4M3 11h18M8 15h2M14 15h2"/>
+            </svg>
+
+            <span>Calendar</span>
+
+            <svg class="chevron" aria-hidden="true" viewBox="0 0 24 24">
+                <path d="m7 10 5 5 5-5"/>
+            </svg>
+        </button>
+    </header>
+
+    <main>
+        <dialog
+            class="popover"
+            id="calendarPopover"
+            aria-label="Your calendar"
+            aria-modal="true"
+        >
+            <div class="head">
+                <div>
+                    <div class="title-line">
+                        <h1>Your calendar</h1>
+                    </div>
+                    <p>Keep track of events.</p>
+                </div>
+
+                <button
+                    class="icon-btn"
+                    id="close"
+                    aria-label="Close calendar"
+                    type="button"
+                >
+                    <svg aria-hidden="true" viewBox="0 0 24 24">
+                        <path d="m6 6 12 12M18 6 6 18"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="body">
+                <div class="month-panel">
+                    <div class="month-toolbar">
+                        <div class="month-title" id="monthTitle" aria-live="polite"></div>
+
+                        <div class="month-actions">
+                            <button class="today-btn" id="today" type="button">Today</button>
+
+                            <button class="icon-btn" id="previous" aria-label="Previous month" type="button">
+                                <svg aria-hidden="true" viewBox="0 0 24 24">
+                                    <path d="m14 6-6 6 6 6"/>
+                                </svg>
+                            </button>
+
+                            <button class="icon-btn" id="next" aria-label="Next month" type="button">
+                                <svg aria-hidden="true" viewBox="0 0 24 24">
+                                    <path d="m10 6 6 6-6 6"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="weekdays" aria-hidden="true">
+                        <span>MON</span>
+                        <span>TUE</span>
+                        <span>WED</span>
+                        <span>THU</span>
+                        <span>FRI</span>
+                        <span>SAT</span>
+                        <span>SUN</span>
+                    </div>
+
+                    <div class="grid" id="days" role="group" aria-label="Calendar dates"></div>
+
+                    <div class="filters" aria-label="Event filters">
+                        <button class="filter" data-type="deadline" aria-pressed="true" type="button">
+                            <span class="dot deadline"></span>
+                            <span>Job acceptance deadline</span>
+                        </button>
+
+                        <button class="filter" data-type="meeting" aria-pressed="true" type="button">
+                            <span class="dot meeting"></span>
+                            <span>Accepted meeting</span>
+                        </button>
+                    </div>
+                </div>
+
+                <aside class="agenda" id="agenda" aria-live="polite"></aside>
+            </div>
+
+            <div class="foot">
+                <span class="zone">
+                    <svg class="timezone-icon" aria-hidden="true" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="9"></circle>
+                        <path d="M12 7v5l3 2"></path>
+                    </svg>
+                    <span id="timezone"></span>
+                </span>
+            </div>
+        </dialog>
+    </main>
+
+    <script>
+    const $ = id => document.getElementById(id);
+
+    /*
+    * popup=1 means this file is being displayed inside
+    * the main page's iframe popup.
+    */
+    const isPopupMode =
+        new URLSearchParams(window.location.search).get('popup') === '1';
+
+    if (isPopupMode) {
+        document.body.classList.add('popup-mode');
+    }
+
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+
+    let selected = new Date(now);
+    let view = new Date(now.getFullYear(), now.getMonth(), 1);
+
+    const enabled = {
+        deadline: true,
+        meeting: true
+    };
+
+    const key = d =>
+        `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+
+    const offset = n => {
+        const d = new Date(now);
+        d.setDate(d.getDate() + n);
+        return key(d);
+    };
+
+    /* Sample events — replace these with your actual event data */
+    const events = [
+        {
+            date: offset(0),
+            type: 'deadline',
+            title: 'Software Engineer',
+            company: 'SDC Company',
+            time: 'Accept by 5:00 PM'
+        },
+        {
+            date: offset(0),
+            type: 'meeting',
+            title: 'Interview Session',
+            company: 'Replit',
+            time: '2:00 – 2:30 PM',
+            accepted: true
+        },
+        {
+            date: offset(3),
+            type: 'meeting',
+            title: 'Discovery meeting',
+            company: 'Forma Studio',
+            time: '10:00 – 10:45 AM',
+            accepted: true
+        },
+        {
+            date: offset(5),
+            type: 'deadline',
+            title: 'Website design project',
+            company: 'Bloom Creative',
+            time: 'Accept by 6:00 PM'
+        },
+        {
+            date: offset(8),
+            type: 'meeting',
+            title: 'Design review',
+            company: 'Studio North',
+            time: '11:00 – 11:30 AM',
+            accepted: true
+        }
+    ];
+
+    const clock = `
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 7v5l3 2"/>
+        </svg>
+    `;
+
+    function eventsOn(d) {
+        return events.filter(
+            e => e.date === key(d) && enabled[e.type]
+        );
+    }
+
+    function render() {
+        $('monthTitle').textContent = view.toLocaleDateString('en', {
+            month: 'long',
+            year: 'numeric'
+        });
+
+        const start = new Date(view);
+        start.setDate(1 - ((start.getDay() + 6) % 7));
+
+        const fragment = document.createDocumentFragment();
+
+        const count = Math.ceil(
+            (((view.getDay() + 6) % 7) +
+            new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate()) / 7
+        ) * 7;
+
+        for (let i = 0; i < count; i++) {
+            const d = new Date(start);
+            d.setDate(start.getDate() + i);
+
+            const day = document.createElement('button');
+
+            day.className =
+                'day' +
+                (d.getMonth() !== view.getMonth() ? ' other' : '') +
+                (key(d) === key(now) ? ' today' : '') +
+                (key(d) === key(selected) ? ' selected' : '');
+
+            day.type = 'button';
+
+            day.setAttribute(
+                'aria-pressed',
+                String(key(d) === key(selected))
+            );
+
+            if (key(d) === key(now)) {
+                day.setAttribute('aria-current', 'date');
+            }
+
+            const items = eventsOn(d);
+
+            day.setAttribute(
+                'aria-label',
+                d.toLocaleDateString('en', {
+                    weekday: 'long',
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric'
+                }) +
+                (items.length
+                    ? `, ${items.length} event${items.length > 1 ? 's' : ''}`
+                    : ', no events')
+            );
+
+            const types = [...new Set(items.map(e => e.type))];
+
+            day.innerHTML = `
+                <span class="num">${d.getDate()}</span>
+                <span class="dots">
+                    ${types.map(t => `<span class="dot ${t}"></span>`).join('')}
+                </span>
+            `;
+
+            day.addEventListener('click', () => {
+                selected = d;
+
+                if (d.getMonth() !== view.getMonth()) {
+                    view = new Date(d.getFullYear(), d.getMonth(), 1);
+                }
+
+                render();
+
+                [
+                    ...$('days').children
+                ].find(el => el.getAttribute('aria-pressed') === 'true')?.focus();
+            });
+
+            fragment.append(day);
+        }
+
+        $('days').replaceChildren(fragment);
+
+        const items = eventsOn(selected);
+
+        $('agenda').innerHTML = `
+            <p class="agenda-date">
+                ${key(selected) === key(now)
+                    ? 'Today'
+                    : selected.toLocaleDateString('en', { weekday: 'long' })}
+            </p>
+
+            <h2>
+                ${selected.toLocaleDateString('en', {
+                    month: 'long',
+                    day: 'numeric'
+                })}
+            </h2>
+        ` + (
+            items.length
+                ? items.map(e => `
+                    <article class="event ${e.type}">
+                        <div class="event-type">
+                            ${e.type === 'deadline'
+                                ? 'ACCEPTANCE DEADLINE'
+                                : 'MEETING'}
+                        </div>
+
+                        <h3>${e.title}</h3>
+                        <p>${e.company}</p>
+
+                        <p class="event-time">
+                            ${clock}${e.time}
+                        </p>
+
+                        ${e.accepted
+                            ? '<span class="status">✓ Accepted</span>'
+                            : ''}
+                    </article>
+                `).join('')
+                : `
+                    <div class="empty">
+                        <svg aria-hidden="true" viewBox="0 0 24 24">
+                            <rect x="3" y="5" width="18" height="16" rx="3"/>
+                            <path d="M16 3v4M8 3v4M3 11h18"/>
+                        </svg>
+
+                        <p>No events for this day.</p>
+
+                        <p>
+                            ${!enabled.deadline || !enabled.meeting
+                                ? 'Try enabling both event filters.'
+                                : 'You have a little breathing room.'}
+                        </p>
+                    </div>
+                `
+        );
+    }
+
+    /* ==========================================
+    OPEN AND CLOSE CALENDAR
+    ========================================== */
+
+    function openCalendar() {
+        const dialog = $('calendarPopover');
+
+        render();
+
+        if (!dialog.open) {
+            dialog.showModal();
+        }
+
+        document.body.classList.add('calendar-open');
+        $('calendarButton').setAttribute('aria-expanded', 'true');
+
+        // In popup mode, the trigger button is hidden.
+        // Focus the dialog's close button instead.
+        $('close').focus();
+    }
+
+    function closeCalendar() {
+        if (isPopupMode && window.parent !== window) {
+            window.parent.postMessage(
+                'closeCalendarPopup',
+                '*'
+            );
+            return;
+        }
+
+        const dialog = $('calendarPopover');
+
+        if (dialog.open) {
+            dialog.close();
+        }
+    }
+
+    $('calendarPopover').addEventListener('close', () => {
+        document.body.classList.remove('calendar-open');
+        $('calendarButton').setAttribute('aria-expanded', 'false');
+
+        // Don't focus a hidden trigger when embedded in the main page.
+        if (!isPopupMode) {
+            $('calendarButton').focus();
+        }
+    });
+
+    /*
+    * In standalone mode, the Calendar button opens the dialog.
+    * In popup mode, the dialog opens automatically below.
+    */
+    $('calendarButton').addEventListener('click', () => {
+        $('calendarPopover').open
+            ? closeCalendar()
+            : openCalendar();
+    });
+
+    $('close').addEventListener('click', closeCalendar);
+
+    /* Handle Escape key */
+    $('calendarPopover').addEventListener('cancel', event => {
+        if (isPopupMode) {
+            event.preventDefault();
+            closeCalendar();
+        }
+    });
+
+    /* Clicking outside the dialog */
+    $('calendarPopover').addEventListener('click', event => {
+        if (event.target === $('calendarPopover')) {
+            closeCalendar();
+        }
+    });
+
+    /* ==========================================
+    MONTH NAVIGATION
+    ========================================== */
+    $('previous').addEventListener('click', () => {
+        view.setMonth(view.getMonth() - 1);
+        render();
+    });
+
+    $('next').addEventListener('click', () => {
+        view.setMonth(view.getMonth() + 1);
+        render();
+    });
+
+    /* Return to today's date */
+    $('today').addEventListener('click', () => {
+        selected = new Date(now);
+        view = new Date(now.getFullYear(), now.getMonth(), 1);
+        render();
+    });
+
+    /* ==========================================
+    TOGGLE EVENT FILTERS
+    ========================================== */
+    document.querySelectorAll('.filter').forEach(button => {
+        button.addEventListener('click', () => {
+            enabled[button.dataset.type] = !enabled[button.dataset.type];
+
+            button.setAttribute(
+                'aria-pressed',
+                String(enabled[button.dataset.type])
+            );
+
+            render();
+        });
+    });
+
+    /* ==========================================
+    DISPLAY LOCAL TIMEZONE
+    ========================================== */
+    $('timezone').textContent =
+        Intl.DateTimeFormat()
+            .resolvedOptions()
+            .timeZone
+            .replaceAll('_', ' ');
+
+    /* ==========================================
+    INITIALIZE CALENDAR
+    ========================================== */
+    render();
+
+    if (isPopupMode) {
+        /*
+        * Main page opened calendar.html?popup=1.
+        * Open the actual calendar immediately, without
+        * showing or requiring a click on the trigger button.
+        */
+        openCalendar();
+    }
+    </script>
+</body>
+</html>

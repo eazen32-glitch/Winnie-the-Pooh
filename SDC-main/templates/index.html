@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#167d5b" />
+    <meta
+      name="description"
+      content="Explore future-ready careers, understand your skills gap, and build an evidence-informed learning pathway."
+    />
+    <title>NextStep — Your future, within reach</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="{{ url_for('static', filename='favicon.svg') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='workflow.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='assistant.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='messages.css') }}" />
+    <script src="{{ url_for('static', filename='workflow.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='assistant.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='messages.js') }}" defer></script>
+  </head>
+  <body class="access-gated" data-role="guest">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <aside class="sidebar" aria-label="Main navigation">
+      <a class="brand" href="#overview" aria-label="NextStep home"
+        ><span
+          class="brand-mark"
+          data-icon="arrow-up-right"
+          aria-hidden="true"
+        ></span
+        >NextStep<span class="brand-dot">.</span></a
+      >
+      <div class="workspace-label">YOUR WORKSPACE</div>
+      <nav class="nav-list">
+        <a class="nav-item active" href="#overview" data-view="overview"
+          ><span data-icon="overview"></span>Overview<span
+            class="nav-active-dot"
+          ></span
+        ></a>
+        <a class="nav-item" href="#radar" data-view="radar"
+          ><span data-icon="radar"></span>Skills radar</a
+        >
+        <a class="nav-item" href="#jobs" data-view="jobs" data-audience="jobseeker guest"
+          ><span data-icon="search"></span>Find a job</a>
+        <a class="nav-item" href="#matches" data-view="matches" data-audience="jobseeker guest"
+          ><span data-icon="briefcase"></span>Career matches<span
+            class="nav-count"
+            id="nav-match-count"
+            >—</span
+          ></a
+        >
+        <a class="nav-item" href="#pathway" data-view="pathway" data-audience="jobseeker guest"
+          ><span data-icon="path"></span>My learning path</a
+        >
+        <a class="nav-item" href="#applications" data-view="applications" data-audience="jobseeker guest"
+          ><span data-icon="cart"></span>My applications</a>
+        <a class="nav-item" href="#applicants" data-view="applicants" data-audience="hr" hidden
+          ><span data-icon="people"></span>Applicant inbox</a>
+        <a class="nav-item" href="#calendar" data-view="calendar"
+          ><span data-icon="calendar"></span>Calendar</a>
+        <a class="nav-item" href="#profile" data-view="profile"
+          ><span data-icon="person"></span>My profile</a>
+        <a class="nav-item" href="#sources" data-view="sources"
+          ><span data-icon="sources"></span>Evidence & sources</a
+        >
+        <a class="nav-item" href="#messages" data-view="messages" data-audience="jobseeker hr" hidden
+          ><span data-icon="message"></span>Messages<span id="messages-unread" data-message-unread class="nav-count" hidden>0</span></a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="purpose-card learner-only">
+          <span class="purpose-icon" data-icon="leaf"></span>
+          <h3>Grow with purpose.</h3>
+          <p>
+            Build skills for your future.<br />Make a difference for everyone.
+          </p>
+          <a href="#pathway" data-view="pathway"
+            >Explore your SDG impact <span aria-hidden="true">↗</span></a
+          >
+        </div>
+        <div class="demo-user">
+          <span class="avatar" aria-hidden="true">D</span>
+          <div>
+            <strong>Demo workspace</strong><span>Synthetic profiles only</span>
+          </div>
+          <span class="small-dot"></span>
+        </div>
+      </div>
+    </aside>
+    <div class="app-shell">
+      <header class="topbar workspace-topbar">
+        <div class="breadcrumb">
+          Workspace <span>/</span>
+          <strong id="breadcrumb-title">Overview</strong>
+        </div>
+        <form id="global-search-form" class="workspace-search" role="search">
+          <span data-icon="search"></span>
+          <label class="sr-only" for="global-search">Search jobs, skills or applicants</label>
+          <input id="global-search" name="search" type="search" maxlength="120" placeholder="Search jobs or skills…" autocomplete="off" />
+          <button type="submit" class="sr-only">Search</button>
+        </form>
+        <div class="topbar-right workspace-tools">
+          <span id="workspace-role" class="prototype-badge">Guest</span>
+          <a id="workspace-cart" class="workspace-icon" href="#applications" data-view="applications" aria-label="My applications">
+            <span data-icon="cart"></span><span id="workspace-cart-count" class="workspace-counter">0</span>
+          </a>
+          <a id="workspace-calendar" class="workspace-icon" href="#calendar" data-view="calendar" aria-label="Calendar"><span data-icon="calendar"></span></a>
+          <button id="workspace-notifications" type="button" class="workspace-icon" aria-label="Notifications" hidden><span data-icon="bell"></span><span id="workspace-notification-count" class="workspace-counter" hidden>0</span></button>
+          <a id="workspace-profile" class="workspace-icon" href="#profile" data-view="profile" aria-label="Edit my profile"><span data-icon="person"></span></a>
+          <button id="workspace-signin" type="button" class="button button-secondary button-small">Sign in</button>
+          <button id="workspace-signout" type="button" class="button button-secondary button-small" hidden>Sign out</button>
+        </div>
+      </header>
+      <a href="#radar" data-view="radar" class="current-trends-strip">
+        <span data-icon="rising"></span><strong>Current trends</strong>
+        <span id="top-trend-summary">Explore dated skills and role signals</span><span aria-hidden="true">→</span>
+      </a>
+      <main id="main" tabindex="-1">
+        <div id="app-alert" class="alert" role="alert" hidden></div>
+        <div id="loading-state" class="loading-state">
+          <span class="spinner"></span>
+          <p>Preparing your next step…</p>
+        </div>
+        <div id="app-content" hidden>
+          <section class="view" data-section="overview">
+            <div class="page-heading">
+              <div>
+                <p class="eyebrow">A LITTLE CLARITY. A LOT OF POSSIBILITY.</p>
+                <h1 id="home-title">Your future, within reach<span>.</span></h1>
+                <p class="page-description" id="home-description">
+                  See where your skills can take you in a changing world of
+                  work.
+                </p>
+              </div>
+              <button
+                class="button button-secondary learner-only"
+                type="button"
+                id="overview-export"
+              >
+                <span data-icon="download"></span>Export my plan
+              </button>
+            </div>
+            <div class="hero-grid">
+              <div class="hero-card">
+                <div class="hero-copy">
+                  <span class="hero-label"
+                    ><span class="small-dot"></span>YOUR NEXT CHAPTER</span
+                  >
+                  <h2 id="hero-title">You already have<br />a place to start.</h2>
+                  <p id="hero-description">
+                    Connect what you know with what's next.<br />A career path
+                    built around your potential.
+                  </p>
+                  <a
+                    class="button button-mint learner-only"
+                    href="#matches"
+                    data-view="matches"
+                    >Explore my career matches
+                    <span aria-hidden="true">↗</span></a
+                  >
+                  <a class="button button-mint hr-only" href="#applicants" data-view="applicants" hidden>Review job applicants <span aria-hidden="true">→</span></a>
+                </div>
+                <div class="hero-art" aria-hidden="true">
+                  <div class="orbit orbit-one"></div>
+                  <div class="orbit orbit-two"></div>
+                  <div class="orbit orbit-three"></div>
+                  <span class="orbit-dot dot-one"></span
+                  ><span class="orbit-dot dot-two"></span>
+                  <div class="growth-line">
+                    <span></span><span></span><span></span><span></span>
+                  </div>
+                  <span class="art-arrow" data-icon="arrow-up-right"></span
+                  ><span class="art-label">A step forward.</span>
+                </div>
+              </div>
+              <div class="signal-summary-card">
+                <div class="card-kicker">
+                  <span class="radar-small" data-icon="radar"></span>THE WORLD
+                  KEEPS MOVING
+                </div>
+                <h3>So should your<br />career compass.</h3>
+                <p>
+                  Your recommendations connect your skills to a refreshable
+                  sample of public job postings.
+                </p>
+                <div id="overview-signal-status" class="source-mini"></div>
+                <a href="#radar" data-view="radar" class="text-link"
+                  >See the skills radar <span aria-hidden="true">→</span></a
+                >
+              </div>
+            </div>
+            <div class="workspace-grid learner-only home-journeys">
+              <a class="card home-journey" href="#jobs" data-view="jobs">
+                <span class="eyebrow">I WANT TO FIND A JOB</span>
+                <h2>Find a company that fits.</h2>
+                <p>Compare requirements, see your skills gaps and track your demo applications.</p>
+                <span class="text-link">Explore opportunities →</span>
+              </a>
+              <a class="card home-journey" href="#matches" data-view="matches">
+                <span class="eyebrow">HELP ME PLAN MY FUTURE</span>
+                <h2>Build skills for what comes next.</h2>
+                <p>Explore future-ready roles and build a learning plan with time estimates and SDG connections.</p>
+                <span class="text-link">Plan my next step →</span>
+              </a>
+            </div>
+            <div id="hr-overview" class="hr-only" hidden></div>
+            <div class="stats-grid learner-only" id="overview-stats"></div>
+            <div class="section-heading learner-only">
+              <div>
+                <h2>Start with you</h2>
+                <p>A few skills today. A clearer direction tomorrow.</p>
+              </div>
+              <span class="subtle-badge">No personal data needed</span>
+            </div>
+            <div class="workspace-grid learner-only">
+              <article class="card profile-card">
+                <div class="card-heading">
+                  <div class="icon-tile" data-icon="person"></div>
+                  <div>
+                    <h3>Your skills profile</h3>
+                    <p>Use a sample, or create a synthetic profile.</p>
+                  </div>
+                </div>
+                <form id="profile-form">
+                  <label class="field-label" for="demo-profile"
+                    >Try a demo profile</label
+                  ><select id="demo-profile" name="demo_profile"></select>
+                  <fieldset class="skill-fieldset">
+                    <legend class="field-label">
+                      Skills you have
+                      <span id="selected-skill-count" class="field-hint"></span>
+                    </legend>
+                    <div class="skill-picker" id="skill-picker"></div>
+                  </fieldset>
+                  <label class="field-label" for="interests"
+                    >What would you like to work on?</label
+                  ><textarea
+                    id="interests"
+                    name="interests"
+                    maxlength="600"
+                    rows="2"
+                    placeholder="e.g. using data to make healthcare more accessible"
+                  ></textarea>
+                  <div class="profile-footer">
+                    <div class="hours-field">
+                      <label class="field-label" for="weekly-hours"
+                        >Learning time / week</label
+                      >
+                      <div class="input-suffix">
+                        <input
+                          id="weekly-hours"
+                          name="weekly_hours"
+                          type="number"
+                          min="1"
+                          max="40"
+                          value="6"
+                          required
+                        /><span>hours</span>
+                      </div>
+                    </div>
+                    <button
+                      class="button button-primary"
+                      type="submit"
+                      id="match-submit"
+                    >
+                      Find my next step <span aria-hidden="true">→</span>
+                    </button>
+                  </div>
+                  <p class="form-note">
+                    <span data-icon="shield"></span> Synthetic examples only.
+                    These exploration inputs are temporary. Save a synthetic resume in My profile to apply for demo jobs.
+                  </p>
+                </form>
+              </article>
+              <article
+                class="card top-match-card"
+                id="top-match-card"
+              ></article>
+            </div>
+            <div class="section-heading lower-heading">
+              <div>
+                <h2>A signal worth following</h2>
+                <p>Skills appearing in the public job sample.</p>
+              </div>
+              <a class="text-link" href="#radar" data-view="radar"
+                >Explore all skills <span aria-hidden="true">→</span></a
+              >
+            </div>
+            <div class="mini-radar-grid" id="mini-radar"></div>
+          </section>
+          <section class="view" data-section="radar" hidden>
+            <div class="page-heading">
+              <div>
+                <p class="eyebrow">EVIDENCE, BEFORE ASSUMPTIONS</p>
+                <h1>Future skills radar<span>.</span></h1>
+                <p class="page-description">
+                  Explore the skills and roles in a refreshable public
+                  job-posting sample.
+                </p>
+              </div>
+              <button
+                class="button button-secondary refresh-button"
+                type="button"
+              >
+                <span data-icon="refresh"></span>Refresh signals
+              </button>
+            </div>
+            <div class="evidence-banner" id="radar-source-banner"></div>
+            <p id="monitor-status" class="table-note" role="status">Checking automatic source updates…</p>
+            <div class="toolbar">
+              <div class="search-box">
+                <span data-icon="search"></span
+                ><input
+                  type="search"
+                  id="radar-search"
+                  aria-label="Search skills and roles"
+                  placeholder="Search skills or roles…"
+                />
+              </div>
+              <div class="segmented" role="group" aria-label="Radar category">
+                <button
+                  class="selected"
+                  type="button"
+                  data-radar-tab="skills"
+                  aria-pressed="true"
+                >
+                  Skills</button
+                ><button
+                  type="button"
+                  data-radar-tab="roles"
+                  aria-pressed="false"
+                >
+                  Roles
+                </button>
+              </div>
+              <label class="select-label" for="trend-filter"
+                >Signal
+                <select id="trend-filter">
+                  <option value="all">All signals</option>
+                  <option value="rising">Rising</option>
+                  <option value="declining">Declining</option>
+                  <option value="stable">Stable</option>
+                  <option value="insufficient">Limited evidence</option>
+                </select></label
+              >
+            </div>
+            <div class="card radar-table-card">
+              <div class="table-scroll">
+                <table class="radar-table">
+                  <caption class="sr-only">
+                    Job sample skill and role signals
+                  </caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Skill / role</th>
+                      <th scope="col">Recent postings</th>
+                      <th scope="col">Earlier postings</th>
+                      <th scope="col">Sample direction</th>
+                      <th scope="col">SDG connection</th>
+                      <th scope="col">Evidence</th>
+                    </tr>
+                  </thead>
+                  <tbody id="radar-table-body"></tbody>
+                </table>
+              </div>
+              <p class="table-note" id="radar-window-note"></p>
+            </div>
+            <details class="card method-card lower-heading">
+              <summary><strong>Discover job titles in the source sample</strong></summary>
+              <p>These are titles observed in the public feed, including titles outside our career catalogue. Changes describe this sample; they do not predict future occupations.</p>
+              <div id="observed-title-list" class="evidence-list"><p>Loading source observations…</p></div>
+            </details>
+            <div class="insight-note">
+              <span data-icon="info"></span>
+              <p>
+                <strong>A compass, not a crystal ball.</strong> Rising and
+                declining describe this sample, not the whole economy. Sparse
+                data is marked as limited evidence. The international
+                graduate-job sample may not reflect Malaysia. Scenario
+                adjustments are assumptions, not validated forecasts.
+              </p>
+            </div>
+          </section>
+          <section class="view" data-section="matches" hidden>
+            <div class="page-heading">
+              <div>
+                <p class="eyebrow">POSSIBILITIES, PERSONAL TO YOU</p>
+                <h1>A direction that fits<span>.</span></h1>
+                <p class="page-description">
+                  Explore roles, understand your strengths, and see what to
+                  learn next.
+                </p>
+              </div>
+              <a
+                class="button button-secondary"
+                href="#overview"
+                data-view="overview"
+                ><span data-icon="edit"></span>Edit skills profile</a
+              >
+            </div>
+            <div class="scenario-card">
+              <div>
+                <span class="card-kicker">EXPLORE A DIFFERENT FUTURE</span>
+                <h3>What if AI adoption moves faster?</h3>
+                <p>
+                  Compare two assumptions. Your skills stay the same; AI-related
+                  skill priorities change.
+                </p>
+              </div>
+              <div class="scenario-controls">
+                <div
+                  class="segmented scenario-switch"
+                  role="group"
+                  aria-label="AI adoption scenario"
+                >
+                  <button
+                    type="button"
+                    data-scenario="moderate"
+                    class="selected"
+                    aria-pressed="true"
+                  >
+                    Moderate adoption</button
+                  ><button
+                    type="button"
+                    data-scenario="fast"
+                    aria-pressed="false"
+                  >
+                    Fast adoption
+                  </button>
+                </div>
+                <span class="scenario-note"
+                  >Illustrative scenarios · not predictions</span
+                >
+              </div>
+            </div>
+            <div class="toolbar">
+              <div class="search-box">
+                <span data-icon="search"></span
+                ><input
+                  id="match-search"
+                  type="search"
+                  aria-label="Search career matches"
+                  placeholder="Search roles, skills, or SDGs…"
+                />
+              </div>
+              <span class="result-count" id="match-result-count"></span>
+            </div>
+            <div class="match-grid" id="match-grid"></div>
+            <div class="insight-note">
+              <span data-icon="info"></span>
+              <p>
+                Match scores help you explore options. They are not a
+                probability of being hired, a qualification assessment, or a
+                hiring decision. Use your judgement and talk to a career
+                adviser.
+              </p>
+            </div>
+          </section>
+          <section class="view" data-section="pathway" hidden>
+            <div class="page-heading">
+              <div>
+                <p class="eyebrow">SMALL STEPS. MEANINGFUL PROGRESS.</p>
+                <h1>Make your next move<span>.</span></h1>
+                <p class="page-description">
+                  A practical learning plan, shaped around the skills you need.
+                </p>
+              </div>
+              <button
+                class="button button-primary"
+                id="pathway-export"
+                type="button"
+              >
+                <span data-icon="download"></span>Download my plan
+              </button>
+            </div>
+            <div class="pathway-top">
+              <label class="field-label" for="pathway-role"
+                >Your destination<select id="pathway-role"></select
+              ></label>
+              <div id="pathway-summary" class="pathway-summary"></div>
+            </div>
+            <div class="pathway-layout">
+              <div>
+                <div class="progress-card">
+                  <div>
+                    <span class="card-kicker">ONE STEP AT A TIME</span
+                    ><strong id="progress-text">0 of 0 skills completed</strong>
+                  </div>
+                  <span id="progress-percent">0%</span>
+                  <div class="progress-track">
+                    <span id="progress-bar"></span>
+                  </div>
+                </div>
+                <div id="pathway-steps" class="pathway-steps"></div>
+              </div>
+              <aside class="card impact-card" id="pathway-impact"></aside>
+            </div>
+            <p class="form-note">
+              This introductory study plan builds foundations; it does not
+              establish professional mastery or job readiness. Learning hours
+              are planning estimates, not provider promises. Some providers may
+              charge for certificates or require optional paid API access; check
+              terms on the linked course page. Progress is stored only in this
+              browser.
+            </p>
+          </section>
+          <section class="view" data-section="sources" hidden>
+            <div class="page-heading">
+              <div>
+                <p class="eyebrow">BUILT TO BE EXPLAINED</p>
+                <h1>Trust starts with evidence<span>.</span></h1>
+                <p class="page-description">
+                  Know where a recommendation comes from, and where its limits
+                  begin.
+                </p>
+              </div>
+              <button
+                class="button button-secondary refresh-button"
+                type="button"
+              >
+                <span data-icon="refresh"></span>Refresh signals
+              </button>
+            </div>
+            <div id="sources-status"></div>
+            <div class="sources-grid">
+              <article class="card method-card">
+                <div class="icon-tile" data-icon="sliders"></div>
+                <h2>How your match is calculated</h2>
+                <p>
+                  An explainable information-retrieval baseline combines your
+                  skills, interests and public job signals. No language model is
+                  used to generate careers or courses.
+                </p>
+                <div class="formula-row">
+                  <span><strong>65%</strong> Skills coverage</span>
+                  <p>
+                    How much of the role's weighted skill profile you already
+                    have.
+                  </p>
+                </div>
+                <div class="formula-row">
+                  <span><strong>20%</strong> Interest relevance</span>
+                  <p>
+                    Lexical similarity between your stated interests and the
+                    role description, using TF–IDF.
+                  </p>
+                </div>
+                <div class="formula-row">
+                  <span><strong>15%</strong> Market signal</span>
+                  <p>
+                    Observed role-title and skill mentions in the current
+                    sample. Scenarios change skill priorities, not posting
+                    counts.
+                  </p>
+                </div>
+                <p class="muted small">
+                  A score is an exploration aid, not a hiring probability. A
+                  lexical baseline can miss transferable skills and synonyms.
+                </p>
+              </article>
+              <article class="card method-card">
+                <div class="icon-tile" data-icon="radar"></div>
+                <h2>Fresh signals, honest limitations</h2>
+                <p>
+                  Public job posts are mapped to a curated skills and roles
+                  catalogue. New evidence can change match scores and rankings.
+                  AI release signals can adjust assumed skill priorities.
+                </p>
+                <ul class="plain-list">
+                  <li>
+                    Source URLs, posting dates and refresh time stay visible.
+                  </li>
+                  <li>
+                    Recent and earlier windows measure the direction of this
+                    sample. Source refreshes are limited to once every five
+                    minutes.
+                  </li>
+                  <li>
+                    Limited evidence is shown explicitly instead of inventing a
+                    trend.
+                  </li>
+                  <li>
+                    If the source is unavailable, the last cached snapshot is
+                    labelled.
+                  </li>
+                  <li>
+                    International graduate vacancies are not Malaysian
+                    employment statistics.
+                  </li>
+                </ul>
+                <div class="mini-notice">
+                  Moderate and fast AI adoption use illustrative assumptions.
+                  They do not estimate how many jobs AI will create or replace.
+                </div>
+              </article>
+              <article class="card method-card">
+                <div class="icon-tile" data-icon="shield"></div>
+                <h2>People stay in charge</h2>
+                <p>
+                  NextStep supports career exploration. HR makes application decisions manually in a synthetic recruitment workspace.
+                </p>
+                <ul class="plain-list">
+                  <li>Only public postings and synthetic demo profiles.</li>
+                  <li>
+                    No age, gender, ethnicity, or other protected attributes in
+                    matching.
+                  </li>
+                  <li>
+                    Excluding protected attributes does not prove fairness;
+                    evaluation is still needed.
+                  </li>
+                  <li>Guests can explore without an account. Signed-in resume and company forms are stored locally in the demo database; use synthetic details.</li>
+                  <li>
+                    Learning progress stays in your browser and can be cleared.
+                  </li>
+                </ul>
+                <button
+                  type="button"
+                  class="button button-secondary button-small"
+                  id="clear-progress"
+                >
+                  Clear my learning progress
+                </button>
+              </article>
+              <article class="card method-card">
+                <div class="icon-tile" data-icon="leaf"></div>
+                <h2>Skills with a wider purpose</h2>
+                <p>
+                  Roles and skills connect to the UN Sustainable Development
+                  Goals through a curated, explained mapping.
+                </p>
+                <p>
+                  Connections describe potential contribution through how a
+                  skill is applied. Completing a course is not a measured SDG
+                  impact.
+                </p>
+                <a
+                  class="text-link"
+                  href="https://sdgs.un.org/goals"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Explore the 17 UN goals <span aria-hidden="true">↗</span></a
+                >
+                <div class="sdg-legend" id="sdg-legend"></div>
+              </article>
+            </div>
+          </section>
+          {% include "workflow.html" %}
+          {% include "messages.html" %}
+          <footer class="app-footer">
+            <span
+              >NextStep <span aria-hidden="true">↗</span> A clearer path
+              forward.</span
+            ><span>SDC 2026 · Domain 1 · Proof of concept</span>
+          </footer>
+        </div>
+      </main>
+      <div
+        class="toast"
+        id="toast"
+        role="status"
+        aria-live="polite"
+        hidden
+      ></div>
+    </div>
+    {% include "access.html" %}
+    {% include "assistant.html" %}
+    <noscript
+      ><div class="noscript">
+        Enable JavaScript to use this interactive prototype. The Python server
+        provides the matching and trend APIs.
+      </div></noscript
+    >
+  </body>
+</html>

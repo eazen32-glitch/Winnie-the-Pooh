@@ -1,0 +1,229 @@
+/* Rules extracted from static/styles.css and scoped to this component. */
+.skills-radar {
+  --bg: #f6f7f3; --surface: #fff; --ink: #202d27; --muted: #778179;
+  --line: #e4e8e1; --radius: 17px;
+  color: var(--ink); background: var(--bg); padding: 20px;
+  font: 14px/1.55 Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  font-synthesis: none;
+}
+.skills-radar *, .skills-radar *::before, .skills-radar *::after { box-sizing: border-box; }
+.skills-radar p { margin: 0; }
+.skills-radar a { color: inherit; text-decoration: none; }
+.skills-radar button, .skills-radar input, .skills-radar select { font: inherit; color: var(--ink); }
+.skills-radar button { cursor: pointer; }
+.skills-radar svg { display: block; flex-shrink: 0; width: 19px; height: 19px; }
+.skills-radar :is(button, a, input, select):focus-visible { outline: 3px solid #75b996; outline-offset: 3px; }
+.skills-radar select { border: 1px solid #dfe5d8; border-radius: 7px; padding: 9px 12px; }
+.skills-radar .monitor-status { font-size: 9px; color: #96a18c; padding: 0 18px 16px; }
+.skills-radar .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.skills-radar .card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+.skills-radar .toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 19px;
+}
+.skills-radar .search-box {
+  position: relative;
+  flex: 1;
+  max-width: 440px;
+  display: flex;
+  align-items: center;
+}
+.skills-radar .search-box > span {
+  position: absolute;
+  left: 12px;
+  color: #8d9c82;
+}
+.skills-radar .search-box svg {
+  width: 15px;
+  height: 15px;
+}
+.skills-radar .search-box input {
+  height: 38px;
+  border: 1px solid #dfe5d8;
+  background: #fdfefb;
+  border-radius: 7px;
+  padding: 9px 12px 9px 36px;
+  width: 100%;
+  font-size: 11px;
+}
+.skills-radar .search-box input::placeholder {
+  color: #98a38d;
+}
+.skills-radar .segmented {
+  display: inline-flex;
+  border: 1px solid #dfe5d7;
+  border-radius: 7px;
+  background: #edf1e8;
+  padding: 3px;
+  gap: 3px;
+}
+.skills-radar .segmented button {
+  border: 0;
+  background: none;
+  color: #89967e;
+  font-size: 10px;
+  padding: 7px 13px;
+  border-radius: 5px;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.skills-radar .segmented button.selected {
+  background: #fff;
+  box-shadow: 0 1px 3px #29361d12;
+  color: #557443;
+  font-weight: 600;
+}
+.skills-radar .select-label {
+  font-size: 10px;
+  color: #8c9782;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+.skills-radar .select-label select {
+  width: auto;
+  background: #fff;
+  font-size: 10px;
+  min-height: 36px;
+}
+.skills-radar .radar-table-card {
+  padding: 0;
+  overflow: hidden;
+}
+.skills-radar .table-scroll {
+  overflow-x: auto;
+}
+.skills-radar .radar-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+.skills-radar .radar-table th {
+  font-size: 9px;
+  font-weight: 550;
+  color: #93a085;
+  padding: 17px 18px;
+  background: #fbfcf9;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+.skills-radar .radar-table td {
+  padding: 19px 18px;
+  border-bottom: 1px solid #eff2e9;
+  font-size: 11px;
+  vertical-align: middle;
+}
+.skills-radar .radar-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+.skills-radar .radar-table td:first-child {
+  font-weight: 600;
+  min-width: 160px;
+}
+.skills-radar .radar-table td:nth-child(2),
+.skills-radar .radar-table td:nth-child(3) {
+  font-variant-numeric: tabular-nums;
+  color: #6a7b5b;
+}
+.skills-radar .sdg-badges {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.skills-radar .sdg-badge {
+  font-size: 8px;
+  padding: 4px 7px;
+  border-radius: 4px;
+  background: #f1f4eb;
+  color: #6c805c;
+  border: 1px solid #e3e9da;
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+.skills-radar .sdg-badge:hover {
+  background: #e2ebd9;
+}
+.skills-radar .sdg-dot {
+  height: 5px;
+  width: 5px;
+  border-radius: 1px;
+  background: var(--sdg-color, #689656);
+}
+.skills-radar .trend-badge {
+  font-size: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  color: #849176;
+  background: #f1f4ec;
+  padding: 4px 7px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+.skills-radar .trend-badge.rising {
+  color: #56864c;
+  background: #edf6e8;
+}
+.skills-radar .trend-badge.declining {
+  color: #b87f51;
+  background: #fcf1e4;
+}
+.skills-radar .trend-badge.insufficient {
+  color: #9a9982;
+  background: #f6f4e9;
+}
+.skills-radar .trend-badge svg {
+  width: 10px;
+  height: 10px;
+}
+.skills-radar .evidence-link {
+  font-size: 9px;
+  color: #688b54;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+.skills-radar .evidence-date {
+  display: block;
+  font-size: 8px;
+  color: #98a38c;
+  margin-top: 4px;
+}
+.skills-radar .muted {
+  color: var(--muted);
+}
+.skills-radar .small {
+  font-size: 10px;
+}
+
+.skills-radar [data-sr-monitor] { font-size: 9px; color: #96a18c; padding: 0 18px 16px; border: 0; background: transparent; }
+.skills-radar .empty-state { padding: 24px; text-align: center; color: #778179; }
+.skills-radar .sdg-badges { max-width: 120px; }
+@media (min-width: 900px) { .skills-radar .radar-table th:nth-child(5) { width: 23%; } }
+@media (max-width: 650px) {
+  .skills-radar { padding: 14px; }
+  .skills-radar .toolbar { flex-wrap: wrap; gap: 12px; }
+  .skills-radar .search-box { flex-basis: 100%; max-width: none; }
+  .skills-radar .radar-table { min-width: 760px; }
+  .skills-radar .select-label { margin-left: auto; }
+}

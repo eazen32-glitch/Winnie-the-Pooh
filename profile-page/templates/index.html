@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A personal space for thoughtful work, ideas, and a little about me.">
+  <title>{{ profile.name }} — Personal profile</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+  <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</head>
+<body>
+
+    <div class="workspace">
+      <header class="topbar">
+        <span>My profile 
+          <span class="breadcrumb">/</span> 
+          <strong>Overview</strong></span>
+          <span class="demo-label">
+          <span></span>  User profile
+        </span>
+      </header>
+      <main id="main">
+        {% for message in get_flashed_messages() %}<div class="toast" role="status">✓ &nbsp; {{ message }}</div>{% endfor %}
+        <div class="page-heading"><div><p class="eyebrow">My Profile</p></h1></div><button class="button button-light" type="button" data-edit><span aria-hidden="true">✎</span> Edit profile</button></div>
+
+        <section class="profile-card" id="overview" aria-labelledby="profile-name">
+          <div class="cover">
+            <img
+              class="cover-photo"
+              src="{{ url_for('static', filename='image/cover.jpg') }}"
+              alt=""
+            >
+          </div>
+          <div class="profile-content">
+            <div class="avatar-row"><div class="avatar" aria-label="Profile initials for {{ profile.name }}"><span>{{ initials }}</span><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M0 80C20 55 75 50 100 78v22H0Z" fill="#365f52"/><path d="M20 24c15-27 58-18 60 12-9-6-12-8-22-19-8 15-26 19-38 20Z" fill="#365f52"/></svg></div><span class="availability{% if not profile.available %} unavailable{% endif %}"><i></i>{{ 'Open to opportunities' if profile.available else 'Focused on current projects' }}</span></div>
+            <div class="intro-row"><div><h2 id="profile-name">{{ profile.name }}<span class="wave" aria-hidden="true">✳</span></h2><p class="role">{{ profile.role }}</p><p class="location"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>{{ profile.location }}</p></div>{% if profile.email %}<a class="button button-dark contact-button" href="mailto:{{ profile.email }}">Let’s connect <span aria-hidden="true">↗</span></a>{% endif %}</div>
+            <p class="profile-bio">{{ profile.bio }}</p>
+            <div class="profile-bottom"><span><span class="tiny-star">✳</span> Use WinHire to get hired.</span><a href="#work">Explore my work <span aria-hidden="true">↓</span></a></div>
+          </div>
+        </section>
+
+        <div class="details-grid">
+
+          <section class="work-section" id="work" aria-labelledby="work-title"><div class="work-heading"><div><p class="eyebrow">A FEW THINGS I’VE MADE</p><h2 id="work-title">Selected work<span>.</span></h2></div><span class="project-count">02 projects</span></div><div class="project-list">{% for project in projects %}<button class="project-card" type="button" data-project="{{ project.slug }}" aria-label="View {{ project.title }} demo project"><div class="project-art {{ project.class }}" aria-hidden="true">{% if project.slug == 'forma' %}<div class="forma-browser"><div class="mini-toolbar"><strong>forma.</strong><span>Objects &nbsp; Our story &nbsp; ↗</span></div><div class="forma-body"><span>LESS, BUT<br><em>BETTER.</em></span><div class="chair"><i></i><b></b></div><small>Objects for a thoughtful everyday.</small></div></div><span class="art-badge">WEB EXPERIENCE</span>{% else %}<div class="bloom-copy"><span class="bloom-flower">✳</span><strong>A little<br>more you.</strong><small>Your everyday, in bloom.</small></div><div class="phone"><div class="phone-notch"></div><small>MONDAY, OCTOBER 12</small><strong>Hello, sunshine <span>☀</span></strong><div class="phone-tile"><span>How are you<br>feeling today?</span><b>☺ &nbsp; ◡ &nbsp; ☹</b></div><div class="phone-habit"><i>✓</i><span>A moment for yourself<small>Take a mindful breath</small></span></div><div class="phone-line"></div></div><span class="art-badge">APP CONCEPT</span>{% endif %}</div><div class="project-info"><div><span class="project-category">{{ project.category }}</span><h3>{{ project.title }} <span>— {{ project.description }}</span></h3></div><span class="project-arrow" aria-hidden="true">↗</span></div></button>{% endfor %}</div><p class="work-caption">A little collection of ideas brought to life. <span>Illustrative projects.</span></p></section>
+        </div>
+        <footer class="page-footer"><span>Made with care. Built to evolve.</span><span>{{ profile.name }} <span aria-hidden="true">✳</span> 2026</span></footer>
+      </main>
+
+  </div>
+
+  <dialog id="edit-dialog"{% if edit_open %} data-open="true"{% endif %} aria-labelledby="edit-title">
+    <div class="dialog-heading">
+      <div>
+        <p class="eyebrow">MAKE YOURSELF AT HOME</p>
+        <h2 id="edit-title">My Information</h2>
+      </div>
+      <button class="icon-button close-button" type="button" data-close aria-label="Close editor">×</button>
+    </div>
+    <p class="dialog-description">Update your details. Your information will be visible to the companies.</p>
+    <form action="{{ url_for('update_profile') }}" method="post">
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+      {% if errors %}<p class="form-error" role="alert">Please check the highlighted fields.</p>{% endif %}
+      <div class="form-grid">
+        {% for key, label, type, limit in [('name','Full name','text',70), ('role','Your Job','text',100), ('location','Location','text',100), ('email','Email address','email',254)] %}
+        <label>{{ label }}{% if key != 'email' %}<span class="required"> *</span>{% endif %}
+          <input name="{{ key }}" type="{{ type }}" value="{{ form.get(key, '') }}" maxlength="{{ limit }}"{% if key != 'email' %} required{% endif %}{% if errors.get(key) %} aria-invalid="true" aria-describedby="error-{{ key }}"{% endif %}>
+          {% if errors.get(key) %}<small class="field-error" id="error-{{ key }}">{{ errors[key] }}</small>{% endif %}
+        </label>
+        {% endfor %}
+
+        <label class="full-width">Current status
+          <select name="status" required{% if errors.get('status') %} aria-invalid="true" aria-describedby="error-status"{% endif %}>
+            {% for value, label in [('studying', 'Studying'), ('fresh_graduate', 'Fresh graduate'), ('under_3_years', 'Working — less than 3 years'), ('3_to_10_years', 'Working — 3 to 10 years'), ('over_10_years', 'Working — more than 10 years')] %}
+            <option value="{{ value }}"{% if form.get('status', 'studying') == value %} selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+          </select>
+          {% if errors.get('status') %}<small class="field-error" id="error-status">{{ errors.status }}</small>{% endif %}
+        </label>
+
+        <label class="full-width">Your story <span class="required">*</span>
+          <textarea name="bio" rows="3" maxlength="600" required{% if errors.get('bio') %} aria-invalid="true" aria-describedby="error-bio"{% endif %}>{{ form.bio }}</textarea>
+          {% if errors.get('bio') %}<small class="field-error" id="error-bio">{{ errors.bio }}</small>{% endif %}
+        </label>
+        <label class="full-width">Skills <span class="field-hint">(separate with commas, up to 12)</span>
+          <input name="skills" value="{{ form.skills }}" maxlength="250"{% if errors.get('skills') %} aria-invalid="true" aria-describedby="error-skills"{% endif %}>
+          {% if errors.get('skills') %}<small class="field-error" id="error-skills">{{ errors.skills }}</small>{% endif %}
+        </label>
+
+{# Include inside the existing edit form's .form-grid. No additional <form>. #}
+<label class="full-width">
+  Phone number
+  <input type="tel" name="phone" autocomplete="tel" maxlength="32"
+         placeholder="e.g. +60 12-345 6789" value="{{ form.get('phone', '') }}"
+         {% if errors.get('phone') %}aria-invalid="true" aria-describedby="phone-error"{% endif %}>
+  {% if errors.get('phone') %}
+  <small class="field-error" id="phone-error">{{ errors.phone }}</small>
+  {% endif %}
+</label>
+
+<label class="full-width">
+  LinkedIn
+  <input name="linkedin" type="url" maxlength="300"
+         placeholder="https://www.linkedin.com/in/your-name"
+         value="{{ form.get('linkedin', '') }}"
+         {% if errors.get('linkedin') %}aria-invalid="true" aria-describedby="linkedin-error"{% endif %}>
+  {% if errors.get('linkedin') %}
+  <small class="field-error" id="linkedin-error">{{ errors.linkedin }}</small>
+  {% endif %}
+</label>
+
+{% macro history_row(section, title, row, upper_year) %}
+<tr>
+  <td class="history-year-cell">
+    <select name="{{ section }}_year" aria-label="{{ title }} year">
+      <option value="">Year</option>
+      {% set saved_year = row.get('year', '')|string %}
+      {% for year in range(upper_year, 1899, -1) %}
+      <option value="{{ year }}" {% if saved_year == year|string %}selected{% endif %}>{{ year }}</option>
+      {% endfor %}
+    </select>
+  </td>
+  <td>
+    <textarea name="{{ section }}_description" rows="3" maxlength="1000"
+              aria-label="{{ title }} details"
+              placeholder="{{ 'Job title, company and responsibilities' if section == 'experience' else 'Qualification and school or university' if section == 'education' else 'Award title and awarding organization' }}">{{ row.get('description', '') }}</textarea>
+    <button type="button" class="history-remove" data-remove-table-row
+            aria-label="Remove {{ title|lower }} row">Remove row</button>
+  </td>
+</tr>
+{% endmacro %}
+
+{% for section, title in [('experience', 'Experience'), ('education', 'Education'), ('awards', 'Awards')] %}
+{% set upper_year = profile_year + 6 if section == 'education' else profile_year %}
+<section class="profile-history-section full-width" data-profile-table
+         {% if section == 'awards' %}data-max-rows="3"{% endif %}
+         aria-labelledby="{{ section }}-table-title">
+  <h3 id="{{ section }}-table-title">{{ title }}</h3>
+  <p class="history-hint">{{ 'Add up to 3 awards.' if section == 'awards' else 'Choose a year and add the details. Add more rows as needed.' }}</p>
+  {% if errors.get(section) %}
+  <p class="field-error" id="{{ section }}-table-error" role="alert">{{ errors[section] }}</p>
+  {% endif %}
+  <table class="profile-history-table" aria-labelledby="{{ section }}-table-title"
+         {% if errors.get(section) %}aria-describedby="{{ section }}-table-error"{% endif %}>
+    <thead>
+      <tr><th scope="col" class="history-year-cell">Year</th><th scope="col">Details</th></tr>
+    </thead>
+    <tbody data-table-rows>
+      {% for row in profile_history(form, section) or [{}] %}
+      {{ history_row(section, title, row, upper_year) }}
+      {% endfor %}
+    </tbody>
+  </table>
+  <template data-table-row-template>{{ history_row(section, title, {}, upper_year) }}</template>
+  <div class="history-table-actions">
+    <button type="button" class="button button-light" data-add-table-row>+ Add row</button>
+    <span class="history-row-status" role="status" aria-live="polite"></span>
+  </div>
+</section>
+{% endfor %}
+
+      </div>
+      <label class="checkbox-label"><input type="checkbox" name="available"{% if form.available %} checked{% endif %}> I’m open to new opportunities</label>
+      <div class="dialog-actions">
+        <button type="button" class="button button-light" data-close>Cancel</button>
+        <button type="submit" class="button button-dark">Save changes <span aria-hidden="true">↗</span></button>
+      </div>
+    </form>
+  </dialog>
+
+  {% for project in projects %}<dialog class="project-dialog" id="project-{{ project.slug }}" aria-labelledby="title-{{ project.slug }}"><div class="dialog-heading"><p class="eyebrow">ILLUSTRATIVE PROJECT / {{ project.year }}</p><button class="icon-button close-button" type="button" data-close aria-label="Close project">×</button></div><span class="project-dialog-mark {{ project.class }}">{{ project.title }}<span>.</span></span><p class="project-category">{{ project.category }}</p><h2 id="title-{{ project.slug }}">{{ project.description }}</h2><p class="project-detail">{{ project.detail }}</p><div class="skill-list">{% for tag in project.tags %}<span>{{ tag }}</span>{% endfor %}</div><div class="dialog-actions"><button type="button" class="button button-dark" data-close>Back to profile <span aria-hidden="true">↗</span></button></div></dialog>{% endfor %}
+</body>
+</html>
